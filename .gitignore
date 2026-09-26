@@ -1,0 +1,18 @@
+node_modules/
+.DS_Store
+
+# Renders, QA stills and intermediates (regenerable)
+out/
+work/
+poema/work/
+
+# Third-party reference material: never commit
+poema/ref/
+
+# Heavy media: regenerate with the pipeline (see README)
+public/*.mp4
+public/*.wav
+!public/pop.wav
+!public/whoosh.wav
+*.mov
+*.m4a
