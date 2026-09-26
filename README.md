@@ -28,6 +28,7 @@ tools/        studio.sh / render.sh helpers
 | `videos/2026-09-25-jev-reel` | `JevExplainer` | Talking head, Jev brand |
 | `videos/2026-09-25-poema-milena` | `Poema` | Narrated, hand-drawn sketch style |
 | `videos/2026-09-26-opus-reel` | `OpusReel` | Talking head, 60 fps, FULL/CARD modes |
+| `videos/2026-09-26-sdlc-playbook` | `SdlcReel` | Talking head built on a claude.com article, cited |
 
 ## Everyday commands
 

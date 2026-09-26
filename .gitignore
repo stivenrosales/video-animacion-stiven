@@ -24,3 +24,6 @@ videos/*/public/*.jpg
 
 # Published deliverables live outside git
 finals/
+
+# Third-party illustrations used on screen
+videos/*/public/*.svg

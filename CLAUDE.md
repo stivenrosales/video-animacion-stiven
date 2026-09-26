@@ -10,6 +10,7 @@ Finished videos:
 | Jev reel (talking head) | `videos/2026-09-25-jev-reel` | `JevExplainer` | Claude-UI cards, TypeSafe/Jev brand, captions |
 | Milena poem (narrated) | `videos/2026-09-25-poema-milena` | `Poema` | Hand-drawn "dirty line" (sketch), silhouettes |
 | Opus 5.5 workflow reel (talking head) | `videos/2026-09-26-opus-reel` | `OpusReel` | Claude-UI cards, 60 fps, FULL/CARD alternation, published |
+| AI-Native SDLC playbook reel (talking head) | `videos/2026-09-26-sdlc-playbook` | `SdlcReel` | Article-sourced figures + FUENTE citations, lowered/zoomed-out camera windows, published |
 
 For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/skills/talking-head-reel/`): it holds the full pipeline and the proven layout numbers.
 
@@ -47,7 +48,13 @@ For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/sk
 - Voice: measure before touching it; single-pass loudnorm undershoots when true peak binds, and SFX push the final mix about 2.5 LU louder, so renormalize the mix.
 - "More professional" means motion design (expo easing, blur, stagger, cues on every word, 60 fps), not a tool swap. Keep Remotion for UI scenes and reserve p5.brush for painterly looks.
 - Ask what the user really sent Claude (prompt, reference images such as the Claude visual guide) so the story scenes are accurate.
-- zsh: `$VAR:l...` is a modifier; write `${VAR}` before a colon.
+- zsh: `$VAR:l...` is a modifier; write `${VAR}` before a colon. `rm -rf dir/*` on an empty dir aborts an `&&` chain (no glob match).
+- Source-based videos: use the source's real figures, logo and tile color (from its HTML/CSS), and put a FUENTE line with its icon on each derived scene.
+- Nothing may cover the face: for tall top content use a `LOWER` camera window; for chest-level hand gestures use `ZOOM_OUT` (0.9, pinned top) plus `CAPTIONS_UP`. Verify on the neighbouring frames, because the head moves.
+- Check centering against x=540 with a guide line; left-aligned groups inside a centered panel read as off-center.
+- Highlights sit behind the text at the text's own height, never as a thin offset stroke.
+- An idea the speaker did not say but the video depends on (e.g. "en empresas") gets a headline beat, not a small note.
+- Remotion `--frames` is 0-based and must stay below duration×fps.
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)
 
