@@ -1,12 +1,15 @@
 # video-animacion-stiven
 
 Programmatic video editing and animation for short-form social video (IG Reels / TikTok, 1080x1920).
-Two finished projects live here:
+Every video lives in its own dated folder `videos/<YYYY-MM-DD>-<slug>/` (`src`, `public`, `scripts`, `work`, `out`, `ref`). Published mp4s go to `finals/<YYYY-MM-DD>-<slug>.mp4`. Open or render any video with `npm run studio -- <slug>` and `npm run render -- <slug> <Comp>` (they pass `--public-dir`). See README → Layout.
 
-| Project | Entry | Composition | Style |
+Finished videos:
+
+| Project | Folder | Composition | Style |
 |---------|-------|-------------|-------|
-| Jev reel (talking head) | `src/index.ts` | `JevExplainer` | Claude-UI cards, TypeSafe/Jev brand, captions |
-| Milena poem (narrated) | `poema/src/index.ts` | `Poema` | Hand-drawn "dirty line" (sketch), silhouettes |
+| Jev reel (talking head) | `videos/2026-09-25-jev-reel` | `JevExplainer` | Claude-UI cards, TypeSafe/Jev brand, captions |
+| Milena poem (narrated) | `videos/2026-09-25-poema-milena` | `Poema` | Hand-drawn "dirty line" (sketch), silhouettes |
+| Opus 5.5 workflow reel (talking head) | `videos/2026-09-26-opus-reel` | `OpusReel` | Claude-UI cards, 60 fps, FULL/CARD alternation, published |
 
 For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/skills/talking-head-reel/`): it holds the full pipeline and the proven layout numbers.
 
@@ -20,9 +23,13 @@ For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/sk
 
 **Talking head (Jev):** `avconvert` HDR→SDR → whisper + silencedetect → `scripts/cut.py` (fine cut, `cuts.json`) → re-transcribe the EDITED audio → `scripts/captions.py` → Remotion scenes timed to word timestamps → render → loudnorm -14 LUFS.
 
-**Narrated animation (poem):** clean the voice (highpass, afftdn, compressor, loudnorm) → `poema/timeline.json` (single source of truth for scenes, SFX and chords) → `poema/scripts/sfx.py` synthesizes the SFX + pad → ffmpeg `sidechaincompress` ducks the SFX under the voice → Remotion scenes (`poema/src/scenes2.tsx`).
+**Narrated animation (poem):** clean the voice (highpass, afftdn, compressor, loudnorm) → `timeline.json` (single source of truth for scenes, SFX and chords) → `scripts/sfx.py` synthesizes the SFX + pad → ffmpeg `sidechaincompress` ducks the SFX under the voice → Remotion scenes (`src/scenes2.tsx`).
+
+**Talking head v1.1 (Opus reel):** same as above, plus retake bisection → `scripts/voice.py` (measure, A/B, -14 LUFS) → pieces preview → mode map → 60 fps render → `voice.py --raw` on the final mix.
 
 ## Rules learned (do not regress)
+
+- New video = new `videos/<date>-<slug>/` folder copied from the skill template. Never put a video's files at the repo root, and never share one `public/` between videos.
 
 - iPhone footage is HLG HDR: tonemap with `avconvert -p Preset3840x2160` before cutting.
 - Captions come from re-transcribing the edited audio, never from remapped timestamps. Confirm brand spellings with the user.
@@ -34,6 +41,13 @@ For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/sk
 - Claude's orange spark appears only next to the Claude logo; each product uses its own brand from its official site.
 - Sketch style: line boil via feTurbulence + feDisplacementMap with the seed stepped every 2 frames, animation on twos, hatch patterns, grain, thick ink outlines, colored-pencil streaks. Characters are silhouettes (user preference).
 - Try the most likely option first; do not run several slow encodes in parallel "just in case".
+- Approval stages the user expects: pieces preview → cut preview (explain which retake was kept) → audio A/B → mode map table → final render.
+- On retakes, keep the last clean take, and re-read the transcript of the edited audio to catch stumbles the first pass hid.
+- `cut.py`: silences past `END` used to drop the final segment (fixed: break when `s >= END`).
+- Voice: measure before touching it; single-pass loudnorm undershoots when true peak binds, and SFX push the final mix about 2.5 LU louder, so renormalize the mix.
+- "More professional" means motion design (expo easing, blur, stagger, cues on every word, 60 fps), not a tool swap. Keep Remotion for UI scenes and reserve p5.brush for painterly looks.
+- Ask what the user really sent Claude (prompt, reference images such as the Claude visual guide) so the story scenes are accurate.
+- zsh: `$VAR:l...` is a modifier; write `${VAR}` before a colon.
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)
 

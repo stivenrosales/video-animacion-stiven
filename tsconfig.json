@@ -9,5 +9,7 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src", "poema/src"]
+  "include": [
+    "videos/*/src"
+  ]
 }

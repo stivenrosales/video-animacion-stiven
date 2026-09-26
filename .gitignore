@@ -1,18 +1,26 @@
 node_modules/
 .DS_Store
 
-# Renders, QA stills and intermediates (regenerable)
-out/
-work/
-poema/work/
+# Per-video renders, QA stills and intermediates (regenerable)
+videos/*/out/
+videos/*/work/
 
 # Third-party reference material: never commit
-poema/ref/
+videos/*/ref/
 
 # Heavy media: regenerate with the pipeline (see README)
-public/*.mp4
-public/*.wav
-!public/pop.wav
-!public/whoosh.wav
+videos/*/public/*.mp4
+videos/*/public/*.wav
+!videos/*/public/pop.wav
+!videos/*/public/whoosh.wav
+!videos/*/public/key.wav
 *.mov
 *.m4a
+
+# Private or third-party images used on screen (DMs, thumbnails, screenshots)
+videos/*/public/*.png
+videos/*/public/*.jpg
+!videos/*/public/remotion.png
+
+# Published deliverables live outside git
+finals/

@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "studio": "remotion studio",
-    "render": "remotion render JevExplainer out/raw.mp4 --image-format=png --crf=14 --x264-preset=slow --color-space=bt709"
+    "studio": "tools/studio.sh",
+    "render": "tools/render.sh"
   },
   "dependencies": {
     "@remotion/captions": "4.0.529",
