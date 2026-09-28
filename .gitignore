@@ -27,3 +27,6 @@ finals/
 
 # Third-party illustrations used on screen
 videos/*/public/*.svg
+
+# Local tool caches (absolute paths, per machine)
+.atl/
