@@ -1,0 +1,2060 @@
+[
+ {
+  "text": " Hace",
+  "startMs": 60,
+  "endMs": 220,
+  "timestampMs": 60,
+  "confidence": null
+ },
+ {
+  "text": " poco",
+  "startMs": 310,
+  "endMs": 490,
+  "timestampMs": 310,
+  "confidence": null
+ },
+ {
+  "text": " tuve",
+  "startMs": 490,
+  "endMs": 730,
+  "timestampMs": 490,
+  "confidence": null
+ },
+ {
+  "text": " una",
+  "startMs": 730,
+  "endMs": 870,
+  "timestampMs": 730,
+  "confidence": null
+ },
+ {
+  "text": " charla",
+  "startMs": 980,
+  "endMs": 1280,
+  "timestampMs": 980,
+  "confidence": null
+ },
+ {
+  "text": " en",
+  "startMs": 1280,
+  "endMs": 1400,
+  "timestampMs": 1280,
+  "confidence": null
+ },
+ {
+  "text": " Lima",
+  "startMs": 1400,
+  "endMs": 1650,
+  "timestampMs": 1400,
+  "confidence": null
+ },
+ {
+  "text": " sobre",
+  "startMs": 1650,
+  "endMs": 1920,
+  "timestampMs": 1650,
+  "confidence": null
+ },
+ {
+  "text": " Claude",
+  "startMs": 2030,
+  "endMs": 2180,
+  "timestampMs": 2030,
+  "confidence": null
+ },
+ {
+  "text": " cuando",
+  "startMs": 2380,
+  "endMs": 2540,
+  "timestampMs": 2380,
+  "confidence": null
+ },
+ {
+  "text": " me",
+  "startMs": 2620,
+  "endMs": 2630,
+  "timestampMs": 2620,
+  "confidence": null
+ },
+ {
+  "text": " invitaron",
+  "startMs": 2630,
+  "endMs": 2950,
+  "timestampMs": 2630,
+  "confidence": null
+ },
+ {
+  "text": " un",
+  "startMs": 2950,
+  "endMs": 3020,
+  "timestampMs": 2950,
+  "confidence": null
+ },
+ {
+  "text": " momento",
+  "startMs": 3020,
+  "endMs": 3340,
+  "timestampMs": 3020,
+  "confidence": null
+ },
+ {
+  "text": " para",
+  "startMs": 3340,
+  "endMs": 3520,
+  "timestampMs": 3340,
+  "confidence": null
+ },
+ {
+  "text": " explicar",
+  "startMs": 3520,
+  "endMs": 3880,
+  "timestampMs": 3520,
+  "confidence": null
+ },
+ {
+  "text": " cómo",
+  "startMs": 3880,
+  "endMs": 4020,
+  "timestampMs": 3880,
+  "confidence": null
+ },
+ {
+  "text": " es",
+  "startMs": 4070,
+  "endMs": 4180,
+  "timestampMs": 4070,
+  "confidence": null
+ },
+ {
+  "text": " mi",
+  "startMs": 4180,
+  "endMs": 4300,
+  "timestampMs": 4180,
+  "confidence": null
+ },
+ {
+  "text": " flujo",
+  "startMs": 4350,
+  "endMs": 4500,
+  "timestampMs": 4350,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 4630,
+  "endMs": 4650,
+  "timestampMs": 4630,
+  "confidence": null
+ },
+ {
+  "text": " trabajo",
+  "startMs": 4650,
+  "endMs": 4970,
+  "timestampMs": 4650,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 5060,
+  "endMs": 5080,
+  "timestampMs": 5060,
+  "confidence": null
+ },
+ {
+  "text": " expliqué",
+  "startMs": 5080,
+  "endMs": 5720,
+  "timestampMs": 5080,
+  "confidence": null
+ },
+ {
+  "text": " varias",
+  "startMs": 5720,
+  "endMs": 6210,
+  "timestampMs": 5720,
+  "confidence": null
+ },
+ {
+  "text": " cosas,",
+  "startMs": 6210,
+  "endMs": 6700,
+  "timestampMs": 6210,
+  "confidence": null
+ },
+ {
+  "text": " entre",
+  "startMs": 6760,
+  "endMs": 6920,
+  "timestampMs": 6760,
+  "confidence": null
+ },
+ {
+  "text": " ellas",
+  "startMs": 7030,
+  "endMs": 7180,
+  "timestampMs": 7030,
+  "confidence": null
+ },
+ {
+  "text": " el",
+  "startMs": 7330,
+  "endMs": 7390,
+  "timestampMs": 7330,
+  "confidence": null
+ },
+ {
+  "text": " workflow",
+  "startMs": 7390,
+  "endMs": 7840,
+  "timestampMs": 7390,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 7880,
+  "endMs": 7900,
+  "timestampMs": 7880,
+  "confidence": null
+ },
+ {
+  "text": " me",
+  "startMs": 7900,
+  "endMs": 7990,
+  "timestampMs": 7900,
+  "confidence": null
+ },
+ {
+  "text": " sorprendió",
+  "startMs": 7990,
+  "endMs": 8360,
+  "timestampMs": 7990,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 8460,
+  "endMs": 8580,
+  "timestampMs": 8460,
+  "confidence": null
+ },
+ {
+  "text": " aún",
+  "startMs": 8580,
+  "endMs": 8710,
+  "timestampMs": 8580,
+  "confidence": null
+ },
+ {
+  "text": " nadie",
+  "startMs": 8820,
+  "endMs": 8940,
+  "timestampMs": 8820,
+  "confidence": null
+ },
+ {
+  "text": " lo",
+  "startMs": 8990,
+  "endMs": 9050,
+  "timestampMs": 8990,
+  "confidence": null
+ },
+ {
+  "text": " aplica,",
+  "startMs": 9050,
+  "endMs": 9510,
+  "timestampMs": 9050,
+  "confidence": null
+ },
+ {
+  "text": " pero",
+  "startMs": 9510,
+  "endMs": 9730,
+  "timestampMs": 9510,
+  "confidence": null
+ },
+ {
+  "text": " quizás",
+  "startMs": 9730,
+  "endMs": 10020,
+  "timestampMs": 9730,
+  "confidence": null
+ },
+ {
+  "text": " sea",
+  "startMs": 10170,
+  "endMs": 10240,
+  "timestampMs": 10170,
+  "confidence": null
+ },
+ {
+  "text": " por",
+  "startMs": 10240,
+  "endMs": 10400,
+  "timestampMs": 10240,
+  "confidence": null
+ },
+ {
+  "text": " algunos",
+  "startMs": 10400,
+  "endMs": 10690,
+  "timestampMs": 10400,
+  "confidence": null
+ },
+ {
+  "text": " detalles",
+  "startMs": 10690,
+  "endMs": 11040,
+  "timestampMs": 10690,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 11040,
+  "endMs": 11190,
+  "timestampMs": 11040,
+  "confidence": null
+ },
+ {
+  "text": " implica",
+  "startMs": 11190,
+  "endMs": 11560,
+  "timestampMs": 11190,
+  "confidence": null
+ },
+ {
+  "text": " eso",
+  "startMs": 11560,
+  "endMs": 11680,
+  "timestampMs": 11560,
+  "confidence": null
+ },
+ {
+  "text": " Primero,",
+  "startMs": 11820,
+  "endMs": 12280,
+  "timestampMs": 11820,
+  "confidence": null
+ },
+ {
+  "text": " es",
+  "startMs": 12380,
+  "endMs": 12460,
+  "timestampMs": 12380,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 12460,
+  "endMs": 12630,
+  "timestampMs": 12460,
+  "confidence": null
+ },
+ {
+  "text": " los",
+  "startMs": 12630,
+  "endMs": 12800,
+  "timestampMs": 12630,
+  "confidence": null
+ },
+ {
+  "text": " workflow",
+  "startMs": 12800,
+  "endMs": 13250,
+  "timestampMs": 12800,
+  "confidence": null
+ },
+ {
+  "text": " consumen",
+  "startMs": 13250,
+  "endMs": 13690,
+  "timestampMs": 13250,
+  "confidence": null
+ },
+ {
+  "text": " muchos",
+  "startMs": 13790,
+  "endMs": 13940,
+  "timestampMs": 13790,
+  "confidence": null
+ },
+ {
+  "text": " tokens,",
+  "startMs": 14090,
+  "endMs": 14410,
+  "timestampMs": 14090,
+  "confidence": null
+ },
+ {
+  "text": " pero",
+  "startMs": 14500,
+  "endMs": 14630,
+  "timestampMs": 14500,
+  "confidence": null
+ },
+ {
+  "text": " son",
+  "startMs": 14630,
+  "endMs": 14740,
+  "timestampMs": 14630,
+  "confidence": null
+ },
+ {
+  "text": " muy",
+  "startMs": 14740,
+  "endMs": 14870,
+  "timestampMs": 14740,
+  "confidence": null
+ },
+ {
+  "text": " efectivos",
+  "startMs": 14870,
+  "endMs": 15240,
+  "timestampMs": 14870,
+  "confidence": null
+ },
+ {
+  "text": " Pero",
+  "startMs": 15300,
+  "endMs": 15460,
+  "timestampMs": 15300,
+  "confidence": null
+ },
+ {
+  "text": " antes",
+  "startMs": 15550,
+  "endMs": 15760,
+  "timestampMs": 15550,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 15860,
+  "endMs": 15920,
+  "timestampMs": 15860,
+  "confidence": null
+ },
+ {
+  "text": " eso,",
+  "startMs": 15920,
+  "endMs": 16180,
+  "timestampMs": 15920,
+  "confidence": null
+ },
+ {
+  "text": " ¿qué",
+  "startMs": 16210,
+  "endMs": 16300,
+  "timestampMs": 16210,
+  "confidence": null
+ },
+ {
+  "text": " es",
+  "startMs": 16300,
+  "endMs": 16390,
+  "timestampMs": 16300,
+  "confidence": null
+ },
+ {
+  "text": " un",
+  "startMs": 16390,
+  "endMs": 16420,
+  "timestampMs": 16390,
+  "confidence": null
+ },
+ {
+  "text": " workflow?",
+  "startMs": 16420,
+  "endMs": 16760,
+  "timestampMs": 16420,
+  "confidence": null
+ },
+ {
+  "text": " Es",
+  "startMs": 16820,
+  "endMs": 16870,
+  "timestampMs": 16820,
+  "confidence": null
+ },
+ {
+  "text": " una",
+  "startMs": 16870,
+  "endMs": 16990,
+  "timestampMs": 16870,
+  "confidence": null
+ },
+ {
+  "text": " forma",
+  "startMs": 17070,
+  "endMs": 17280,
+  "timestampMs": 17070,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 17380,
+  "endMs": 17420,
+  "timestampMs": 17380,
+  "confidence": null
+ },
+ {
+  "text": " encadenar",
+  "startMs": 17420,
+  "endMs": 17900,
+  "timestampMs": 17420,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 17910,
+  "endMs": 17960,
+  "timestampMs": 17910,
+  "confidence": null
+ },
+ {
+  "text": " agentes",
+  "startMs": 17960,
+  "endMs": 18400,
+  "timestampMs": 17960,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 18400,
+  "endMs": 18520,
+  "timestampMs": 18400,
+  "confidence": null
+ },
+ {
+  "text": " manera",
+  "startMs": 18520,
+  "endMs": 18680,
+  "timestampMs": 18520,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 18790,
+  "endMs": 18870,
+  "timestampMs": 18790,
+  "confidence": null
+ },
+ {
+  "text": " trabajen",
+  "startMs": 18870,
+  "endMs": 19240,
+  "timestampMs": 18870,
+  "confidence": null
+ },
+ {
+  "text": " durante",
+  "startMs": 19240,
+  "endMs": 19840,
+  "timestampMs": 19240,
+  "confidence": null
+ },
+ {
+  "text": " una,",
+  "startMs": 19840,
+  "endMs": 20520,
+  "timestampMs": 19840,
+  "confidence": null
+ },
+ {
+  "text": " dos",
+  "startMs": 20520,
+  "endMs": 20840,
+  "timestampMs": 20520,
+  "confidence": null
+ },
+ {
+  "text": " o",
+  "startMs": 20840,
+  "endMs": 20900,
+  "timestampMs": 20840,
+  "confidence": null
+ },
+ {
+  "text": " hasta",
+  "startMs": 20900,
+  "endMs": 21290,
+  "timestampMs": 20900,
+  "confidence": null
+ },
+ {
+  "text": " ocho",
+  "startMs": 21290,
+  "endMs": 21580,
+  "timestampMs": 21290,
+  "confidence": null
+ },
+ {
+  "text": " horas",
+  "startMs": 21630,
+  "endMs": 22000,
+  "timestampMs": 21630,
+  "confidence": null
+ },
+ {
+  "text": " continuas",
+  "startMs": 22000,
+  "endMs": 22840,
+  "timestampMs": 22000,
+  "confidence": null
+ },
+ {
+  "text": " quemando",
+  "startMs": 22900,
+  "endMs": 23200,
+  "timestampMs": 22900,
+  "confidence": null
+ },
+ {
+  "text": " tokens",
+  "startMs": 23200,
+  "endMs": 23470,
+  "timestampMs": 23200,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 23470,
+  "endMs": 23510,
+  "timestampMs": 23470,
+  "confidence": null
+ },
+ {
+  "text": " trabajando",
+  "startMs": 23510,
+  "endMs": 23950,
+  "timestampMs": 23510,
+  "confidence": null
+ },
+ {
+  "text": " en",
+  "startMs": 23990,
+  "endMs": 24050,
+  "timestampMs": 23990,
+  "confidence": null
+ },
+ {
+  "text": " un",
+  "startMs": 24050,
+  "endMs": 24140,
+  "timestampMs": 24050,
+  "confidence": null
+ },
+ {
+  "text": " proyecto",
+  "startMs": 24140,
+  "endMs": 24500,
+  "timestampMs": 24140,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 24500,
+  "endMs": 24620,
+  "timestampMs": 24500,
+  "confidence": null
+ },
+ {
+  "text": " tú",
+  "startMs": 24630,
+  "endMs": 24720,
+  "timestampMs": 24630,
+  "confidence": null
+ },
+ {
+  "text": " defines",
+  "startMs": 24870,
+  "endMs": 25020,
+  "timestampMs": 24870,
+  "confidence": null
+ },
+ {
+  "text": " Entonces,",
+  "startMs": 25220,
+  "endMs": 25680,
+  "timestampMs": 25220,
+  "confidence": null
+ },
+ {
+  "text": " para",
+  "startMs": 25780,
+  "endMs": 25940,
+  "timestampMs": 25780,
+  "confidence": null
+ },
+ {
+  "text": " eso,",
+  "startMs": 25940,
+  "endMs": 26220,
+  "timestampMs": 25940,
+  "confidence": null
+ },
+ {
+  "text": " obviamente,",
+  "startMs": 26220,
+  "endMs": 26860,
+  "timestampMs": 26220,
+  "confidence": null
+ },
+ {
+  "text": " primero,",
+  "startMs": 26920,
+  "endMs": 27340,
+  "timestampMs": 26920,
+  "confidence": null
+ },
+ {
+  "text": " tienes",
+  "startMs": 27490,
+  "endMs": 27750,
+  "timestampMs": 27490,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 27750,
+  "endMs": 27920,
+  "timestampMs": 27750,
+  "confidence": null
+ },
+ {
+  "text": " tener",
+  "startMs": 27920,
+  "endMs": 28200,
+  "timestampMs": 27920,
+  "confidence": null
+ },
+ {
+  "text": " una",
+  "startMs": 28200,
+  "endMs": 28370,
+  "timestampMs": 28200,
+  "confidence": null
+ },
+ {
+  "text": " suscripción",
+  "startMs": 28370,
+  "endMs": 28990,
+  "timestampMs": 28370,
+  "confidence": null
+ },
+ {
+  "text": " grande",
+  "startMs": 28990,
+  "endMs": 29330,
+  "timestampMs": 28990,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 29330,
+  "endMs": 29450,
+  "timestampMs": 29330,
+  "confidence": null
+ },
+ {
+  "text": " Claude",
+  "startMs": 29470,
+  "endMs": 29800,
+  "timestampMs": 29470,
+  "confidence": null
+ },
+ {
+  "text": " o",
+  "startMs": 29800,
+  "endMs": 29880,
+  "timestampMs": 29800,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 29880,
+  "endMs": 30030,
+  "timestampMs": 29880,
+  "confidence": null
+ },
+ {
+  "text": " ChatGPT",
+  "startMs": 30180,
+  "endMs": 30620,
+  "timestampMs": 30180,
+  "confidence": null
+ },
+ {
+  "text": " o",
+  "startMs": 30700,
+  "endMs": 30750,
+  "timestampMs": 30700,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 30750,
+  "endMs": 30870,
+  "timestampMs": 30750,
+  "confidence": null
+ },
+ {
+  "text": " Codex",
+  "startMs": 31030,
+  "endMs": 31280,
+  "timestampMs": 31030,
+  "confidence": null
+ },
+ {
+  "text": " donde",
+  "startMs": 31280,
+  "endMs": 31500,
+  "timestampMs": 31280,
+  "confidence": null
+ },
+ {
+  "text": " uses",
+  "startMs": 31500,
+  "endMs": 31680,
+  "timestampMs": 31500,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 31730,
+  "endMs": 31740,
+  "timestampMs": 31730,
+  "confidence": null
+ },
+ {
+  "text": " segundo,",
+  "startMs": 31740,
+  "endMs": 32190,
+  "timestampMs": 31740,
+  "confidence": null
+ },
+ {
+  "text": " como",
+  "startMs": 32190,
+  "endMs": 32390,
+  "timestampMs": 32190,
+  "confidence": null
+ },
+ {
+  "text": " es",
+  "startMs": 32390,
+  "endMs": 32490,
+  "timestampMs": 32390,
+  "confidence": null
+ },
+ {
+  "text": " un",
+  "startMs": 32490,
+  "endMs": 32610,
+  "timestampMs": 32490,
+  "confidence": null
+ },
+ {
+  "text": " trabajo",
+  "startMs": 32660,
+  "endMs": 32950,
+  "timestampMs": 32660,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 32950,
+  "endMs": 33050,
+  "timestampMs": 32950,
+  "confidence": null
+ },
+ {
+  "text": " largo",
+  "startMs": 33050,
+  "endMs": 33310,
+  "timestampMs": 33050,
+  "confidence": null
+ },
+ {
+  "text": " aliento,",
+  "startMs": 33310,
+  "endMs": 33850,
+  "timestampMs": 33310,
+  "confidence": null
+ },
+ {
+  "text": " pues",
+  "startMs": 33850,
+  "endMs": 34120,
+  "timestampMs": 33850,
+  "confidence": null
+ },
+ {
+  "text": " tiene",
+  "startMs": 34120,
+  "endMs": 34330,
+  "timestampMs": 34120,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 34420,
+  "endMs": 34520,
+  "timestampMs": 34420,
+  "confidence": null
+ },
+ {
+  "text": " estar",
+  "startMs": 34520,
+  "endMs": 34770,
+  "timestampMs": 34520,
+  "confidence": null
+ },
+ {
+  "text": " prendido",
+  "startMs": 34770,
+  "endMs": 35170,
+  "timestampMs": 34770,
+  "confidence": null
+ },
+ {
+  "text": " tu",
+  "startMs": 35170,
+  "endMs": 35290,
+  "timestampMs": 35170,
+  "confidence": null
+ },
+ {
+  "text": " PC",
+  "startMs": 35290,
+  "endMs": 35400,
+  "timestampMs": 35290,
+  "confidence": null
+ },
+ {
+  "text": " o",
+  "startMs": 35400,
+  "endMs": 35450,
+  "timestampMs": 35400,
+  "confidence": null
+ },
+ {
+  "text": " la",
+  "startMs": 35450,
+  "endMs": 35570,
+  "timestampMs": 35450,
+  "confidence": null
+ },
+ {
+  "text": " terminal",
+  "startMs": 35610,
+  "endMs": 36000,
+  "timestampMs": 35610,
+  "confidence": null
+ },
+ {
+  "text": " donde",
+  "startMs": 36000,
+  "endMs": 36230,
+  "timestampMs": 36000,
+  "confidence": null
+ },
+ {
+  "text": " estés",
+  "startMs": 36310,
+  "endMs": 36550,
+  "timestampMs": 36310,
+  "confidence": null
+ },
+ {
+  "text": " usando",
+  "startMs": 36550,
+  "endMs": 36920,
+  "timestampMs": 36550,
+  "confidence": null
+ },
+ {
+  "text": " Bueno,",
+  "startMs": 36980,
+  "endMs": 37250,
+  "timestampMs": 36980,
+  "confidence": null
+ },
+ {
+  "text": " vamos",
+  "startMs": 37250,
+  "endMs": 37440,
+  "timestampMs": 37250,
+  "confidence": null
+ },
+ {
+  "text": " primero",
+  "startMs": 37540,
+  "endMs": 37790,
+  "timestampMs": 37540,
+  "confidence": null
+ },
+ {
+  "text": " por",
+  "startMs": 37890,
+  "endMs": 37970,
+  "timestampMs": 37890,
+  "confidence": null
+ },
+ {
+  "text": " la",
+  "startMs": 37970,
+  "endMs": 38070,
+  "timestampMs": 37970,
+  "confidence": null
+ },
+ {
+  "text": " PC,",
+  "startMs": 38070,
+  "endMs": 38320,
+  "timestampMs": 38070,
+  "confidence": null
+ },
+ {
+  "text": " la",
+  "startMs": 38320,
+  "endMs": 38440,
+  "timestampMs": 38320,
+  "confidence": null
+ },
+ {
+  "text": " PC",
+  "startMs": 38440,
+  "endMs": 38560,
+  "timestampMs": 38440,
+  "confidence": null
+ },
+ {
+  "text": " no",
+  "startMs": 38560,
+  "endMs": 38670,
+  "timestampMs": 38560,
+  "confidence": null
+ },
+ {
+  "text": " se",
+  "startMs": 38670,
+  "endMs": 38800,
+  "timestampMs": 38670,
+  "confidence": null
+ },
+ {
+  "text": " debe",
+  "startMs": 38800,
+  "endMs": 39050,
+  "timestampMs": 38800,
+  "confidence": null
+ },
+ {
+  "text": " apagar,",
+  "startMs": 39050,
+  "endMs": 39570,
+  "timestampMs": 39050,
+  "confidence": null
+ },
+ {
+  "text": " entonces",
+  "startMs": 39570,
+  "endMs": 39940,
+  "timestampMs": 39570,
+  "confidence": null
+ },
+ {
+  "text": " hay",
+  "startMs": 39940,
+  "endMs": 40080,
+  "timestampMs": 39940,
+  "confidence": null
+ },
+ {
+  "text": " formas",
+  "startMs": 40080,
+  "endMs": 40360,
+  "timestampMs": 40080,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 40360,
+  "endMs": 40480,
+  "timestampMs": 40360,
+  "confidence": null
+ },
+ {
+  "text": " dejarlo",
+  "startMs": 40530,
+  "endMs": 40760,
+  "timestampMs": 40530,
+  "confidence": null
+ },
+ {
+  "text": " prendido",
+  "startMs": 40850,
+  "endMs": 41160,
+  "timestampMs": 40850,
+  "confidence": null
+ },
+ {
+  "text": " Al",
+  "startMs": 41220,
+  "endMs": 41270,
+  "timestampMs": 41220,
+  "confidence": null
+ },
+ {
+  "text": " menos",
+  "startMs": 41270,
+  "endMs": 41530,
+  "timestampMs": 41270,
+  "confidence": null
+ },
+ {
+  "text": " en",
+  "startMs": 41610,
+  "endMs": 41660,
+  "timestampMs": 41610,
+  "confidence": null
+ },
+ {
+  "text": " mi",
+  "startMs": 41660,
+  "endMs": 41780,
+  "timestampMs": 41660,
+  "confidence": null
+ },
+ {
+  "text": " Mac",
+  "startMs": 41780,
+  "endMs": 41930,
+  "timestampMs": 41780,
+  "confidence": null
+ },
+ {
+  "text": " tengo",
+  "startMs": 41930,
+  "endMs": 42210,
+  "timestampMs": 41930,
+  "confidence": null
+ },
+ {
+  "text": " esta",
+  "startMs": 42210,
+  "endMs": 42430,
+  "timestampMs": 42210,
+  "confidence": null
+ },
+ {
+  "text": " herramienta,",
+  "startMs": 42430,
+  "endMs": 43080,
+  "timestampMs": 42430,
+  "confidence": null
+ },
+ {
+  "text": " se",
+  "startMs": 43190,
+  "endMs": 43260,
+  "timestampMs": 43190,
+  "confidence": null
+ },
+ {
+  "text": " llama",
+  "startMs": 43260,
+  "endMs": 43540,
+  "timestampMs": 43260,
+  "confidence": null
+ },
+ {
+  "text": " Vorssaint,",
+  "startMs": 43540,
+  "endMs": 44160,
+  "timestampMs": 43540,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 44160,
+  "endMs": 44340,
+  "timestampMs": 44160,
+  "confidence": null
+ },
+ {
+  "text": " es",
+  "startMs": 44340,
+  "endMs": 44460,
+  "timestampMs": 44340,
+  "confidence": null
+ },
+ {
+  "text": " bastante",
+  "startMs": 44460,
+  "endMs": 44940,
+  "timestampMs": 44460,
+  "confidence": null
+ },
+ {
+  "text": " genial",
+  "startMs": 44940,
+  "endMs": 45320,
+  "timestampMs": 44940,
+  "confidence": null
+ },
+ {
+  "text": " porque",
+  "startMs": 45380,
+  "endMs": 45540,
+  "timestampMs": 45380,
+  "confidence": null
+ },
+ {
+  "text": " simplemente",
+  "startMs": 45630,
+  "endMs": 46010,
+  "timestampMs": 45630,
+  "confidence": null
+ },
+ {
+  "text": " le",
+  "startMs": 46010,
+  "endMs": 46090,
+  "timestampMs": 46010,
+  "confidence": null
+ },
+ {
+  "text": " doy",
+  "startMs": 46090,
+  "endMs": 46210,
+  "timestampMs": 46090,
+  "confidence": null
+ },
+ {
+  "text": " clic",
+  "startMs": 46300,
+  "endMs": 46420,
+  "timestampMs": 46300,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 46470,
+  "endMs": 46520,
+  "timestampMs": 46470,
+  "confidence": null
+ },
+ {
+  "text": " ya",
+  "startMs": 46520,
+  "endMs": 46690,
+  "timestampMs": 46520,
+  "confidence": null
+ },
+ {
+  "text": " mi",
+  "startMs": 46690,
+  "endMs": 46860,
+  "timestampMs": 46690,
+  "confidence": null
+ },
+ {
+  "text": " PC",
+  "startMs": 46860,
+  "endMs": 47020,
+  "timestampMs": 46860,
+  "confidence": null
+ },
+ {
+  "text": " no",
+  "startMs": 47020,
+  "endMs": 47200,
+  "timestampMs": 47020,
+  "confidence": null
+ },
+ {
+  "text": " se",
+  "startMs": 47200,
+  "endMs": 47360,
+  "timestampMs": 47200,
+  "confidence": null
+ },
+ {
+  "text": " apaga,",
+  "startMs": 47370,
+  "endMs": 47930,
+  "timestampMs": 47370,
+  "confidence": null
+ },
+ {
+  "text": " lo",
+  "startMs": 47930,
+  "endMs": 48050,
+  "timestampMs": 47930,
+  "confidence": null
+ },
+ {
+  "text": " dejo",
+  "startMs": 48060,
+  "endMs": 48200,
+  "timestampMs": 48060,
+  "confidence": null
+ },
+ {
+  "text": " trabajando",
+  "startMs": 48200,
+  "endMs": 48660,
+  "timestampMs": 48200,
+  "confidence": null
+ },
+ {
+  "text": " ocho",
+  "startMs": 48660,
+  "endMs": 48840,
+  "timestampMs": 48660,
+  "confidence": null
+ },
+ {
+  "text": " horas",
+  "startMs": 48930,
+  "endMs": 49160,
+  "timestampMs": 48930,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 49160,
+  "endMs": 49250,
+  "timestampMs": 49160,
+  "confidence": null
+ },
+ {
+  "text": " listo",
+  "startMs": 49250,
+  "endMs": 49560,
+  "timestampMs": 49250,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 49610,
+  "endMs": 49620,
+  "timestampMs": 49610,
+  "confidence": null
+ },
+ {
+  "text": " finalmente,",
+  "startMs": 49620,
+  "endMs": 50230,
+  "timestampMs": 49620,
+  "confidence": null
+ },
+ {
+  "text": " tener",
+  "startMs": 50230,
+  "endMs": 50430,
+  "timestampMs": 50230,
+  "confidence": null
+ },
+ {
+  "text": " definido",
+  "startMs": 50540,
+  "endMs": 50900,
+  "timestampMs": 50540,
+  "confidence": null
+ },
+ {
+  "text": " un",
+  "startMs": 50900,
+  "endMs": 51000,
+  "timestampMs": 50900,
+  "confidence": null
+ },
+ {
+  "text": " plan",
+  "startMs": 51000,
+  "endMs": 51210,
+  "timestampMs": 51000,
+  "confidence": null
+ },
+ {
+  "text": " estructurado",
+  "startMs": 51210,
+  "endMs": 51740,
+  "timestampMs": 51210,
+  "confidence": null
+ },
+ {
+  "text": " Primero,",
+  "startMs": 51940,
+  "endMs": 52250,
+  "timestampMs": 51940,
+  "confidence": null
+ },
+ {
+  "text": " antes",
+  "startMs": 52330,
+  "endMs": 52450,
+  "timestampMs": 52330,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 52500,
+  "endMs": 52560,
+  "timestampMs": 52500,
+  "confidence": null
+ },
+ {
+  "text": " hacer",
+  "startMs": 52560,
+  "endMs": 52750,
+  "timestampMs": 52560,
+  "confidence": null
+ },
+ {
+  "text": " todo",
+  "startMs": 52850,
+  "endMs": 52950,
+  "timestampMs": 52850,
+  "confidence": null
+ },
+ {
+  "text": " lo",
+  "startMs": 52950,
+  "endMs": 53030,
+  "timestampMs": 52950,
+  "confidence": null
+ },
+ {
+  "text": " demás,",
+  "startMs": 53030,
+  "endMs": 53330,
+  "timestampMs": 53030,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 53330,
+  "endMs": 53370,
+  "timestampMs": 53330,
+  "confidence": null
+ },
+ {
+  "text": " seguramente",
+  "startMs": 53370,
+  "endMs": 53800,
+  "timestampMs": 53370,
+  "confidence": null
+ },
+ {
+  "text": " ya",
+  "startMs": 53910,
+  "endMs": 53930,
+  "timestampMs": 53910,
+  "confidence": null
+ },
+ {
+  "text": " has",
+  "startMs": 53930,
+  "endMs": 54060,
+  "timestampMs": 53930,
+  "confidence": null
+ },
+ {
+  "text": " escuchado",
+  "startMs": 54060,
+  "endMs": 54450,
+  "timestampMs": 54060,
+  "confidence": null
+ },
+ {
+  "text": " esto",
+  "startMs": 54450,
+  "endMs": 54570,
+  "timestampMs": 54450,
+  "confidence": null
+ },
+ {
+  "text": " muchas",
+  "startMs": 54620,
+  "endMs": 54880,
+  "timestampMs": 54620,
+  "confidence": null
+ },
+ {
+  "text": " veces,",
+  "startMs": 54880,
+  "endMs": 55330,
+  "timestampMs": 54880,
+  "confidence": null
+ },
+ {
+  "text": " tienes",
+  "startMs": 55330,
+  "endMs": 55600,
+  "timestampMs": 55330,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 55600,
+  "endMs": 55720,
+  "timestampMs": 55600,
+  "confidence": null
+ },
+ {
+  "text": " planificar",
+  "startMs": 55810,
+  "endMs": 56200,
+  "timestampMs": 55810,
+  "confidence": null
+ },
+ {
+  "text": " paso",
+  "startMs": 56200,
+  "endMs": 56620,
+  "timestampMs": 56200,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 56620,
+  "endMs": 56740,
+  "timestampMs": 56620,
+  "confidence": null
+ },
+ {
+  "text": " paso",
+  "startMs": 56740,
+  "endMs": 57150,
+  "timestampMs": 56740,
+  "confidence": null
+ },
+ {
+  "text": " lo",
+  "startMs": 57220,
+  "endMs": 57250,
+  "timestampMs": 57220,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 57250,
+  "endMs": 57380,
+  "timestampMs": 57250,
+  "confidence": null
+ },
+ {
+  "text": " tiene",
+  "startMs": 57380,
+  "endMs": 57530,
+  "timestampMs": 57380,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 57610,
+  "endMs": 57730,
+  "timestampMs": 57610,
+  "confidence": null
+ },
+ {
+  "text": " hacer",
+  "startMs": 57780,
+  "endMs": 57970,
+  "timestampMs": 57780,
+  "confidence": null
+ },
+ {
+  "text": " tu",
+  "startMs": 57970,
+  "endMs": 58090,
+  "timestampMs": 57970,
+  "confidence": null
+ },
+ {
+  "text": " agente",
+  "startMs": 58140,
+  "endMs": 58360,
+  "timestampMs": 58140,
+  "confidence": null
+ },
+ {
+  "text": " o",
+  "startMs": 58360,
+  "endMs": 58430,
+  "timestampMs": 58360,
+  "confidence": null
+ },
+ {
+  "text": " el",
+  "startMs": 58430,
+  "endMs": 58580,
+  "timestampMs": 58430,
+  "confidence": null
+ },
+ {
+  "text": " objetivo",
+  "startMs": 58580,
+  "endMs": 59080,
+  "timestampMs": 58580,
+  "confidence": null
+ },
+ {
+  "text": " final",
+  "startMs": 59190,
+  "endMs": 59560,
+  "timestampMs": 59190,
+  "confidence": null
+ },
+ {
+  "text": " Si",
+  "startMs": 59620,
+  "endMs": 59660,
+  "timestampMs": 59620,
+  "confidence": null
+ },
+ {
+  "text": " tienes",
+  "startMs": 59660,
+  "endMs": 59930,
+  "timestampMs": 59660,
+  "confidence": null
+ },
+ {
+  "text": " muy",
+  "startMs": 60010,
+  "endMs": 60130,
+  "timestampMs": 60010,
+  "confidence": null
+ },
+ {
+  "text": " definido",
+  "startMs": 60180,
+  "endMs": 60430,
+  "timestampMs": 60180,
+  "confidence": null
+ },
+ {
+  "text": " eso,",
+  "startMs": 60540,
+  "endMs": 60760,
+  "timestampMs": 60540,
+  "confidence": null
+ },
+ {
+  "text": " básicamente",
+  "startMs": 60760,
+  "endMs": 61260,
+  "timestampMs": 60760,
+  "confidence": null
+ },
+ {
+  "text": " el",
+  "startMs": 61310,
+  "endMs": 61410,
+  "timestampMs": 61310,
+  "confidence": null
+ },
+ {
+  "text": " trabajo",
+  "startMs": 61410,
+  "endMs": 61740,
+  "timestampMs": 61410,
+  "confidence": null
+ },
+ {
+  "text": " ya",
+  "startMs": 61860,
+  "endMs": 61890,
+  "timestampMs": 61860,
+  "confidence": null
+ },
+ {
+  "text": " está",
+  "startMs": 61890,
+  "endMs": 62060,
+  "timestampMs": 61890,
+  "confidence": null
+ },
+ {
+  "text": " hecho",
+  "startMs": 62060,
+  "endMs": 62360,
+  "timestampMs": 62060,
+  "confidence": null
+ },
+ {
+  "text": " Primero,",
+  "startMs": 62420,
+  "endMs": 62880,
+  "timestampMs": 62420,
+  "confidence": null
+ },
+ {
+  "text": " planificas",
+  "startMs": 62980,
+  "endMs": 63630,
+  "timestampMs": 62980,
+  "confidence": null
+ },
+ {
+  "text": " el",
+  "startMs": 63630,
+  "endMs": 63760,
+  "timestampMs": 63630,
+  "confidence": null
+ },
+ {
+  "text": " paso",
+  "startMs": 63760,
+  "endMs": 64030,
+  "timestampMs": 63760,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 64030,
+  "endMs": 64150,
+  "timestampMs": 64030,
+  "confidence": null
+ },
+ {
+  "text": " paso",
+  "startMs": 64160,
+  "endMs": 64440,
+  "timestampMs": 64160,
+  "confidence": null
+ },
+ {
+  "text": " todos",
+  "startMs": 64440,
+  "endMs": 64770,
+  "timestampMs": 64440,
+  "confidence": null
+ },
+ {
+  "text": " los",
+  "startMs": 64770,
+  "endMs": 64970,
+  "timestampMs": 64770,
+  "confidence": null
+ },
+ {
+  "text": " indicadores",
+  "startMs": 64970,
+  "endMs": 65690,
+  "timestampMs": 64970,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 65690,
+  "endMs": 65880,
+  "timestampMs": 65690,
+  "confidence": null
+ },
+ {
+  "text": " miden",
+  "startMs": 65970,
+  "endMs": 66200,
+  "timestampMs": 65970,
+  "confidence": null
+ },
+ {
+  "text": " el",
+  "startMs": 66290,
+  "endMs": 66350,
+  "timestampMs": 66290,
+  "confidence": null
+ },
+ {
+  "text": " éxito",
+  "startMs": 66350,
+  "endMs": 66600,
+  "timestampMs": 66350,
+  "confidence": null
+ },
+ {
+  "text": " del",
+  "startMs": 66670,
+  "endMs": 66860,
+  "timestampMs": 66670,
+  "confidence": null
+ },
+ {
+  "text": " proyecto",
+  "startMs": 66860,
+  "endMs": 67440,
+  "timestampMs": 66860,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 67500,
+  "endMs": 67500,
+  "timestampMs": 67500,
+  "confidence": null
+ },
+ {
+  "text": " finalmente",
+  "startMs": 67500,
+  "endMs": 68170,
+  "timestampMs": 67500,
+  "confidence": null
+ },
+ {
+  "text": " le",
+  "startMs": 68170,
+  "endMs": 68300,
+  "timestampMs": 68170,
+  "confidence": null
+ },
+ {
+  "text": " das",
+  "startMs": 68300,
+  "endMs": 68500,
+  "timestampMs": 68300,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 68500,
+  "endMs": 68580,
+  "timestampMs": 68500,
+  "confidence": null
+ },
+ {
+  "text": " correr",
+  "startMs": 68580,
+  "endMs": 68960,
+  "timestampMs": 68580,
+  "confidence": null
+ },
+ {
+  "text": " workflow",
+  "startMs": 68960,
+  "endMs": 69520,
+  "timestampMs": 68960,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 69520,
+  "endMs": 69580,
+  "timestampMs": 69520,
+  "confidence": null
+ },
+ {
+  "text": " listo,",
+  "startMs": 69580,
+  "endMs": 70020,
+  "timestampMs": 69580,
+  "confidence": null
+ },
+ {
+  "text": " te",
+  "startMs": 70020,
+  "endMs": 70140,
+  "timestampMs": 70020,
+  "confidence": null
+ },
+ {
+  "text": " olvidas",
+  "startMs": 70180,
+  "endMs": 70470,
+  "timestampMs": 70180,
+  "confidence": null
+ },
+ {
+  "text": " ocho",
+  "startMs": 70470,
+  "endMs": 70670,
+  "timestampMs": 70470,
+  "confidence": null
+ },
+ {
+  "text": " horas",
+  "startMs": 70670,
+  "endMs": 70940,
+  "timestampMs": 70670,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 70940,
+  "endMs": 71060,
+  "timestampMs": 70940,
+  "confidence": null
+ },
+ {
+  "text": " listo,",
+  "startMs": 71060,
+  "endMs": 71600,
+  "timestampMs": 71060,
+  "confidence": null
+ },
+ {
+  "text": " tu",
+  "startMs": 71600,
+  "endMs": 71720,
+  "timestampMs": 71600,
+  "confidence": null
+ },
+ {
+  "text": " trabajo",
+  "startMs": 71750,
+  "endMs": 72150,
+  "timestampMs": 71750,
+  "confidence": null
+ },
+ {
+  "text": " está",
+  "startMs": 72150,
+  "endMs": 72320,
+  "timestampMs": 72150,
+  "confidence": null
+ },
+ {
+  "text": " terminado",
+  "startMs": 72460,
+  "endMs": 72900,
+  "timestampMs": 72460,
+  "confidence": null
+ },
+ {
+  "text": " Tú",
+  "startMs": 73020,
+  "endMs": 73050,
+  "timestampMs": 73020,
+  "confidence": null
+ },
+ {
+  "text": " solo",
+  "startMs": 73050,
+  "endMs": 73180,
+  "timestampMs": 73050,
+  "confidence": null
+ },
+ {
+  "text": " tienes",
+  "startMs": 73270,
+  "endMs": 73480,
+  "timestampMs": 73270,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 73580,
+  "endMs": 73630,
+  "timestampMs": 73580,
+  "confidence": null
+ },
+ {
+  "text": " revisar",
+  "startMs": 73630,
+  "endMs": 73940,
+  "timestampMs": 73630,
+  "confidence": null
+ },
+ {
+  "text": " al",
+  "startMs": 73940,
+  "endMs": 74030,
+  "timestampMs": 73940,
+  "confidence": null
+ },
+ {
+  "text": " final,",
+  "startMs": 74030,
+  "endMs": 74370,
+  "timestampMs": 74030,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 74370,
+  "endMs": 74410,
+  "timestampMs": 74370,
+  "confidence": null
+ },
+ {
+  "text": " así",
+  "startMs": 74410,
+  "endMs": 74540,
+  "timestampMs": 74410,
+  "confidence": null
+ },
+ {
+  "text": " trabajo",
+  "startMs": 74540,
+  "endMs": 74850,
+  "timestampMs": 74540,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 74850,
+  "endMs": 74970,
+  "timestampMs": 74850,
+  "confidence": null
+ },
+ {
+  "text": " esta",
+  "startMs": 74990,
+  "endMs": 75120,
+  "timestampMs": 74990,
+  "confidence": null
+ },
+ {
+  "text": " manera",
+  "startMs": 75120,
+  "endMs": 75390,
+  "timestampMs": 75120,
+  "confidence": null
+ },
+ {
+  "text": " con",
+  "startMs": 75390,
+  "endMs": 75520,
+  "timestampMs": 75390,
+  "confidence": null
+ },
+ {
+  "text": " workflows,",
+  "startMs": 75520,
+  "endMs": 76010,
+  "timestampMs": 75520,
+  "confidence": null
+ },
+ {
+  "text": " espero",
+  "startMs": 76010,
+  "endMs": 76180,
+  "timestampMs": 76010,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 76180,
+  "endMs": 76270,
+  "timestampMs": 76180,
+  "confidence": null
+ },
+ {
+  "text": " tú",
+  "startMs": 76270,
+  "endMs": 76360,
+  "timestampMs": 76270,
+  "confidence": null
+ },
+ {
+  "text": " también",
+  "startMs": 76360,
+  "endMs": 76480,
+  "timestampMs": 76360,
+  "confidence": null
+ }
+]
