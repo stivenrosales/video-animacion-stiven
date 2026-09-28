@@ -15,6 +15,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "remotion": "4.0.529",
+    "roughjs": "^4.6.6",
     "simple-icons": "^16.32.0"
   },
   "devDependencies": {
