@@ -14,7 +14,9 @@ Finished videos:
 | Workflows reel (talking head) | `videos/2026-09-27-workflows` | `WorkflowsReel` | Claude-UI kit (menus, pastel tiles, input box, cursor), voice-only "off" mode, event flyer, sheep stickers |
 | MCP vs WhatsApp reel (talking head) | `videos/2026-09-27-mcp-vs-whatsapp` | `McpReel` | Ali Abdaal style (soft serif + gold keywords, handwriting, stickers, light caption chip), chunked render |
 
-For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/skills/talking-head-reel/`): it holds the full pipeline and the proven layout numbers.
+For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/skills/talking-head-reel/`): it holds the full pipeline and the proven layout numbers. The public copy lives in `skills/talking-head-reel/`; after changing the global skill, sync it with `rsync -a --exclude .DS_Store ~/.claude/skills/talking-head-reel/ skills/talking-head-reel/`.
+
+The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `python3 docs/art/gallery.py` (style mockups from `finals/`).
 
 ## Stack
 
