@@ -39,14 +39,15 @@ The whole workflow ships as a **Claude Code skill**, so you describe the reel an
 
 ## 🎨 Styles
 
-Four visual languages, each built from real references (fonts, hex colors and positions measured from the source, never approximated).
+Five visual languages, each built from real references (fonts, hex colors and positions measured from the source, never approximated).
 
 <table>
 <tr>
-<td align="center" width="25%"><img src="docs/assets/styles/claude-ui.webp" width="200" alt="Claude-UI style: a menu card with Claude, ChatGPT and OpenCode above a camera card"></td>
-<td align="center" width="25%"><img src="docs/assets/styles/ali-abdaal.webp" width="200" alt="Ali Abdaal style: soft serif headline with a gold italic keyword over the talking head"></td>
-<td align="center" width="25%"><img src="docs/assets/styles/sketch.webp" width="200" alt="Sketch style: hand-drawn silhouettes in front of a glowing door"></td>
-<td align="center" width="25%"><img src="docs/assets/styles/liquid-glass.webp" width="200" alt="Liquid Glass style: refractive glass notifications over the talking head"></td>
+<td align="center" width="20%"><img src="docs/assets/styles/claude-ui.webp" width="200" alt="Claude-UI style: a menu card with Claude, ChatGPT and OpenCode above a camera card"></td>
+<td align="center" width="20%"><img src="docs/assets/styles/ali-abdaal.webp" width="200" alt="Ali Abdaal style: soft serif headline with a gold italic keyword over the talking head"></td>
+<td align="center" width="20%"><img src="docs/assets/styles/ali-sketch.webp" width="200" alt="Ali × Sketch style: white icon boxes joined by hand-drawn arrows above a lowered camera"></td>
+<td align="center" width="20%"><img src="docs/assets/styles/sketch.webp" width="200" alt="Sketch style: hand-drawn silhouettes in front of a glowing door"></td>
+<td align="center" width="20%"><img src="docs/assets/styles/liquid-glass.webp" width="200" alt="Liquid Glass style: refractive glass notifications over the talking head"></td>
 </tr>
 <tr>
 <td valign="top">
@@ -61,6 +62,13 @@ Four visual languages, each built from real references (fonts, hex colors and po
 **Ali Abdaal**<br>
 <sub>Soft serif headlines that light up word by word, gold italic keywords, handwritten notes, logo stickers and a light caption chip.</sub><br><br>
 <a href="skills/talking-head-reel/assets/styles/ali-abdaal"><code>styles/ali-abdaal</code></a>
+
+</td>
+<td valign="top">
+
+**Ali × Sketch** <sup>new</sup><br>
+<sub>Ali's boxes, cards and glossy tiles, Excalidraw's hand strokes (rough.js + Excalifont), and a frameless camera drop that turns the sky into a stage for diagrams.</sub><br><br>
+<a href="skills/talking-head-reel/assets/styles/ali-sketch"><code>styles/ali-sketch</code></a>
 
 </td>
 <td valign="top">
@@ -88,6 +96,7 @@ Four visual languages, each built from real references (fonts, hex colors and po
 |-------|------|---------|
 | Claude-UI | Source Serif 4 · Inter · JetBrains Mono | ![](https://img.shields.io/badge/%23FAF9F5-FAF9F5?style=flat-square) ![](https://img.shields.io/badge/%23141413-141413?style=flat-square) ![](https://img.shields.io/badge/%23C15F3C-C15F3C?style=flat-square) ![](https://img.shields.io/badge/%23E4EEFA-E4EEFA?style=flat-square) ![](https://img.shields.io/badge/%23F9EBDD-F9EBDD?style=flat-square) ![](https://img.shields.io/badge/%23EEEAF8-EEEAF8?style=flat-square) ![](https://img.shields.io/badge/%23E6F2E8-E6F2E8?style=flat-square) |
 | Ali Abdaal | Fraunces SOFT 100 (for Recoleta) · Poppins · Gaegu · Oswald | ![](https://img.shields.io/badge/%23F9F6F3-F9F6F3?style=flat-square) ![](https://img.shields.io/badge/%231B1624-1B1624?style=flat-square) ![](https://img.shields.io/badge/%23F7C95B-F7C95B?style=flat-square) ![](https://img.shields.io/badge/%235DCDF1-5DCDF1?style=flat-square) ![](https://img.shields.io/badge/%23FD976D-FD976D?style=flat-square) ![](https://img.shields.io/badge/%238EF0A8-8EF0A8?style=flat-square) ![](https://img.shields.io/badge/%23C9B6FF-C9B6FF?style=flat-square) |
+| Ali × Sketch | Fraunces SOFT 100 · Poppins · Excalifont · Oswald | ![](https://img.shields.io/badge/%23FFFFFF-FFFFFF?style=flat-square) ![](https://img.shields.io/badge/%23F7C95B-F7C95B?style=flat-square) ![](https://img.shields.io/badge/%23A5D8FF-A5D8FF?style=flat-square) ![](https://img.shields.io/badge/%23FDD46B-FDD46B?style=flat-square) ![](https://img.shields.io/badge/%238EF0A8-8EF0A8?style=flat-square) ![](https://img.shields.io/badge/%23FD976D-FD976D?style=flat-square) ![](https://img.shields.io/badge/%231E1E1E-1E1E1E?style=flat-square) |
 | Sketch | Kalam | ![](https://img.shields.io/badge/%23ECE8DF-ECE8DF?style=flat-square) ![](https://img.shields.io/badge/%232B1B1E-2B1B1E?style=flat-square) ![](https://img.shields.io/badge/%230D0B24-0D0B24?style=flat-square) ![](https://img.shields.io/badge/%23D9774E-D9774E?style=flat-square) ![](https://img.shields.io/badge/%23FFD46B-FFD46B?style=flat-square) ![](https://img.shields.io/badge/%236E3F8F-6E3F8F?style=flat-square) ![](https://img.shields.io/badge/%23F06FA8-F06FA8?style=flat-square) |
 | Liquid Glass | SF Pro (system stack) | ![](https://img.shields.io/badge/tint-0%20clear%20%E2%86%92%201%20tinted-9CC3E6?style=flat-square) ![](https://img.shields.io/badge/default-.45-5D8FC7?style=flat-square) ![](https://img.shields.io/badge/saturate-1.18-0A6EFF?style=flat-square) |
 
@@ -193,7 +202,7 @@ Then just talk to Claude Code:
 | [`references/pipeline.md`](skills/talking-head-reel/references/pipeline.md) | Commands, layout numbers, render benchmarks, gotchas |
 | [`references/styles.md`](skills/talking-head-reel/references/styles.md) | How to study a reference, plus every style kit |
 | [`assets/template/`](skills/talking-head-reel/assets/template) | A working Remotion project with `cut.py`, `captions.py`, `voice.py`, `sfx_samples.py` |
-| [`assets/styles/`](skills/talking-head-reel/assets/styles) | Claude-UI, Ali Abdaal and Liquid Glass kits with their HTML style boards |
+| [`assets/styles/`](skills/talking-head-reel/assets/styles) | Claude-UI, Ali Abdaal, Ali × Sketch and Liquid Glass kits with their HTML style boards |
 
 **Guardrails it enforces**
 
@@ -216,6 +225,7 @@ Then just talk to Claude Code:
 | 2026-09-26 | [AI-Native SDLC playbook](videos/2026-09-26-sdlc-playbook) | `SdlcReel` | Claude-UI, cited source figures | 60 |
 | 2026-09-27 | [Agent workflows](videos/2026-09-27-workflows) | `WorkflowsReel` | Claude-UI kit, voice-only mode | 60 |
 | 2026-09-27 | [MCP vs WhatsApp](videos/2026-09-27-mcp-vs-whatsapp) | `McpReel` | Ali Abdaal | 60 |
+| 2026-09-28 | [Agents vs automations](videos/2026-09-28-fusion) | `FusionReel` | Ali × Sketch, two takes joined | 60 |
 
 ## 🗂️ Repo map
 
@@ -250,9 +260,10 @@ python3 docs/art/gallery.py   # phone mockups (needs the local finals/)
 
 - Code and the skill: [Apache-2.0](LICENSE).
 - Fraunces: [SIL Open Font License 1.1](videos/2026-09-27-mcp-vs-whatsapp/public/fonts/OFL.txt).
+- Excalifont (Excalidraw): [SIL Open Font License 1.1](videos/2026-09-28-fusion/public/fonts/OFL-Excalifont.txt). Hand strokes by [rough.js](https://github.com/rough-stuff/rough) (MIT).
 - Every sound effect was synthesized with code. No sample libraries.
 - Claude, Claude Code, Clawd and the Claude logo are trademarks of Anthropic. OpenAI, ChatGPT, Gemini, WhatsApp, Meta, Apple and other names belong to their owners and appear only to refer to their products. The pixel-art Clawd is fan art.
-- The Ali Abdaal and Liquid Glass kits are study recreations. They are not affiliated with or endorsed by their creators.
+- The Ali Abdaal, Ali × Sketch and Liquid Glass kits are study recreations. They are not affiliated with or endorsed by their creators.
 
 <div align="center">
 <br>

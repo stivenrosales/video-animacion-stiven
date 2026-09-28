@@ -13,6 +13,7 @@ Finished videos:
 | AI-Native SDLC playbook reel (talking head) | `videos/2026-09-26-sdlc-playbook` | `SdlcReel` | Article-sourced figures + FUENTE citations, lowered/zoomed-out camera windows, published |
 | Workflows reel (talking head) | `videos/2026-09-27-workflows` | `WorkflowsReel` | Claude-UI kit (menus, pastel tiles, input box, cursor), voice-only "off" mode, event flyer, sheep stickers |
 | MCP vs WhatsApp reel (talking head) | `videos/2026-09-27-mcp-vs-whatsapp` | `McpReel` | Ali Abdaal style (soft serif + gold keywords, handwriting, stickers, light caption chip), chunked render |
+| Agents vs automations reel (talking head, 2 takes) | `videos/2026-09-28-fusion` | `FusionReel` | Ali × Sketch: Ali elements + rough.js/Excalifont strokes + frameless camera drop, one macOS window |
 
 For talking-head reels, load the skill `talking-head-reel`: it holds the full pipeline and the proven layout numbers. Its single source of truth is `skills/talking-head-reel/` in this repo; `~/.claude/skills/talking-head-reel` is a symlink to it, so edit the repo copy and commit.
 
@@ -60,7 +61,9 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - An idea the speaker did not say but the video depends on (e.g. "en empresas") gets a headline beat, not a small note.
 - Remotion `--frames` is 0-based and must stay below duration×fps.
 - REFERENCE FIDELITY: when the user names a style or gives a reference (image, site, shorts, past reel), study it concretely (download it, contact-sheet it, extract real fonts/hex colors/positions) and show an HTML style board over his real frames BEFORE building. A generic approximation cost a full rebuild twice. See the skill's `references/styles.md`.
-- Style verdicts: Claude-UI kit = liked; Ali Abdaal = liked a lot; Liquid Glass = rejected.
+- Style verdicts: Claude-UI kit = liked; Ali Abdaal = liked a lot; Ali × Sketch = liked a lot (Ali elements, Excalidraw strokes only, Claude-UI camera drop without frame); Liquid Glass = rejected; Claude-UI graphics mixed with Ali = rejected.
+- Cut only silences by default. Never remove words he said (self-corrections, fillers) without asking.
+- A clip that ends mid-word means a missing take: ask for it and join the takes in `work/join/`.
 - Work inline for video editing; delegating the build to a subagent lost context (generic v1, idle waits, overwritten `work/audio.wav`).
 - Never overwrite `work/audio.wav`: it is `cut.py`'s silence source. Name other audio `voice-in.wav`, `mix.wav`, etc.
 - Keep the breath after the last word (`LAST_WORD_END` in `cut.py`) and fade the final audio 0.3 s. An edit that ends on the word feels chopped.
