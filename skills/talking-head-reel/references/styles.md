@@ -1,4 +1,4 @@
-# Styles and reference fidelity (v1.3)
+# Styles and reference fidelity (v1.4)
 
 The user judges a reel by how close it is to the reference he gave. "Roughly in that spirit" is a failure. This file holds the procedure and the style kits we already built.
 
@@ -52,6 +52,15 @@ Procedure:
   - Poppins, Gaegu (handwriting) and Oswald (caps) come from `@remotion/google-fonts`.
 - `ali.tsx` primitives: Beat, Appear, Head, Label, Hand, Doodle, Pill, Bubble, Tile, Big, Num, Sparkles, DashCard, Chip, QuestionCard and Cursor.
 - `Head` and `words()` look up word times in `captions.json` via `cue()`, which throws on a missing word. `"*IA*=inteligencia"` shows «IA» on the word he actually said.
+
+### Ali × Sketch (`ali-sketch/`) — liked a lot (fusion reel, 2026-09-28)
+The user asked to fuse Ali and Claude-UI. Two rounds settled it: Claude-UI *graphics* next to Ali looked "raro", and Excalidraw *boxes* lost to Ali's. What survived:
+- **Elements are Ali's**: white rounded boxes with a colored icon circle (`ABox`: 58 px dot `#A5D8FF`/`#FDD46B`/`#8EF0A8`, Poppins 600 28 px), white cards with a big icon or glossy tile (`ACard`), glossy gradient tiles, a gold chip ("✦ IA"), pills, the huge gold number, Fraunces headlines with gold keywords, the light caption chip.
+- **Strokes are Excalidraw's**: rough.js (the engine Excalidraw is built on) for arrows, loose ovals, underlines, strike-throughs and a double-pass zigzag scribble (`rough.tsx`: `rough.generator()` + `toPaths`, `pathLength=1` dash reveal, seeded so every frame matches, memoized by the shape's JSON). Handwritten notes use **Excalifont** (OFL; its Latin subset has á ñ ¡ ¿, unlike Gaegu which misses "á"), weight 400, in Ali's colors over the sky.
+- **Movement is Claude-UI's, without the frame**: `LOWER` windows (320 px) slide the full-screen camera down; a blurred copy fills the gap with a 220 px top feather, the scrim grows, the caption chip rides up to y 868 above the hair. Use it for the explanation beats (diagrams), keep full frame for hook, opinions and CTA.
+- **One macOS window per reel, max**: an Ali-styled window (white, radius 26, glow, traffic lights) with real-looking content (KPIs pop, bars grow) on the beat where the speaker names concrete software. More than one stops being special.
+- Rejected on the way: X strike (too plain), Claude-UI input boxes/menus next to Ali, Excalidraw hachure boxes.
+- Boards: `style-board.html` (final), `stroke-lab.html` (perfect-freehand vs rough.js vs p5.brush; the user picked rough.js). They expect frames `f*.jpg` from the video next to them (not committed).
 
 ### Liquid Glass (`liquid-glass/`) — REJECTED by the user ("interesante, pero no me gusta")
 Keep it as a technique only. Per element, a canvas displacement map is built from a rounded-rect SDF (inward normal × (1−t)^2.4 inside the bezel). It feeds an SVG filter (feImage + blur + three feDisplacementMap passes for mild dispersion + saturate 1.18) applied via `backdrop-filter:url(#id)`, which works in Chrome and Remotion. macOS 27 tuning: a dark edge line, a brighter rim, and a `--t` tint from clear to tinted. Gotchas:

@@ -135,3 +135,12 @@ Proven on a 97 s iPhone 4K HDR vertical clip → 79.5 s reel, and an 82.5 s clip
 - **Sites that return 403 to curl/WebFetch:** open them with Claude in Chrome and run `getComputedStyle` over headings and body text plus `document.fonts`.
 - **App UIs** (for example Vorssaint): take the logo from `apple-touch-icon`/`og:image`, the real UI copy from the site HTML, and screenshots from the GitHub README `docs/assets`.
 - **Brand logos missing from simple-icons** (Power BI): use the official SVG from Wikimedia Commons.
+
+## 10. Gotchas from the fusion reel (v1.4)
+
+- Only silences are cut by default. Removing words the speaker said (self-corrections, fillers) needs the user's OK; an unrequested cut of "desarrollar o… mejor dicho" was reported as eating the intro.
+- An iPhone clip can end mid-word. Check the RMS of the last 0.5 s: speech at the file's edge means a missing take, not a render bug. Concatenate takes with ffmpeg `concat` into `work/join/` and run `cut.py` there so `work/audio.wav` stays untouched.
+- `render-chunks.sh` only renders missing chunks: after a retime, delete `out/chunks` (and `out/bundle`).
+- `Head` text `"shown=spoken"` drops punctuation that sits on the spoken side: write `*IA?*=inteligencia`, not `*IA*=inteligencia?`.
+- zsh: `"$G[a]"` inside an ffmpeg filter string is an array subscript. Write `${G}[a]`.
+- A padded chunk bisect (`adelay=400,apad`) plus a 50 ms RMS scan finds cut edges to ±50 ms; a 50 ms-late cut left a "des-" residue that only the re-transcription exposed.

@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ali con trazos a mano</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,100;1,9..144,500..800,100&family=Poppins:wght@500;600;700&family=Oswald:wght@600&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family: "Excalifont"; src: url("excalifont.woff2") format("woff2"); }
+  :root {
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Poppins", system-ui, sans-serif;
+    --hand: "Excalifont", "Comic Sans MS", cursive;   /* Excalidraw's own font (OFL) */
+    --caps: "Oswald", "Arial Narrow", sans-serif;
+    --ink: #1e1e1e;                                  /* Excalidraw stroke black */
+    --gold: #F7C95B; --yellow: #FDD46B; --peach: #FD976D; --mint: #8EF0A8;
+    --scale: 0.42; --lower: 320px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #F9F6F3; color: #1B1624; font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  main { max-width: 1480px; margin: 0 auto; padding: 48px 24px 96px; }
+  header h1 { font-family: var(--serif); font-variation-settings: "SOFT" 100; font-weight: 600; font-size: 46px; letter-spacing: -1px; margin: 0; }
+  header h1 em { font-family: var(--hand); font-style: normal; font-weight: 400; color: #1971c2; }
+  header p { color: #76737C; font-size: 17px; margin: 10px 0 36px; max-width: 840px; line-height: 1.5; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(1080px * var(--scale)), 1fr)); gap: 44px 28px; justify-items: center; }
+  figure { margin: 0; width: calc(1080px * var(--scale)); }
+  figcaption b { display: block; font-family: var(--serif); font-variation-settings: "SOFT" 100; font-size: 21px; font-weight: 600; margin-top: 14px; }
+  figcaption span { display: block; color: #76737C; font-size: 14px; margin-top: 4px; line-height: 1.45; }
+  .tag { display: inline-block; font: 600 11px var(--sans); letter-spacing: .6px; padding: 3px 9px; border-radius: 99px; margin-right: 6px; vertical-align: 3px; background: #E9F7FC; color: #1D7EA3; }
+  .tag.low { background: #FFF3D1; color: #8A6500; }
+  .frame { width: calc(1080px * var(--scale)); height: calc(1920px * var(--scale)); border-radius: 30px; overflow: hidden; position: relative; box-shadow: 0 24px 60px rgba(27,22,36,.22), 0 0 0 1px rgba(27,22,36,.06); }
+  .screen { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform: scale(var(--scale)); transform-origin: 0 0; overflow: hidden; background: #6F9BC9; }
+
+  .cam { position: absolute; inset: 0; }
+  .cam img { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+  .cam .back { filter: blur(28px); transform: scale(1.04); }
+  .cam .front { animation: push 9s ease-in-out infinite alternate; }
+  .low .cam .front { top: var(--lower); -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 220px); mask-image: linear-gradient(to bottom, transparent 0, #000 220px); animation: drop 7s cubic-bezier(.16,1,.3,1) infinite; }
+  @keyframes push { from { transform: scale(1.0) } to { transform: scale(1.05) } }
+  @keyframes drop { 0% { transform: translateY(calc(-1 * var(--lower))) } 10%, 90% { transform: translateY(0) } 100% { transform: translateY(calc(-1 * var(--lower))) } }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,12,24,.60) 0%, rgba(14,12,24,.36) 26%, rgba(14,12,24,0) 44%); }
+  .low .scrim { background: linear-gradient(180deg, rgba(14,12,24,.62) 0%, rgba(14,12,24,.40) 34%, rgba(14,12,24,0) 52%); }
+  .abs { position: absolute; }
+  .center { left: 0; right: 0; text-align: center; }
+  .ink { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; pointer-events: none; overflow: visible; }
+  .ink.shadow { filter: drop-shadow(0 3px 6px rgba(0,0,0,.28)); }
+
+  .head { font-family: var(--serif); font-variation-settings: "SOFT" 100; font-weight: 650; color: #fff; letter-spacing: -1px; line-height: 1.12; text-shadow: 0 2px 14px rgba(0,0,0,.35); }
+  .head .k { color: var(--gold); font-style: italic; font-weight: 600; }
+  .label { font-family: var(--caps); font-weight: 600; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; font-size: 32px; }
+  .label b { color: #fff; font-weight: 600; }
+  .cap { position: absolute; left: 50%; top: 1462px; transform: translate(-50%, -50%); padding: 12px 28px 14px; border-radius: 16px; background: rgba(240,240,242,.95); box-shadow: 0 6px 18px rgba(0,0,0,.18); font-family: var(--sans); font-weight: 700; font-size: 44px; letter-spacing: -.4px; white-space: nowrap; color: #141414; }
+  .cap i { font-style: normal; color: #9A9AA0; }
+  .low .cap { top: 868px; }
+
+  /* Excalidraw text: on boxes it is ink, on the sky it is Ali-colored with a soft shadow */
+  .ex { font-family: var(--hand); white-space: nowrap; line-height: 1.1; }
+  .ex.box { color: var(--ink); text-align: center; }
+  .ex.sky { text-shadow: 0 2px 10px rgba(0,0,0,.4); }
+  [data-t] { opacity: 0; }
+
+  .pill { display: inline-flex; align-items: center; gap: 16px; padding: 18px 34px; border-radius: 26px; background: #fff; color: #111; font-family: var(--sans); font-weight: 700; font-size: 50px; letter-spacing: -1px; box-shadow: 0 0 0 1px rgba(0,0,0,.04), 0 0 40px rgba(255,255,255,.55), 0 10px 30px rgba(0,0,0,.25); }
+  .qcard { background: #DDF3F1; color: #1B1624; border-radius: 26px; padding: 28px 34px; font-family: var(--sans); font-weight: 500; font-size: 38px; line-height: 1.3; box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+  .bubble { display: inline-flex; align-items: flex-end; gap: 14px; }
+  .bubble .av { width: 70px; height: 70px; border-radius: 50%; flex: none; display: grid; place-items: center; box-shadow: 0 4px 12px rgba(0,0,0,.25); }
+  .bubble .tx { padding: 18px 26px; border-radius: 28px 28px 28px 8px; background: #fff; color: #111; font-family: var(--sans); font-weight: 600; font-size: 36px; box-shadow: 0 8px 24px rgba(0,0,0,.22); white-space: nowrap; }
+  .icon3d { position: absolute; border-radius: 34px; display: grid; place-items: center; box-shadow: inset 0 6px 10px rgba(255,255,255,.55), inset 0 -8px 14px rgba(0,0,0,.18), 0 16px 30px rgba(0,0,0,.28); animation: bob 4s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)) } 50% { transform: translateY(-14px) rotate(var(--r, 0deg)) } }
+  .abox { position: absolute; display: flex; align-items: center; gap: 14px; padding: 11px 22px 11px 11px; border-radius: 26px; background: #fff; color: #111; font: 600 28px var(--sans); letter-spacing: -.4px; white-space: nowrap;
+          box-shadow: 0 0 0 1px rgba(0,0,0,.04), 0 0 34px rgba(255,255,255,.45), 0 10px 26px rgba(0,0,0,.25); }
+  .abox .av, .acard .av { border-radius: 50%; display: grid; place-items: center; flex: none; box-shadow: inset 0 3px 6px rgba(255,255,255,.5), 0 3px 8px rgba(0,0,0,.18); }
+  .acard { position: absolute; background: #fff; border-radius: 34px; padding: 30px 26px; text-align: center; color: #111;
+           box-shadow: 0 0 0 1px rgba(0,0,0,.04), 0 0 40px rgba(255,255,255,.45), 0 14px 34px rgba(0,0,0,.28); }
+  .acard h3 { margin: 18px 0 4px; font: 700 38px var(--sans); letter-spacing: -.8px; }
+  .acard p { margin: 0; font: 500 27px var(--sans); color: #6E6B73; }
+  .gchip { position: absolute; padding: 6px 18px; border-radius: 14px; background: #FDD46B; color: #1B1624; font: 700 26px var(--sans); box-shadow: 0 6px 16px rgba(0,0,0,.25); }
+  /* macOS window, Ali-styled: white, rounded, soft glow, traffic lights */
+  .mac { position: absolute; background: #fff; border-radius: 26px; overflow: hidden; color: #1B1624; font-family: var(--sans);
+         box-shadow: 0 0 0 1px rgba(0,0,0,.05), 0 0 50px rgba(255,255,255,.45), 0 18px 44px rgba(0,0,0,.32); }
+  .mac .bar { height: 52px; display: flex; align-items: center; gap: 10px; padding: 0 20px; background: #F4F2F6; border-bottom: 1px solid #E7E4EA; }
+  .mac .bar i { width: 16px; height: 16px; border-radius: 50%; display: block; }
+  .mac .bar b { margin-left: 14px; font: 600 22px var(--sans); color: #6E6B73; }
+  .mac .kpis { display: flex; gap: 14px; padding: 18px 22px 6px; }
+  .mac .kpi { flex: 1; background: #F7F5F9; border-radius: 16px; padding: 10px 16px; }
+  .mac .kpi small { display: block; font: 500 18px var(--sans); color: #8A8791; }
+  .mac .kpi span { font: 700 30px var(--sans); letter-spacing: -.6px; }
+  .mac .chart { display: flex; align-items: flex-end; gap: 16px; height: 128px; padding: 8px 26px 20px; }
+  .mac .chart div { flex: 1; border-radius: 10px 10px 4px 4px; background: linear-gradient(180deg, #9FD8FF, #3B8BEB); transform-origin: bottom; }
+  .mac .chart div.hi { background: linear-gradient(180deg, #FFE08A, #F5A623); }
+  .big { font-family: var(--serif); font-variation-settings: "SOFT" 100; font-weight: 800; color: var(--gold); letter-spacing: -4px; line-height: 1; text-shadow: 0 6px 30px rgba(0,0,0,.30); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Ali con <em>trazos a mano</em></h1>
+    <p>La voz sigue siendo de Ali: titular serif con dorado, stickers y chip claro. Las cajas, tarjetas e íconos son de Ali: blancas, redondeadas, con brillo e íconos en círculos de color. De Excalidraw solo quedan los trazos: flechas, óvalos, tachones y notas a mano (rough.js + Excalifont), en los colores de Ali para leerse sobre el cielo.</p>
+  </header>
+  <div class="grid" id="grid"></div>
+</main>
+<script src="icons.js"></script>
+<script src="icons-extra.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<script>
+const I = window.ICONS;
+const LOOP = 7;
+const INK = "#1e1e1e";
+const PASTEL = { red: "#ffc9c9", green: "#b2f2bb", blue: "#a5d8ff", yellow: "#ffec99", violet: "#d0bfff", orange: "#ffd8a8" };
+const lucide = (n, s = 44, c = "currentColor", w = 2) =>
+  `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${I.lucide[n]}</svg>`;
+const brand = (n, s = 44, c) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24"><path d="${I[n].path}" fill="${c || "#" + I[n].hex}"/></svg>`;
+const msft = (s = 44) => `<svg width="${s}" height="${s}" viewBox="0 0 22 22"><rect width="10" height="10" fill="#F25022"/><rect x="12" width="10" height="10" fill="#7FBA00"/><rect y="12" width="10" height="10" fill="#00A4EF"/><rect x="12" y="12" width="10" height="10" fill="#FFB900"/></svg>`;
+const head = (text, size) => `<div class="head" style="font-size:${size}px">` + text.split(" ").map((w) => /^\*.*\*$/.test(w) ? `<span class="k">${w.replace(/\*/g, "")}</span>` : w).join(" ") + `</div>`;
+const cap = (on, off) => `<div class="cap">${on}${off ? ` <i>${off}</i>` : ""}</div>`;
+const cam = (f) => `<div class="cam"><img class="back" src="${f}"><img class="front" src="${f}"></div><div class="scrim"></div>`;
+// Excalidraw text: box label (ink) or sky note (colored). t = second it appears in the loop.
+const ex = (text, x, y, size, t, { color, sky = false, rot = 0, w } = {}) =>
+  `<div class="abs ex ${sky ? "sky" : "box"}" data-t="${t}" style="left:${x}px;top:${y}px;font-size:${size}px;${w ? `width:${w}px;` : ""}color:${color || (sky ? "#fff" : INK)};transform:rotate(${rot}deg)">${text}</div>`;
+
+// Ali elements: white rounded box with a colored icon circle, and a white card with a big icon.
+const abox = (icon, bg, label, x, y, t, w = 255) =>
+  `<div class="abox pop" data-t="${t}" style="left:${x}px;top:${y}px;width:${w}px"><div class="av" style="width:58px;height:58px;background:${bg}">${lucide(icon, 32, "#1B1624", 2.3)}</div>${label}</div>`;
+const acard = (iconHtml, title, sub, x, y, w, h, t) =>
+  `<div class="acard pop" data-t="${t}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px">${iconHtml}<h3>${title}</h3><p>${sub}</p></div>`;
+const glossy = (icon, grad, size, extra = "") =>
+  `<div style="width:${size}px;height:${size}px;border-radius:${size * 0.26}px;margin:0 auto;display:grid;place-items:center;background:${grad};box-shadow:inset 0 6px 10px rgba(255,255,255,.55),inset 0 -8px 14px rgba(0,0,0,.18),0 10px 22px rgba(0,0,0,.22);${extra}">${icon}</div>`;
+
+// ---------- sketch DSL: every shape is revealed like a pen, in order ----------
+// box(x,y,w,h,fill,t): white paper base + Excalidraw hachure fill + rough ink outline.
+// line/curve/arrow/ellipse for loose doodles in Ali colors.
+const S = {
+  box: (x, y, w, h, fill, t, o = {}) => ({ kind: "box", x, y, w, h, fill, t, o }),
+  curve: (pts, color, t, o = {}) => ({ kind: "curve", pts, color, t, o }),
+  arrow: (pts, color, t, o = {}) => ({ kind: "arrow", pts, color, t, o }),
+  ellipse: (cx, cy, w, h, color, t, o = {}) => ({ kind: "ellipse", cx, cy, w, h, color, t, o }),
+  bars: (x, y, w, h, t) => ({ kind: "bars", x, y, w, h, t }),
+  cylinder: (x, y, w, h, fill, t) => ({ kind: "cyl", x, y, w, h, fill, t }),
+  clock: (cx, cy, r, t) => ({ kind: "clock", cx, cy, r, t }),
+  chat: (x, y, w, h, t) => ({ kind: "chat", x, y, w, h, t }),
+};
+function renderSketch(svg, shapes, seedBase) {
+  const rc = rough.svg(svg);
+  const anim = [];
+  let seed = seedBase;
+  const add = (node, t, dur, fade = false) => {
+    svg.appendChild(node);
+    node.querySelectorAll("path").forEach((p) => {
+      const filled = p.getAttribute("fill") && p.getAttribute("fill") !== "none" && !p.getAttribute("stroke-width");
+      if (filled && fade) { anim.push({ p, t, dur, fade: true }); return; }
+      p.setAttribute("pathLength", "1"); p.setAttribute("stroke-dasharray", "1 1"); p.setAttribute("stroke-linecap", "round");
+      anim.push({ p, t, dur });
+    });
+  };
+  const ink = (w = 4) => ({ stroke: INK, strokeWidth: w, roughness: 1.3, bowing: 1.2, seed: seed++ });
+  for (const s of shapes) {
+    const o = s.o || {};
+    if (s.kind === "box") {
+      add(rc.rectangle(s.x, s.y, s.w, s.h, { fill: "#fff", fillStyle: "solid", stroke: "none", roughness: 1, seed: seed++ }), s.t, 0.2, true);
+      add(rc.rectangle(s.x, s.y, s.w, s.h, { fill: s.fill, fillStyle: "hachure", hachureGap: 12, hachureAngle: -41, fillWeight: 3, stroke: "none", roughness: 1.2, seed: seed++ }), s.t + 0.25, 0.5);
+      add(rc.rectangle(s.x, s.y, s.w, s.h, ink(o.w || 4.5)), s.t, 0.45);
+    } else if (s.kind === "curve") {
+      add(rc.curve(s.pts, { stroke: s.color, strokeWidth: o.w || 6, roughness: o.r ?? 1.4, bowing: 1.5, seed: seed++ }), s.t, o.dur || 0.45);
+    } else if (s.kind === "arrow") {
+      const [a, b] = s.pts.slice(-2);
+      const ang = Math.atan2(b[1] - a[1], b[0] - a[0]), L = o.head || 34;
+      const h1 = [b[0] - L * Math.cos(ang - 0.5), b[1] - L * Math.sin(ang - 0.5)], h2 = [b[0] - L * Math.cos(ang + 0.5), b[1] - L * Math.sin(ang + 0.5)];
+      const opts = () => ({ stroke: s.color, strokeWidth: o.w || 5.5, roughness: o.r ?? 1.2, bowing: 1.2, seed: seed++ });
+      add(s.pts.length > 2 ? rc.curve(s.pts, opts()) : rc.line(...s.pts[0], ...s.pts[1], opts()), s.t, o.dur || 0.35);
+      add(rc.linearPath([h1, b, h2], opts()), s.t + (o.dur || 0.35), 0.15);
+    } else if (s.kind === "ellipse") {
+      add(rc.ellipse(s.cx, s.cy, s.w, s.h, { stroke: s.color, strokeWidth: o.w || 6, roughness: 1.6, bowing: 2, seed: seed++ }), s.t, o.dur || 0.5);
+    } else if (s.kind === "bars") {
+      const n = 4, gap = 18, bw = (s.w - gap * (n + 1)) / n, hs = [0.4, 0.62, 0.5, 0.95];
+      hs.forEach((k, i) => {
+        const bh = s.h * k, bx = s.x + gap + i * (bw + gap), by = s.y + s.h - bh;
+        add(rc.rectangle(bx, by, bw, bh, { fill: i === 3 ? PASTEL.orange : PASTEL.blue, fillStyle: "hachure", hachureGap: 9, fillWeight: 2.5, stroke: INK, strokeWidth: 3.5, roughness: 1.2, seed: seed++ }), s.t + i * 0.12, 0.3);
+      });
+    } else if (s.kind === "cyl") {
+      const ry = s.h * 0.14;
+      add(rc.path(`M ${s.x} ${s.y + ry} L ${s.x} ${s.y + s.h - ry} A ${s.w / 2} ${ry} 0 0 0 ${s.x + s.w} ${s.y + s.h - ry} L ${s.x + s.w} ${s.y + ry}`, { fill: s.fill, fillStyle: "hachure", hachureGap: 12, fillWeight: 3, stroke: INK, strokeWidth: 4.5, roughness: 1.2, seed: seed++ }), s.t, 0.5);
+      add(rc.ellipse(s.x + s.w / 2, s.y + ry, s.w, ry * 2, { fill: "#fff", fillStyle: "solid", ...ink(4.5) }), s.t, 0.3);
+      add(rc.path(`M ${s.x} ${s.y + s.h * 0.45} A ${s.w / 2} ${ry} 0 0 0 ${s.x + s.w} ${s.y + s.h * 0.45}`, ink(3.5)), s.t + 0.3, 0.3);
+    } else if (s.kind === "clock") {
+      add(rc.circle(s.cx, s.cy, s.r * 2, { fill: PASTEL.yellow, fillStyle: "hachure", hachureGap: 10, fillWeight: 2.5, ...ink(4.5) }), s.t, 0.4);
+      add(rc.linearPath([[s.cx, s.cy - s.r * 0.62], [s.cx, s.cy], [s.cx + s.r * 0.45, s.cy + s.r * 0.2]], ink(5)), s.t + 0.4, 0.25);
+    } else if (s.kind === "chat") {
+      const { x, y, w, h } = s, r = 22;
+      const d = `M ${x + r} ${y} L ${x + w - r} ${y} Q ${x + w} ${y} ${x + w} ${y + r} L ${x + w} ${y + h - r} Q ${x + w} ${y + h} ${x + w - r} ${y + h} L ${x + 44} ${y + h} L ${x + 14} ${y + h + 30} L ${x + 22} ${y + h} L ${x + r} ${y + h} Q ${x} ${y + h} ${x} ${y + h - r} L ${x} ${y + r} Q ${x} ${y} ${x + r} ${y} Z`;
+      add(rc.path(d, { fill: PASTEL.violet, fillStyle: "hachure", hachureGap: 10, fillWeight: 2.5, ...ink(4.5) }), s.t, 0.5);
+      [0.3, 0.5, 0.7].forEach((k, i) => add(rc.circle(x + w * k, y + h / 2, 12, { fill: INK, fillStyle: "solid", ...ink(2) }), s.t + 0.5 + i * 0.08, 0.1));
+    }
+  }
+  return anim;
+}
+
+// ---------- moments ----------
+const FRAMES = [
+  {
+    title: "1 · Lo que me pedían",
+    note: "7–14 s · Tarjeta aqua de Ali escribiéndose. La nota «el cliente» y su flecha ya son Excalidraw.",
+    html: cam("f10.jpg") +
+      `<div class="abs center label" style="top:262px">Lo que me <b>pedían:</b></div>` +
+      `<div class="abs qcard" style="left:120px;right:120px;top:322px">«Quiero que un agente coja este documento y lo registre aquí»</div>` +
+      ex("el cliente", 700, 525, 56, 0.9, { sky: true, color: "var(--mint)", rot: -4 }) +
+      cap("quiero que un", "agente"),
+    sketch: [S.arrow([[690, 560], [640, 555], [610, 500]], "#8EF0A8", 0.5)],
+  },
+  {
+    title: "2 · Entorno Microsoft",
+    note: "14–18 s · Sticker y fichas brillantes de Ali. «casi siempre» en Excalifont con subrayado a mano.",
+    html: cam("f22.jpg") +
+      `<div class="abs center" style="top:262px"><span class="pill">${msft(54)} Microsoft</span></div>` +
+      `<div class="icon3d" style="left:200px;top:418px;width:116px;height:116px;background:linear-gradient(160deg,#6FC3FF,#1F6FD1);--r:-8deg">${lucide("mail", 64, "#fff", 2.4)}</div>` +
+      `<div class="icon3d" style="left:482px;top:400px;width:116px;height:116px;background:linear-gradient(160deg,#7EE0A1,#1E8C4E);animation-delay:-1.3s">${lucide("sheet", 64, "#fff", 2.4)}</div>` +
+      `<div class="icon3d" style="left:764px;top:418px;width:116px;height:116px;background:linear-gradient(160deg,#FFE08A,#F0A020);--r:8deg;animation-delay:-2.6s">${lucide("folder-open", 64, "#fff", 2.4)}</div>` +
+      ex("casi siempre", 640, 556, 52, 0.4, { sky: true, color: "#d0bfff", rot: -3 }) +
+      cap("entorno de", "Microsoft"),
+    sketch: [S.curve([[640, 616], [760, 610], [900, 606]], "#d0bfff", 0.9, { w: 5 })],
+  },
+  {
+    title: "3 · Esto es una automatización",
+    note: "18–25 s · Tachón a mano sobre «Un agente de IA». Debajo, las cajitas de Ali con su ícono en círculo, unidas por flechas a mano: documento → lo mueve → lo registra.",
+    html: cam("f22.jpg") +
+      `<div class="abs center head" style="top:262px;font-size:56px;opacity:.6">Un agente de IA</div>` +
+      `<div class="abs center" style="top:334px">${head("Una *automatización*", 80)}</div>` +
+      abox("file-text", "#A5D8FF", "documento", 105, 462, 1.0, 255) +
+      abox("zap", "#FDD46B", "lo mueve", 430, 462, 1.5, 225) +
+      abox("database", "#8EF0A8", "lo registra", 725, 462, 2.0, 250) +
+      ex("ni siquiera necesita IA", 330, 566, 44, 2.7, { sky: true, color: "var(--peach)", rot: -2 }) +
+      cap("una", "automatización"),
+    sketch: [
+      S.curve([[330, 298], [540, 292], [752, 300]], "#FD976D", 0.2, { w: 7, r: 1 }),
+      S.arrow([[368, 502], [420, 502]], "#fff", 1.35, { head: 18, w: 5 }),
+      S.arrow([[663, 502], [715, 502]], "#fff", 1.85, { head: 18, w: 5 }),
+    ],
+  },
+  {
+    low: true, title: "4 · No todo es un agente",
+    note: "34–38 s · CÁMARA BAJA. Dos tarjetas blancas de Ali: conversacional (burbuja lila) vs programático (ficha brillante de rayo). Un óvalo a mano elige la segunda.",
+    html: cam("f40.jpg") +
+      `<div class="abs center" style="top:262px">${head("No todo es un *agente*", 76)}</div>` +
+      acard(`<div class="av" style="width:104px;height:104px;margin:0 auto;background:#C9B6FF">${lucide("message-circle", 54, "#1B1624", 2.2)}</div>`, "Conversacional", "le hablas por chat", 100, 405, 400, 270, 0.6) +
+      acard(glossy(lucide("zap", 60, "#fff", 2.4), "linear-gradient(160deg,#FFE08A,#F5A623)", 104), "Programático", "corre solo, a su hora", 580, 405, 400, 270, 1.1) +
+      ex("casi siempre es este", 470, 726, 50, 2.6, { sky: true, color: "var(--yellow)", rot: -2 }) +
+      cap("no es un agente", "tipo"),
+    sketch: [
+      S.ellipse(780, 540, 500, 350, "#FDD46B", 2.0, { w: 7 }),
+      S.arrow([[640, 744], [590, 744], [560, 704]], "#FDD46B", 2.9, { head: 24 }),
+    ],
+  },
+  {
+    low: true, title: "5 · Algo programático",
+    note: "38–47 s · CÁMARA BAJA. «9:00» gigante dorado y el flujo con cajitas de Ali. La del medio lleva el chip «✦ IA»: sí usa IA, pero no es un agente.",
+    html: cam("f45.jpg") +
+      `<div class="abs center label" style="top:262px">Todos los días a las</div>` +
+      `<div class="abs center big" style="top:302px;font-size:150px">9:00</div>` +
+      abox("mail", "#A5D8FF", "lee correos", 95, 520, 0.8, 255) +
+      abox("file-text", "#FDD46B", "extrae datos", 410, 520, 1.4, 270) +
+      abox("database", "#8EF0A8", "al sistema", 740, 520, 2.0, 245) +
+      `<div class="gchip pop" data-t="2.5" style="left:590px;top:474px">✦ IA</div>` +
+      ex("sí usa IA… pero no es un agente", 170, 650, 50, 3.0, { sky: true, color: "var(--mint)", rot: -1.5 }) +
+      cap("leer mis correos", "y"),
+    sketch: [
+      S.arrow([[357, 560], [403, 560]], "#fff", 1.15, { head: 17, w: 5 }),
+      S.arrow([[687, 560], [733, 560]], "#fff", 1.75, { head: 17, w: 5 }),
+    ],
+  },
+  {
+    title: "6 · No todo entra por un chat",
+    note: "50–54 s · Sticker de Claude. La burbuja de chat se tacha con un garabato de doble pasada y un óvalo encierra «chat».",
+    html: cam("f52.jpg") +
+      `<div class="abs center" style="top:262px"><span class="pill" style="font-size:46px">${brand("claude", 50, "#D97757")} Claude</span></div>` +
+      `<div class="abs" style="left:300px;top:400px"><div class="bubble"><div class="av" style="background:#FDD46B">${lucide("message-circle", 38, "#1B1624", 2.2)}</div><div class="tx">Escríbele al chat…</div></div></div>` +
+      `<div class="abs center" style="top:520px">${head("No todo entra por un *chat*", 64)}</div>` +
+      cap("por un chat", "o por"),
+    sketch: [
+      S.curve([[392, 470], [420, 404], [452, 474], [486, 402], [520, 472], [556, 400], [590, 470], [626, 402], [660, 468], [694, 404], [730, 466], [770, 410]], "#FD976D", 0.5, { w: 8, dur: 0.6, r: 1.1 }),
+      S.curve([[400, 452], [436, 418], [470, 458], [508, 414], [546, 456], [584, 412], [622, 452], [662, 414], [700, 450], [742, 420]], "#FD976D", 1.0, { w: 6, dur: 0.5, r: 1.3 }),
+      S.ellipse(848, 556, 162, 104, "#FDD46B", 1.6),
+    ],
+  },
+  {
+    low: true, title: "7 · Eso no es nuevo",
+    note: "58–65 s · CÁMARA BAJA. Fichas brillantes de Ali (dashboard y ERP) unidas por una órbita a mano, «hace años» en nota y el titular dorado.",
+    html: cam("f60.jpg") +
+      `<div class="abs pop" data-t="0.4" style="left:210px;top:300px">${glossy(lucide("chart-column", 82, "#fff", 2.4), "linear-gradient(160deg,#9FD8FF,#3B8BEB)", 160, "transform:rotate(-8deg)")}</div>` +
+      `<div class="abs pop" data-t="0.8" style="left:710px;top:300px">${glossy(lucide("database", 82, "#fff", 2.4), "linear-gradient(160deg,#FFB38A,#E8603C)", 160, "transform:rotate(8deg)")}</div>` +
+      ex("dashboard", 170, 522, 44, 1.2, { sky: true, w: 240 }) +
+      ex("ERP", 670, 522, 44, 1.4, { sky: true, w: 240 }) +
+      ex("hace años", 430, 330, 50, 2.1, { sky: true, color: "var(--yellow)", rot: -6 }) +
+      `<div class="abs center" style="top:600px">${head("Eso *no* *es* *nuevo*", 84)}</div>` +
+      cap("eso no es", "nuevo"),
+    sketch: [
+      S.ellipse(540, 380, 800, 250, "rgba(255,255,255,.8)", 1.0, { w: 4 }),
+    ],
+  },
+  {
+    low: true, title: "7b · Eso no es nuevo (ventana macOS)",
+    note: "58–65 s · CÁMARA BAJA. Ventana de macOS al estilo Ali (blanca, redondeada, con brillo) con un dashboard de ERP: los KPI aparecen y las barras crecen. Flecha y «hace años» a mano.",
+    html: cam("f60.jpg") +
+      `<div class="mac pop" data-t="0.3" style="left:150px;top:262px;width:780px">
+         <div class="bar"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><b>ERP · Ventas</b></div>
+         <div class="kpis"><div class="kpi pop" data-t="0.8"><small>Ventas</small><span>S/ 48 k</span></div><div class="kpi pop" data-t="0.95"><small>Pedidos</small><span>312</span></div><div class="kpi pop" data-t="1.1"><small>Stock bajo</small><span>7</span></div></div>
+         <div class="chart"><div class="grow" data-t="1.2" style="height:38%"></div><div class="grow" data-t="1.3" style="height:55%"></div><div class="grow" data-t="1.4" style="height:47%"></div><div class="grow" data-t="1.5" style="height:68%"></div><div class="grow" data-t="1.6" style="height:60%"></div><div class="grow" data-t="1.7" style="height:80%"></div><div class="grow hi" data-t="1.8" style="height:100%"></div></div>
+       </div>` +
+      ex("hace años", 690, 574, 52, 2.3, { sky: true, color: "var(--yellow)", rot: -5 }) +
+      `<div class="abs center" style="top:640px">${head("Eso *no* *es* *nuevo*", 78)}</div>` +
+      cap("eso no es", "nuevo"),
+    sketch: [
+      S.arrow([[680, 604], [620, 600], [585, 560]], "#FDD46B", 2.0, { head: 24 }),
+    ],
+  },
+];
+
+const grid = document.getElementById("grid");
+const only = new URLSearchParams(location.search).get("only");
+const at = new URLSearchParams(location.search).get("t");
+if (only) { document.documentElement.style.setProperty("--scale", "1"); document.querySelector("header").remove(); }
+const ANIMS = [];
+FRAMES.forEach((f, i) => {
+  if (only && i !== +only - 1) return;
+  grid.insertAdjacentHTML("beforeend", `<figure><div class="frame"><div class="screen ${f.low ? "low" : ""}" id="s${i}">${f.html}</div></div>
+    <figcaption><b><span class="tag ${f.low ? "low" : ""}">${f.low ? "CÁMARA BAJA" : "CÁMARA NORMAL"}</span>${f.title}</b><span>${f.note}</span></figcaption></figure>`);
+  const screen = document.getElementById("s" + i);
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "ink shadow"); svg.setAttribute("viewBox", "0 0 1080 1920");
+  // Sketch sits under the text labels so Excalifont reads on top of the hachure.
+  screen.insertBefore(svg, screen.querySelector(".ex") || screen.querySelector(".cap"));
+  ANIMS.push({ screen, anim: renderSketch(svg, f.sketch || [], 20 + i * 50) });
+});
+const clamp01 = (x) => Math.max(0, Math.min(1, x));
+const ease = (x) => 1 - Math.pow(1 - x, 3);
+function frame(t) {
+  const out = t > LOOP - 0.5 ? clamp01((LOOP - t) / 0.5) : 1;   // fade everything before the loop restarts
+  for (const { screen, anim } of ANIMS) {
+    for (const a of anim) {
+      const p = ease(clamp01((t - a.t) / a.dur));
+      if (a.fade) a.p.style.opacity = p * out; else { a.p.setAttribute("stroke-dashoffset", String(1 - p)); a.p.style.opacity = out; }
+    }
+    screen.querySelectorAll("[data-t]").forEach((el) => {
+      const p = ease(clamp01((t - +el.dataset.t) / 0.3));
+      el.style.opacity = p * out;
+      el.style.translate = `0 ${(1 - p) * 10}px`;
+      if (el.classList.contains("pop")) el.style.scale = String(0.85 + 0.15 * p);
+      if (el.classList.contains("grow")) { el.style.opacity = out; el.style.translate = "0 0"; el.style.transform = `scaleY(${p})`; }
+    });
+  }
+}
+if (at) frame(+at);
+else (function tick() { frame((performance.now() / 1000) % LOOP); requestAnimationFrame(tick); })();
+</script>
+</body>
+</html>

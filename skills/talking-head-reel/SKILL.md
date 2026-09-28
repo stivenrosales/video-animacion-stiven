@@ -64,6 +64,9 @@ The user judges the reel by how close it is to HIS reference. A generic approxim
 | Horizontal figure overflows the phone width | Wrap into two rows and animate the reflow; never shrink text to fit |
 | Key idea the speaker never said out loud | Give it its own headline beat; a caption insert is too short to read |
 | User already approved the voice chain or an SFX set | Reuse directly, no A/B |
+| User asks to fuse two styles | Show a board per round; expect to keep one side's elements and borrow only motion/strokes from the other (see `ali-sketch`) |
+| Recording ends mid-sentence | Ask for the continuation take; concat both into `work/join/src.mov` (own `audio.wav`) and cut that |
+| Speaker self-corrects ("X, mejor dicho, Y") | Keep it unless the user asks to cut it: cutting spoken content without asking felt like an aggressive intro |
 | A small fix after the full render | `tools/render-chunks.sh <slug> <Comp> 10 "<sec-range>"`, then redo the mix normalization |
 
 ## Execution Steps

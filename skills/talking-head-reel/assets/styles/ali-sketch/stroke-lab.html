@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Stroke Lab</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,100;1,9..144,500..800,100&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --serif: "Fraunces", Georgia, serif; --sans: "Poppins", system-ui, sans-serif; --gold: #F7C95B; --scale: .46; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #F9F6F3; color: #1B1624; font-family: var(--sans); }
+  main { max-width: 1700px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-family: var(--serif); font-variation-settings: "SOFT" 100; font-weight: 600; font-size: 42px; margin: 0; letter-spacing: -1px; }
+  p.lead { color: #76737C; font-size: 16px; max-width: 900px; line-height: 1.5; }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+  figure { margin: 0; width: calc(1080px * var(--scale)); }
+  figcaption b { display: block; font-family: var(--serif); font-variation-settings: "SOFT" 100; font-size: 22px; margin-top: 12px; }
+  figcaption span { color: #76737C; font-size: 14px; line-height: 1.45; display: block; margin-top: 4px; }
+  .frame { width: calc(1080px * var(--scale)); height: calc(900px * var(--scale)); border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 20px 50px rgba(27,22,36,.2); }
+  .stage { position: absolute; left: 0; top: 0; width: 1080px; height: 900px; transform: scale(var(--scale)); transform-origin: 0 0; overflow: hidden; }
+  .stage img { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,12,24,.62) 0%, rgba(14,12,24,.30) 60%, rgba(14,12,24,.1) 100%); }
+  .bubble { position: absolute; left: 300px; top: 290px; display: flex; align-items: flex-end; gap: 14px; }
+  .bubble .av { width: 70px; height: 70px; border-radius: 50%; background: #FDD46B; }
+  .bubble .tx { padding: 18px 28px; border-radius: 28px 28px 28px 8px; background: #fff; font-weight: 600; font-size: 38px; box-shadow: 0 8px 24px rgba(0,0,0,.22); white-space: nowrap; }
+  .head { position: absolute; left: 0; right: 0; top: 500px; text-align: center; font-family: var(--serif); font-variation-settings: "SOFT" 100; font-weight: 650; font-size: 70px; color: #fff; letter-spacing: -1px; text-shadow: 0 2px 14px rgba(0,0,0,.35); }
+  .head i { color: var(--gold); font-weight: 600; }
+  .ink { position: absolute; left: 0; top: 0; width: 1080px; height: 900px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Laboratorio de trazos</h1>
+  <p class="lead">Los mismos cuatro trazos (tachón en zigzag, círculo, subrayado y flecha), la misma animación y tres motores distintos. Todo corre en Chrome, así que cualquiera de los tres entra al video.</p>
+  <div class="row" id="row"></div>
+</main>
+<script type="module">import { getStroke } from "https://cdn.jsdelivr.net/npm/perfect-freehand@1.2.3/+esm"; window.PerfectFreehand = { getStroke };</script>
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@2/lib/p5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5.brush@2.2.3/dist/p5.brush.js"></script>
+<script>
+const W = 1080, H = 900, LOOP = 5.2;
+const PANELS = [
+  ["A · Plumón con presión", "perfect-freehand. Grosor que cambia con la velocidad, puntas afiladas. Limpio y con energía: el más «Ali».", "pf"],
+  ["B · Lápiz a mano", "rough.js. Doble pasada con temblor, como dibujado de verdad con un marcador delgado. Más casero.", "rough"],
+  ["C · Marcador con textura", "p5.brush. Tinta con textura y bordes irregulares, como un marcador real sobre papel. El más orgánico.", "brush"],
+];
+const row = document.getElementById("row");
+for (const [t, n, id] of PANELS) {
+  row.insertAdjacentHTML("beforeend", `<figure><div class="frame"><div class="stage">
+    <img src="f52.jpg" style="top:-120px"><div class="scrim"></div>
+    <div class="bubble"><div class="av"></div><div class="tx">Escríbele al chat…</div></div>
+    <div class="head">No todo entra por un <i>chat</i></div>
+    <div class="ink" id="${id}"></div></div></div><figcaption><b>${t}</b><span>${n}</span></figcaption></figure>`);
+}
+
+// ---------- shared geometry (1080x900 stage) ----------
+const catmull = (pts, per = 18) => {
+  const out = [];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+    for (let s = 0; s < per; s++) {
+      const t = s / per, t2 = t * t, t3 = t2 * t;
+      out.push([0, 1].map((k) => 0.5 * (2 * p1[k] + (-p0[k] + p2[k]) * t + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * t2 + (-p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k]) * t3)));
+    }
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+};
+// Scribble-out: fast zigzag over the bubble, slightly tilted, with overshoot at both ends.
+const scribble = (() => {
+  const pts = [], n = 11;
+  for (let i = 0; i <= n; i++) {
+    const x = 392 + (i / n) * 370 + (i % 2 ? 14 : -10);
+    const y = (i % 2 ? 300 : 378) - i * 3 + ((i * 37) % 11 - 5);
+    pts.push([x, y]);
+  }
+  return pts;
+})();
+const circle = (() => {
+  const pts = [], cx = 876, cy = 548, rx = 84, ry = 56;
+  for (let a = -2.6; a <= -2.6 + Math.PI * 2.25; a += 0.35) {
+    const wob = 1 + 0.05 * Math.sin(a * 3);
+    pts.push([cx + Math.cos(a) * rx * wob, cy + Math.sin(a) * ry * wob - (a + 2.6) * 3]);
+  }
+  return pts;
+})();
+const underline = [[170, 626], [380, 634], [600, 628], [760, 620]];
+const arrow = [[990, 800], [1000, 720], [980, 660], [950, 612]];
+const arrowHead = [[925, 640], [948, 608], [982, 628]];
+const STROKES = [
+  { pts: scribble, color: "#FD976D", w: 16, t0: 0.0, t1: 0.7, per: 10 },
+  { pts: circle, color: "#FDD46B", w: 11, t0: 0.8, t1: 1.5 },
+  { pts: underline, color: "#FFFFFF", w: 9, t0: 1.6, t1: 2.0 },
+  { pts: arrow, color: "#8EF0A8", w: 10, t0: 2.1, t1: 2.5 },
+  { pts: arrowHead, color: "#8EF0A8", w: 10, t0: 2.5, t1: 2.7, per: 6 },
+];
+for (const s of STROKES) s.dense = catmull(s.pts, s.per || 16);
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const progress = (s, t) => easeOut(Math.min(1, Math.max(0, (t - s.t0) / (s.t1 - s.t0))));
+const clock = () => (performance.now() / 1000) % LOOP;
+
+// ---------- A: perfect-freehand ----------
+const pfSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+pfSvg.setAttribute("viewBox", `0 0 ${W} ${H}`); pfSvg.setAttribute("width", W); pfSvg.setAttribute("height", H);
+pfSvg.style.filter = "drop-shadow(0 3px 6px rgba(0,0,0,.25))";
+document.getElementById("pf").appendChild(pfSvg);
+const toPath = (poly) => poly.length ? "M" + poly.map((p) => p.map((v) => v.toFixed(1)).join(" ")).join("L") + "Z" : "";
+function drawPF(t) {
+  if (!window.PerfectFreehand) return;
+  pfSvg.innerHTML = STROKES.map((s) => {
+    const p = progress(s, t); if (p <= 0) return "";
+    const n = Math.max(2, Math.round(s.dense.length * p));
+    const poly = PerfectFreehand.getStroke(s.dense.slice(0, n), { size: s.w * 1.7, thinning: 0.62, smoothing: 0.6, streamline: 0.35, simulatePressure: true, start: { taper: 30 }, end: { taper: p >= 1 ? 40 : 0 } });
+    return `<path d="${toPath(poly)}" fill="${s.color}"/>`;
+  }).join("");
+}
+
+// ---------- B: rough.js (generated once, revealed with dash offset) ----------
+const rSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+rSvg.setAttribute("viewBox", `0 0 ${W} ${H}`); rSvg.setAttribute("width", W); rSvg.setAttribute("height", H);
+rSvg.style.filter = "drop-shadow(0 3px 6px rgba(0,0,0,.25))";
+document.getElementById("rough").appendChild(rSvg);
+const rc = rough.svg(rSvg);
+const roughPaths = STROKES.map((s, i) => {
+  const g = rc.curve(s.pts, { stroke: s.color, strokeWidth: s.w * 0.55, roughness: 1.6, bowing: 1.5, seed: 11 + i });
+  rSvg.appendChild(g);
+  const paths = [...g.querySelectorAll("path")];
+  paths.forEach((p) => { p.setAttribute("pathLength", "1"); p.setAttribute("stroke-dasharray", "1 1"); p.setAttribute("stroke-linecap", "round"); });
+  return paths;
+});
+function drawRough(t) {
+  STROKES.forEach((s, i) => roughPaths[i].forEach((p, k) => {
+    const pr = Math.min(1, Math.max(0, progress(s, t) * 1.15 - k * 0.15));
+    p.setAttribute("stroke-dashoffset", String(1 - pr));
+  }));
+}
+
+// ---------- C: p5.brush ----------
+new p5((p) => {
+  brush.instance(p);
+  p.setup = () => {
+    const c = p.createCanvas(W, H, p.WEBGL);
+    c.parent("brush"); c.elt.style.width = W + "px"; c.elt.style.height = H + "px";
+    c.elt.style.filter = "drop-shadow(0 3px 6px rgba(0,0,0,.25))";
+    p.pixelDensity(1);
+    brush.scaleBrushes(2.4);
+  };
+  p.draw = () => {
+    const t = clock();
+    p.clear();
+    p.randomSeed(7); p.noiseSeed(7);
+    p.push(); p.translate(-W / 2, -H / 2);
+    for (const s of STROKES) {
+      const pr = progress(s, t); if (pr <= 0) continue;
+      const n = Math.max(2, Math.round(s.dense.length * pr));
+      brush.set("marker", s.color, s.w / 7);
+      brush.spline(s.dense.slice(0, n), 0.3);
+      brush.spline(s.dense.slice(0, n), 0.3); // second pass: markers build up ink
+    }
+    p.pop();
+  };
+});
+
+(function tick() { const t = clock(); drawPF(t); drawRough(t); requestAnimationFrame(tick); })();
+</script>
+</body>
+</html>
