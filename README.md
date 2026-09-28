@@ -29,12 +29,16 @@ tools/        studio.sh / render.sh helpers
 | `videos/2026-09-25-poema-milena` | `Poema` | Narrated, hand-drawn sketch style |
 | `videos/2026-09-26-opus-reel` | `OpusReel` | Talking head, 60 fps, FULL/CARD modes |
 | `videos/2026-09-26-sdlc-playbook` | `SdlcReel` | Talking head built on a claude.com article, cited |
+| `videos/2026-09-27-workflows` | `WorkflowsReel` | Claude-UI kit, voice-only animation mode |
+| `videos/2026-09-27-mcp-vs-whatsapp` | `McpReel` | Ali Abdaal style, chunked render |
 
 ## Everyday commands
 
 ```bash
 npm run studio -- opus              # Remotion Studio for the video whose folder matches "opus"
 npm run render -- opus OpusReel     # full-quality render → videos/…opus-reel/out/raw.mp4
+tools/render-chunks.sh mcp McpReel           # chunked full render → out/raw.mp4
+tools/render-chunks.sh mcp McpReel 10 49-53  # re-render only the chunks touching 49–53 s
 ```
 
 ## New talking-head video

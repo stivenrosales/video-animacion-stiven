@@ -11,6 +11,8 @@ Finished videos:
 | Milena poem (narrated) | `videos/2026-09-25-poema-milena` | `Poema` | Hand-drawn "dirty line" (sketch), silhouettes |
 | Opus 5.5 workflow reel (talking head) | `videos/2026-09-26-opus-reel` | `OpusReel` | Claude-UI cards, 60 fps, FULL/CARD alternation, published |
 | AI-Native SDLC playbook reel (talking head) | `videos/2026-09-26-sdlc-playbook` | `SdlcReel` | Article-sourced figures + FUENTE citations, lowered/zoomed-out camera windows, published |
+| Workflows reel (talking head) | `videos/2026-09-27-workflows` | `WorkflowsReel` | Claude-UI kit (menus, pastel tiles, input box, cursor), voice-only "off" mode, event flyer, sheep stickers |
+| MCP vs WhatsApp reel (talking head) | `videos/2026-09-27-mcp-vs-whatsapp` | `McpReel` | Ali Abdaal style (soft serif + gold keywords, handwriting, stickers, light caption chip), chunked render |
 
 For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/skills/talking-head-reel/`): it holds the full pipeline and the proven layout numbers.
 
@@ -55,6 +57,15 @@ For talking-head reels, load the global skill `talking-head-reel` (`~/.claude/sk
 - Highlights sit behind the text at the text's own height, never as a thin offset stroke.
 - An idea the speaker did not say but the video depends on (e.g. "en empresas") gets a headline beat, not a small note.
 - Remotion `--frames` is 0-based and must stay below duration×fps.
+- REFERENCE FIDELITY: when the user names a style or gives a reference (image, site, shorts, past reel), study it concretely (download it, contact-sheet it, extract real fonts/hex colors/positions) and show an HTML style board over his real frames BEFORE building. A generic approximation cost a full rebuild twice. See the skill's `references/styles.md`.
+- Style verdicts: Claude-UI kit = liked; Ali Abdaal = liked a lot; Liquid Glass = rejected.
+- Work inline for video editing; delegating the build to a subagent lost context (generic v1, idle waits, overwritten `work/audio.wav`).
+- Never overwrite `work/audio.wav`: it is `cut.py`'s silence source. Name other audio `voice-in.wav`, `mix.wav`, etc.
+- Keep the breath after the last word (`LAST_WORD_END` in `cut.py`) and fade the final audio 0.3 s. An edit that ends on the word feels chopped.
+- Captions must clear THIS speaker's chin: scan the chin band of the final at 1 fps. For close framing, chip center y 1462 and punch-ins 1.06/1.12.
+- Offer SFX as A/B/C candidates (`scripts/sfx_samples.py`); approved set: A everywhere, time-lapse B.
+- Render with `tools/render-chunks.sh <slug> <Comp>`: a fix re-renders only its 10 s chunk. `--gl=angle`, JPEG frames and keyframe tweaks gave no useful gain; `cut.py` uses `-preset fast`.
+- On the phone (Remote Control), send a 720p crf 24 copy with SendUserFile.
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)
 
