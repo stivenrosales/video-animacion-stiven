@@ -86,4 +86,4 @@ Return: the final mp4 path, duration, and LUFS; the cuts removed; the name corre
 - `references/styles.md`: the reference fidelity procedure, the style kits (Claude-UI, Ali Abdaal, Liquid Glass rejected) and caption placement.
 - `references/pipeline.md`: commands, layout numbers, render benchmarks, and gotchas.
 - `assets/template/`: a working Remotion project plus `scripts/` (cut, captions, voice, sfx_samples) and `render-chunks.sh`.
-- `assets/styles/`: style kits (`ali-abdaal/`, `claude-ui/`) and HTML style boards.
+- `assets/styles/`: style kits (`ali-abdaal/`, `claude-ui/`, `liquid-glass/`) and HTML style boards.
