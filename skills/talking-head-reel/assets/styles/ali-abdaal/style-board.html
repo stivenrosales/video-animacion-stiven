@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Estilo Ali Abdaal · MCP vs WhatsApp</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fraunces (SOFT axis) stands in for Ali's Recoleta; Poppins for his caption chips; Gaegu for the handwritten notes. -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,500..800,100;1,9..144,500..800,100&family=Poppins:wght@500;600;700&family=Gaegu:wght@700&family=Oswald:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Poppins", system-ui, sans-serif;
+    --hand: "Gaegu", "Comic Sans MS", cursive;
+    --caps: "Oswald", "Arial Narrow", sans-serif;
+    --ink: #1B1624;
+    --cream: #F9F6F3;
+    --gold: #F7C95B;
+    --yellow: #FDD46B;
+    --sky: #5DCDF1;
+    --peach: #FD976D;
+    --mint: #8EF0A8;
+    --lilac: #C9B6FF;
+    --scale: 0.42;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  main { max-width: 1480px; margin: 0 auto; padding: 48px 24px 96px; }
+  header h1 { font-family: var(--serif); font-variation-settings: "SOFT" 100; font-weight: 600; font-size: 46px; letter-spacing: -1px; margin: 0; }
+  header h1 em { font-style: normal; background: linear-gradient(transparent 62%, rgba(93,205,241,.45) 62%); }
+  header p { color: #76737C; font-size: 17px; margin: 10px 0 36px; max-width: 780px; line-height: 1.5; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(1080px * var(--scale)), 1fr)); gap: 44px 28px; justify-items: center; }
+  figure { margin: 0; width: calc(1080px * var(--scale)); }
+  figcaption { margin-top: 14px; }
+  figcaption b { display: block; font-family: var(--serif); font-variation-settings: "SOFT" 100; font-size: 21px; font-weight: 600; }
+  figcaption span { display: block; color: #76737C; font-size: 14px; margin-top: 4px; line-height: 1.45; }
+  .frame { width: calc(1080px * var(--scale)); height: calc(1920px * var(--scale)); border-radius: 30px; overflow: hidden; position: relative; box-shadow: 0 24px 60px rgba(27,22,36,.22), 0 0 0 1px rgba(27,22,36,.06); }
+  .frame.square { height: calc(1080px * var(--scale)); }
+  .screen { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform: scale(var(--scale)); transform-origin: 0 0; overflow: hidden; }
+  .square .screen { height: 1080px; }
+  .screen > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: push 9s ease-in-out infinite alternate; }
+  @keyframes push { from { transform: scale(1.0) } to { transform: scale(1.05) } }
+  /* Ali's top band is naturally dark (indoor). Outdoors we darken the sky so white serif text reads. */
+  .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,12,24,.62) 0%, rgba(14,12,24,.38) 26%, rgba(14,12,24,0) 44%); pointer-events: none; }
+  .abs { position: absolute; }
+  .center { left: 0; right: 0; text-align: center; }
+
+  /* ---------- headline: soft serif, gold keywords, words light up in order ---------- */
+  .head { font-family: var(--serif); font-variation-settings: "SOFT" 100, "WONK" 0; font-weight: 650; color: #fff; letter-spacing: -1px; line-height: 1.12; text-shadow: 0 2px 14px rgba(0,0,0,.35); }
+  .head .k { color: var(--gold); font-style: italic; font-weight: 600; }
+  .head .w { opacity: .35; animation: wordOn 7s infinite; animation-delay: calc(var(--i) * .16s); }
+  @keyframes wordOn { 0% { opacity: .35 } 6%, 86% { opacity: 1 } 100% { opacity: .35 } }
+  .label { font-family: var(--caps); font-weight: 600; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; font-size: 34px; }
+  .label b { color: #fff; font-weight: 600; }
+
+  /* ---------- caption chip (Ali): light pill, dark bold text, upcoming words gray ---------- */
+  .cap { position: absolute; left: 50%; top: 1392px; transform: translateX(-50%); padding: 14px 30px 16px; border-radius: 16px; background: rgba(240,240,242,.94); box-shadow: 0 6px 18px rgba(0,0,0,.18); font-family: var(--sans); font-weight: 700; font-size: 50px; letter-spacing: -.4px; white-space: nowrap; color: #141414; }
+  .cap i { font-style: normal; color: #9A9AA0; }
+
+  /* ---------- handwriting + doodles ---------- */
+  .hand { font-family: var(--hand); font-weight: 700; letter-spacing: 1px; line-height: 1.05; text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+  .doodle path { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 5s ease-out infinite; }
+  @keyframes draw { 0% { stroke-dashoffset: var(--len) } 18%, 88% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: var(--len) } }
+
+  /* ---------- stickers ---------- */
+  .pill { display: inline-flex; align-items: center; gap: 18px; padding: 20px 38px; border-radius: 26px; background: #fff; color: #111; font-family: var(--sans); font-weight: 700; font-size: 54px; letter-spacing: -1px;
+          box-shadow: 0 0 0 1px rgba(0,0,0,.04), 0 0 40px rgba(255,255,255,.55), 0 10px 30px rgba(0,0,0,.25); animation: pop 5s cubic-bezier(.2,1.4,.4,1) infinite; }
+  @keyframes pop { 0% { transform: scale(.6); opacity: 0 } 8%, 90% { transform: scale(1); opacity: 1 } 100% { transform: scale(.6); opacity: 0 } }
+  .bubble { display: flex; align-items: flex-end; gap: 16px; }
+  .bubble .av { width: 74px; height: 74px; border-radius: 50%; flex: none; display: grid; place-items: center; box-shadow: 0 4px 12px rgba(0,0,0,.25); }
+  .bubble .tx { padding: 20px 28px; border-radius: 30px 30px 30px 8px; background: #fff; color: #111; font-family: var(--sans); font-weight: 600; font-size: 38px; box-shadow: 0 8px 24px rgba(0,0,0,.22); }
+  .bubble.me { flex-direction: row-reverse; }
+  .bubble.me .tx { border-radius: 30px 30px 8px 30px; background: #DCF8C6; }
+  .num { position: relative; display: inline-grid; place-items: center; width: 150px; height: 104px; }
+  .num::before { content: ""; position: absolute; inset: -40px -70px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,120,190,.45), rgba(93,205,241,.35) 45%, rgba(253,212,107,.20) 70%, transparent); filter: blur(10px); }
+  .num svg { position: absolute; inset: 0; }
+  .num span { position: relative; font-family: var(--serif); font-variation-settings: "SOFT" 100; font-style: italic; font-weight: 700; font-size: 96px; color: var(--gold); line-height: 1; }
+  .qcard { background: #DDF3F1; color: #1B1624; border-radius: 26px; padding: 30px 36px; font-family: var(--sans); font-weight: 500; font-size: 40px; line-height: 1.3; box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+  .caret { display: inline-block; width: 4px; height: 44px; background: #1B1624; margin-left: 4px; vertical-align: -6px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0 } }
+  .orbit { position: absolute; border: 3px solid rgba(255,255,255,.55); border-radius: 50%; }
+  .icon3d { position: absolute; width: 150px; height: 150px; border-radius: 38px; display: grid; place-items: center; box-shadow: inset 0 6px 10px rgba(255,255,255,.55), inset 0 -8px 14px rgba(0,0,0,.18), 0 16px 30px rgba(0,0,0,.28); animation: bob 4s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)) } 50% { transform: translateY(-14px) rotate(var(--r, 0deg)) } }
+  .big { font-family: var(--serif); font-variation-settings: "SOFT" 100; font-weight: 800; color: var(--gold); letter-spacing: -4px; line-height: 1; text-shadow: 0 6px 30px rgba(0,0,0,.30); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Estilo <em>Ali Abdaal</em>, aplicado a tu video</h1>
+    <p>Cada tablero es un momento del guion, sobre un cuadro real de tu video. Titular serif suave con palabras en dorado, notas a mano de colores, stickers con brillo y el subtítulo en chip claro, como en sus shorts. Las animaciones en bucle muestran cómo entraría cada cosa.</p>
+  </header>
+  <div class="grid" id="grid"></div>
+</main>
+<script src="icons.js"></script>
+<script>
+const I = window.ICONS;
+const lucide = (n, s = 44, c = "currentColor", w = 2) =>
+  `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${I.lucide[n]}</svg>`;
+const brand = (n, s = 44, c) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24"><path d="${I[n].path}" fill="${c || "#" + I[n].hex}"/></svg>`;
+// Headline with per-word reveal; wrap keywords in *stars* to paint them gold italic.
+const head = (text, size) => {
+  let i = 0;
+  return `<div class="head" style="font-size:${size}px">` + text.split(" ").map((w) => {
+    const k = /^\*.*\*[.,?!]?$/.test(w);
+    const clean = w.replace(/\*/g, "");
+    return `<span class="w ${k ? "k" : ""}" style="--i:${i++}">${clean}</span>`;
+  }).join(" ") + `</div>`;
+};
+const cap = (on, off) => `<div class="cap">${on}${off ? ` <i>${off}</i>` : ""}</div>`;
+const arrow = (d, color, len, w = 7) => `<svg class="doodle" style="position:absolute;inset:0;--len:${len}" width="1080" height="1920" viewBox="0 0 1080 1920"><path d="${d}" stroke="${color}" stroke-width="${w}"/></svg>`;
+const bg = (f) => `<img class="bg" src="${f}"><div class="scrim"></div>`;
+
+const FRAMES = [
+  {
+    title: "1 · Gancho",
+    note: "0–10 s · Etiqueta en mayúsculas doradas + tarjeta de pregunta que se escribe sola (como su «ONE QUESTION I GET A LOT»). Subtítulo en chip claro.",
+    html: bg("f16.jpg") +
+      `<div class="abs center label" style="top:262px">Una pregunta que <b>me hice:</b></div>` +
+      `<div class="abs qcard" style="left:120px;right:120px;top:330px">¿Diseñar agentes de WhatsApp es lo más efectivo para empresas?<span class="caret"></span></div>` +
+      cap("agentes de", "WhatsApp"),
+  },
+  {
+    title: "2 · Todos usan WhatsApp",
+    note: "20–28 s · Logo en pastilla blanca con brillo (como su sticker de Manychat), burbujas de chat y nota a mano con flecha dibujada.",
+    html: bg("f30.jpg") +
+      `<div class="abs center" style="top:262px"><span class="pill">${brand("whatsapp", 60, "#25D366")} WhatsApp</span></div>` +
+      `<div class="abs" style="left:110px;top:430px;width:640px"><div class="bubble"><div class="av" style="background:#FDD46B">${lucide("bot", 40, "#1B1624", 2.2)}</div><div class="tx">¿Cuánto vendimos hoy?</div></div></div>` +
+      `<div class="abs hand" style="left:760px;top:420px;font-size:65px;color:var(--mint);transform:rotate(-6deg)">el gerente</div>` +
+      arrow("M 820 480 C 860 530, 830 560, 770 560", "#8EF0A8", 220) +
+      cap("usa", "WhatsApp"),
+  },
+  {
+    title: "3 · Meta ahora cobra",
+    note: "28–41 s · Titular serif con la palabra clave en dorado y la nota a mano en durazno sobre los límites, subrayada a mano.",
+    html: bg("f38.jpg") +
+      `<div class="abs center" style="top:262px"><span class="pill" style="font-size:46px;padding:16px 30px">${brand("meta", 54, "#0467DF")} Meta</span></div>` +
+      `<div class="abs center" style="top:392px">${head("Ahora *cobra* por cada mensaje", 74)}</div>` +
+      `<div class="abs center hand" style="top:500px;font-size:62px;color:var(--peach)">+ límites de conversación</div>` +
+      arrow("M 330 568 C 440 556, 620 560, 750 552", "#FD976D", 440, 6) +
+      cap("va a cobrar", "también"),
+  },
+  {
+    title: "4 · Lo que pagas",
+    note: "62–71 s · Lista numerada con número en itálica dorada, óvalo dibujado y halo arcoíris, igual que su «2 · Generates a bunch of…».",
+    html: bg("f68.jpg") +
+      `<div class="abs center" style="top:262px"><div class="num"><svg viewBox="0 0 150 104"><ellipse cx="75" cy="52" rx="70" ry="44" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="3" transform="rotate(-12 75 52)"/></svg><span>1</span></div></div>` +
+      `<div class="abs center" style="top:392px">${head("Pagas los *mensajes* de WhatsApp", 70)}</div>` +
+      `<div class="abs center hand" style="top:492px;font-size:58px;color:var(--lilac)">y después… la IA que consumen</div>` +
+      cap("primero", "gastas en"),
+  },
+  {
+    title: "5 · La alternativa: MCP",
+    note: "41–62 s · Íconos flotando en órbita (como su escena de «niche») que se conectan a Claude. Nota a mano: «MCP = el enchufe».",
+    html: bg("f50.jpg") +
+      `<div class="abs center" style="top:262px">${head("Conecta tu *dashboard* a Claude", 70)}</div>` +
+      `<div class="orbit" style="left:150px;top:380px;width:780px;height:230px;transform:rotate(-6deg)"></div>` +
+      `<div class="icon3d" style="left:170px;top:400px;background:linear-gradient(160deg,#FFE08A,#F5A623);--r:-8deg">${lucide("chart-column", 78, "#fff", 2.4)}</div>` +
+      `<div class="icon3d" style="left:465px;top:352px;background:linear-gradient(160deg,#FBF8F1,#EADFCF);animation-delay:-1.3s">${brand("claude", 92, "#D97757")}</div>` +
+      `<div class="icon3d" style="left:760px;top:410px;background:linear-gradient(160deg,#9FD8FF,#3B8BEB);--r:8deg;animation-delay:-2.6s">${lucide("building-complex", 76, "#fff", 2.4)}</div>` +
+      `<div class="abs hand" style="left:120px;top:560px;font-size:55px;color:#fff;transform:rotate(-4deg)">Power BI</div>` +
+      `<div class="abs hand" style="left:800px;top:568px;font-size:55px;color:#fff;transform:rotate(5deg)">tu ERP</div>` +
+      `<div class="abs center hand" style="top:600px;font-size:65px;color:var(--mint)">MCP = el enchufe</div>` +
+      cap("empaquetar un", "servicio"),
+  },
+  {
+    title: "6 · Cierre",
+    note: "80–83 s · Pregunta final en serif con dorado y un «cuéntame» a mano con flecha hacia los comentarios.",
+    html: bg("f83.jpg") +
+      `<div class="abs center" style="top:262px">${head("¿Tú cómo integrarías *IA* en una empresa?", 72)}</div>` +
+      `<div class="abs hand" style="left:560px;top:462px;font-size:72px;color:var(--yellow);transform:rotate(-5deg)">cuéntame</div>` +
+      arrow("M 880 540 C 950 600, 950 680, 900 740", "#FDD46B", 260) +
+      `<div class="abs" style="left:830px;top:740px">${lucide("message-circle", 90, "#FDD46B", 2.4)}</div>` +
+      cap("¿tú cómo", "integrarías"),
+  },
+  {
+    title: "7 · Kit de piezas",
+    note: "Momentos cortos: la cifra gigante en dorado («S/ 0», como su «$10 MILLION» o «WHOA»), notas a mano y el chip de subtítulo con la palabra activa.",
+    square: true,
+    html: `<img class="bg" src="f68.jpg" style="object-position:50% 0%"><div class="scrim" style="background:rgba(14,12,24,.42)"></div>` +
+      `<div class="abs center label" style="top:70px;font-size:30px">Tu costo en IA</div>` +
+      `<div class="abs center big" style="top:120px;font-size:230px">S/ 0</div>` +
+      `<div class="abs center hand" style="top:370px;font-size:58px;color:var(--mint)">pagan su suscripción de Claude</div>` +
+      `<div class="abs center hand" style="top:470px;font-size:58px;color:var(--peach)">ojo: bases de datos grandes</div>` +
+      arrow("M 330 540 C 460 528, 640 534, 760 526", "#FD976D", 450, 6) +
+      `<div class="abs center" style="top:620px"><span class="pill" style="font-size:40px;padding:14px 26px">${brand("claude", 44, "#D97757")} Claude</span></div>` +
+      `<div class="cap" style="top:820px">no gasto <i>nada</i></div>`,
+  },
+];
+
+const grid = document.getElementById("grid");
+const only = new URLSearchParams(location.search).get("only");
+if (only) { document.documentElement.style.setProperty("--scale", "1"); document.querySelector("header").remove(); }
+for (const f of FRAMES.filter((_, i) => !only || i === +only - 1)) {
+  grid.insertAdjacentHTML("beforeend", `<figure><div class="frame ${f.square ? "square" : ""}"><div class="screen">${f.html}</div></div>
+    <figcaption><b>${f.title}</b><span>${f.note}</span></figcaption></figure>`);
+}
+</script>
+</body>
+</html>
