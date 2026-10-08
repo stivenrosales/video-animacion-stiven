@@ -15,6 +15,7 @@ Finished videos:
 | MCP vs WhatsApp reel (talking head) | `videos/2026-09-27-mcp-vs-whatsapp` | `McpReel` | Ali Abdaal style (soft serif + gold keywords, handwriting, stickers, light caption chip), chunked render |
 | Agents vs automations reel (talking head, 2 takes) | `videos/2026-09-28-fusion` | `FusionReel` | Ali × Sketch: Ali elements + rough.js/Excalifont strokes + frameless camera drop, one macOS window |
 | Don't buy AI courses reel (talking head) | `videos/2026-10-07-cursos-ia` | `CursosReel` | Claude Carousel: Claude's IG carousels (grid paper, hand boxes, tabs, arrows) + reel devices (soft serif, chalk icons), CC0 stroke SFX |
+| WhatsApp agents reel (talking head) | `videos/2026-10-07-whatsapp-agentes` | `WhatsAppReel` | Ali Abdaal YouTube (long-form): cream canvas + swoosh, lilac-bordered camera card, chapter cards, word blur-in serif, real meme screenshot with FUENTE |
 
 For talking-head reels, load the skill `talking-head-reel`: it holds the full pipeline and the proven layout numbers. Its single source of truth is `skills/talking-head-reel/` in this repo; `~/.claude/skills/talking-head-reel` is a symlink to it, so edit the repo copy and commit.
 
@@ -77,6 +78,8 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - Camera card: anchor the eye line (~0.47 of the card); the default 0.30 left his face too low.
 - Stroke SFX come from real CC0 recordings (Freesound, OpenGameArt), never synthesized; use them sparingly (~1 per scene, 0.25) and keep chalk icons over the camera silent.
 - Filler cuts: verify each with a splice test of the joined audio; a cut 110 ms early ate the "-que" of "porque".
+- No "broken" cards: badges and pills never straddle a card edge, nothing is tilted, and two elements never overlap mid-transition, unless the user asks (even if the reference does it).
+- The dark top scrim is one fixed full-frame layer that only fades; inside an animated Scene its edges show while it scales in.
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)
 

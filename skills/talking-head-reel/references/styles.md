@@ -78,6 +78,9 @@ Keep it as a technique only. Per element, a canvas displacement map is built fro
 - Labels must sit above lens thumbs.
 - Build nested glass innermost first.
 
+### Layout rule for every kit: no broken edges
+The user rejected badges and pills that straddle a card border, tilted cards and tilted badges ("quiebres de las tarjetas"), even when the reference does it. Default: cards stay straight, badges sit INSIDE their card (or in their own row above it with a clear gap), and transitions never let two elements overlap mid-animation. Use tilts or overlaps only when he asks for them.
+
 ## 3. Caption placement is about THIS speaker, not the reference
 
 - Camera card: anchor the EYES, not a fixed 0.30. With Stiven's close framing (source: hair ≈0.26, eyes ≈0.48, chin ≈0.64) `anchor 0.30` put his eyes at 63% of the card and he said his face sat too low; `FACE_Y = eye line` and card anchor 0.47 fixed it. Full mode anchor 0.51 pins the frame top so the hair stays low for top graphics.
