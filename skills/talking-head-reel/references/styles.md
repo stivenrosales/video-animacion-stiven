@@ -1,4 +1,4 @@
-# Styles and reference fidelity (v1.4)
+# Styles and reference fidelity (v1.5)
 
 The user judges a reel by how close it is to the reference he gave. "Roughly in that spirit" is a failure. This file holds the procedure and the style kits we already built.
 
@@ -62,6 +62,16 @@ The user asked to fuse Ali and Claude-UI. Two rounds settled it: Claude-UI *grap
 - Rejected on the way: X strike (too plain), Claude-UI input boxes/menus next to Ali, Excalidraw hachure boxes.
 - Boards: `style-board.html` (final), `stroke-lab.html` (perfect-freehand vs rough.js vs p5.brush; the user picked rough.js). They expect frames `f*.jpg` from the video next to them (not committed).
 
+### Claude Carousel (`claude-carousel/`) — liked (cursos-ia reel, 2026-10-07)
+The user asked for "Claude style" and then pointed at Claude's own Instagram: carousels (DduIElvIG_N, DeEsQBioDT3, DbL-LYLoOBp) and reels. Tokens in `claude-carousel/spec.md`; animated board template `style-board.tpl.html`.
+- **Carousel layer (card mode, on grid paper `#F0F1EB` + 34 px `#E3E5DC` grid):** hand-drawn rounded boxes (black ~4.5 px, rough.js roughness 0.6, `disableMultiStroke`) filled ivory `#F5F4ED` / peach `#EBC9B7` / sand `#E3DACB` / blue-gray `#C0D2DE`; tilted label tabs (±4°); curved arrows with open chevrons; clay `#D97757` square tiles with black line icons; gray `#E8E6DF` boxes with clay small-caps labels; a bracket that opens into rows; colored metro lines (pink `#C2668A`, green `#5E9C7C`, blue `#6E9CC8`, amber `#E5A852`) into matching mono code chips; real Claude UI cards mixed in.
+- **Reel layer (full mode, over the camera):** soft white Source Serif headlines over the head (no hard shadow), white chalk-line icons drawn on beside the head with a serif label ("Documents" device), captions in serif on a translucent smoke chip `rgba(38,36,33,.46)` radius 8 (ink serif in card mode).
+- **Motion:** every stroke draws on (`pathLength` dash) and then boils lightly: seed `1 + floor(frame/4) % 3`. Only hand-drawn strokes boil; UI cards and metro lines stay still.
+- **Strikes** are measured on the word (canvas `measureText` with the loaded font), two marker passes with a slight upward slant and overshoot. Guessing the position put it under the baseline.
+- **Close:** full screen with a `LOWER` window (260 px) so the question and a claude.ai input sit above the head; no caption there (the headline says it and the chip would land on the mouth).
+- Rejected in the rounds: a hand-drawn box floating over the sky in full mode (use chalk icons instead), the end arrow, an off-mode end card.
+- Stroke SFX: real CC0 recordings (`SFX-CREDITS.md`), only on reveals that carry the idea, volume ≈0.25, none on the chalk icons over the camera.
+
 ### Liquid Glass (`liquid-glass/`) — REJECTED by the user ("interesante, pero no me gusta")
 Keep it as a technique only. Per element, a canvas displacement map is built from a rounded-rect SDF (inward normal × (1−t)^2.4 inside the bezel). It feeds an SVG filter (feImage + blur + three feDisplacementMap passes for mild dispersion + saturate 1.18) applied via `backdrop-filter:url(#id)`, which works in Chrome and Remotion. macOS 27 tuning: a dark edge line, a brighter rim, and a `--t` tint from clear to tinted. Gotchas:
 - Saturation above 1.2 turns glass over skin orange.
@@ -69,6 +79,8 @@ Keep it as a technique only. Per element, a canvas displacement map is built fro
 - Build nested glass innermost first.
 
 ## 3. Caption placement is about THIS speaker, not the reference
+
+- Camera card: anchor the EYES, not a fixed 0.30. With Stiven's close framing (source: hair ≈0.26, eyes ≈0.48, chin ≈0.64) `anchor 0.30` put his eyes at 63% of the card and he said his face sat too low; `FACE_Y = eye line` and card anchor 0.47 fixed it. Full mode anchor 0.51 pins the frame top so the hair stays low for top graphics.
 
 The reference creator's caption height does not transfer: Ali frames wider than Stiven.
 - After the render, scan the chin band: `ffmpeg -i final.mp4 -vf "fps=1,crop=1080:760:0:900,scale=180:-1,tile=10x8"`. Look for any second where the chip touches the chin.

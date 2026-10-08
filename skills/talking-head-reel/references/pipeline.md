@@ -144,3 +144,12 @@ Proven on a 97 s iPhone 4K HDR vertical clip → 79.5 s reel, and an 82.5 s clip
 - `Head` text `"shown=spoken"` drops punctuation that sits on the spoken side: write `*IA?*=inteligencia`, not `*IA*=inteligencia?`.
 - zsh: `"$G[a]"` inside an ffmpeg filter string is an array subscript. Write `${G}[a]`.
 - A padded chunk bisect (`adelay=400,apad`) plus a 50 ms RMS scan finds cut edges to ±50 ms; a 50 ms-late cut left a "des-" residue that only the re-transcription exposed.
+
+## 11. Gotchas from the cursos-ia reel (v1.5)
+
+- **Filler cuts:** a splice test (remove the range, transcribe the joined 3 s window) is more reliable than transcribing tiny chunks, which hallucinate ("[Música]", "¡Hasta la próxima!"). A 25 ms RMS + zero-crossing scan finds the plosive burst: cutting "básicamente" at 36.76 ate the "-que" of "porque"; the k-burst sat at 36.79–36.82 and the stressed "BÁ" began at 36.87.
+- **Whisper drops words** at the edited audio's edges ("en serio" vanished): `captions.py` has an `ADD` list `(startMs, endMs, text)` that trims the previous word to make room.
+- **Instagram carousels:** the `/embed/captioned/` page only exposes slide 1 statically. Walk the sidecar with `playwright-core` + the system Chrome, clicking `[aria-label="Siguiente"]` (Spanish locale) and collecting `currentSrc` (640 px). Stripping `stp=` breaks the signed URL.
+- **Short SFX:** `loudnorm` on sub-second clips outputs silence; RMS-match with `volumedetect` + `volume`. Freesound HQ previews (`cdn.freesound.org/previews/<folder>/<id>_<user>-hq.mp3`) download without login; check "Creative Commons 0" on each sound page.
+- **Audio-only fixes** (SFX level or cues): `npx remotion render <bundle> <Comp> work/mix.wav --codec=wav`, then `voice.py --raw` and remux onto `out/raw.mp4`. No video re-render.
+- **Stroke sounds:** the user found 21 cues at 0.5 "demasiado"; keep ≈1 per scene at 0.25 and none on chalk icons drawn over the camera.

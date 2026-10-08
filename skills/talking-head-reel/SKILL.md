@@ -64,6 +64,9 @@ The user judges the reel by how close it is to HIS reference. A generic approxim
 | Horizontal figure overflows the phone width | Wrap into two rows and animate the reflow; never shrink text to fit |
 | Key idea the speaker never said out loud | Give it its own headline beat; a caption insert is too short to read |
 | User already approved the voice chain or an SFX set | Reuse directly, no A/B |
+| User says "Claude style" and shows Claude's IG carousels or reels | Use `claude-carousel` (hand boxes, tabs, arrows, clay tiles on grid paper + soft serif and chalk icons over the camera); show the animated board |
+| Hand-drawn strokes need sound | Offer real CC0 recordings (Freesound/OpenGameArt) as A/B/C in context; use them on key reveals only, ≈0.25 |
+| Face looks low in the camera card | Anchor the eye line (`FACE_Y`) at ~0.47 of the card instead of the default 0.30 |
 | User asks to fuse two styles | Show a board per round; expect to keep one side's elements and borrow only motion/strokes from the other (see `ali-sketch`) |
 | Recording ends mid-sentence | Ask for the continuation take; concat both into `work/join/src.mov` (own `audio.wav`) and cut that |
 | Speaker self-corrects ("X, mejor dicho, Y") | Keep it unless the user asks to cut it: cutting spoken content without asking felt like an aggressive intro |
@@ -89,4 +92,4 @@ Return: the final mp4 path, duration, and LUFS; the cuts removed; the name corre
 - `references/styles.md`: the reference fidelity procedure, the style kits (Claude-UI, Ali Abdaal, Liquid Glass rejected) and caption placement.
 - `references/pipeline.md`: commands, layout numbers, render benchmarks, and gotchas.
 - `assets/template/`: a working Remotion project plus `scripts/` (cut, captions, voice, sfx_samples) and `render-chunks.sh`.
-- `assets/styles/`: style kits (`ali-abdaal/`, `claude-ui/`, `liquid-glass/`) and HTML style boards.
+- `assets/styles/`: style kits (`claude-ui/`, `claude-carousel/`, `ali-abdaal/`, `ali-sketch/`, `liquid-glass/`) and HTML style boards.

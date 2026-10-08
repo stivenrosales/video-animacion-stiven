@@ -1,0 +1,212 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Board v3 · Cursos de IA</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&display=swap" rel="stylesheet">
+<script src="../../../node_modules/roughjs/bundled/rough.js"></script>
+<style>
+*{box-sizing:border-box;margin:0}
+body{background:#E6E4DC;font-family:'DM Sans',sans-serif;color:#141413;padding:40px}
+h1{font-family:'Source Serif 4',serif;font-weight:500;font-size:34px;margin-bottom:6px}
+p.lead{color:#6B6A65;margin-bottom:12px;font-size:15px;max-width:1500px;line-height:1.45}
+.refs{display:flex;gap:10px;margin-bottom:30px;align-items:flex-end}.refs img{height:170px;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(4,378px);gap:28px}
+figure{width:378px}
+figcaption{font-size:13px;color:#6B6A65;margin-top:8px;line-height:1.35}
+.frame{width:1080px;height:1920px;position:relative;overflow:hidden;transform:scale(.35);transform-origin:0 0;margin-bottom:-1248px;border-radius:40px;background:#000}
+.paper{background-color:#F0F1EB;background-image:linear-gradient(#E3E5DC 1.5px,transparent 1.5px),linear-gradient(90deg,#E3E5DC 1.5px,transparent 1.5px);background-size:34px 34px;background-position:-1px -1px}
+.bleed{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06)}
+.scrim{position:absolute;inset:0 0 auto 0;height:640px;background:linear-gradient(#00000033,#0000)}
+.camcard{position:absolute;left:90px;top:1010px;width:900px;height:880px;border-radius:48px;overflow:hidden;box-shadow:0 18px 48px #14141322}
+.camcard img{width:100%;height:100%;object-fit:cover;object-position:50% 48%}
+svg.ink{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:visible}
+.a{position:absolute}
+.serif{font-family:'Source Serif 4',serif;font-weight:400;letter-spacing:-.015em}
+.soft{color:#FBFAF6;text-shadow:0 1px 14px #0000002e}
+.hd{display:flex;align-items:center;padding:0 34px;font-weight:500;line-height:1.22}
+.caps{font-size:21px;font-weight:600;letter-spacing:.09em;color:#C15F3C;text-transform:uppercase;margin-bottom:6px}
+.gray{background:#E8E6DF;border-radius:10px}
+.tile{background:#D97757;border-radius:8px}
+.ui{background:#fff;border-radius:22px;box-shadow:0 1px 3px #1414130f,0 10px 30px #14141314}
+.code{font-family:'JetBrains Mono',monospace;font-size:24px;padding:3px 12px;border-radius:7px;color:#fff}
+/* captions: Claude reel look = soft serif; on camera it sits on a translucent smoke chip */
+.cap{position:absolute;left:0;right:0;top:935px;transform:translateY(-50%);text-align:center;font-family:'Source Serif 4',serif;font-size:54px;white-space:nowrap;letter-spacing:-.01em}
+.cap .n{opacity:.35}
+.full .cap{left:50%;right:auto;top:1462px;transform:translate(-50%,-50%);background:rgba(38,36,33,.46);color:#FBFAF6;padding:4px 22px 10px;border-radius:8px;font-size:50px}
+.full .cap .n{opacity:.5}
+.cmp{display:flex;gap:6px;align-items:flex-end}.cmp b{font-size:12px;color:#6B6A65;font-weight:500}
+</style></head><body>
+<h1>Cursos de IA — board v3 (animado: se dibuja y tiembla)</h1>
+<p class="lead">Cambios: (1) gráficos sobre la persona como en el reel de Claude: íconos de línea blanca que se dibujan + etiqueta serif suave; (2) titulares serif suaves sobre la cabeza, sin sombra dura; (3) subtítulos en serif (sobre cámara: chip humo translúcido); (4) tachón medido sobre la palabra, a dos pasadas de marcador; (5) cámara en tarjeta: rostro centrado (antes los ojos caían al 63 % de la tarjeta, ahora al ~47 %); (6) trazos a mano con temblorcito leve (re-seed cada 4 frames), solo en lo dibujado. Recarga para ver el dibujado otra vez.</p>
+<div class="refs"><div class="cmp"><img src="../ref/claude-reel-1.jpg"><img src="../ref/claude-reel-2.jpg"><b>reel de Claude</b></div><img src="../ref/ig/sheet-DbL-LYLoOBp.jpg"><img src="../ref/ig/sheet-DeEsQBioDT3.jpg"></div>
+<div class="grid" id="grid"></div>
+<script>
+const LOGO = __LOGOS__;
+const logo = (n, s, fill) => n === 'gemini'
+  ? `<svg width="${s}" height="${s}" viewBox="0 0 24 24"><defs><linearGradient id="gg${s}" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1C7DFF"/><stop offset=".55" stop-color="#8E75B2"/><stop offset="1" stop-color="#E0685C"/></linearGradient></defs><path d="${LOGO.gemini}" fill="url(#gg${s})"/></svg>`
+  : `<svg width="${s}" height="${s}" viewBox="0 0 24 24"><path d="${LOGO[n]}" fill="${fill}"/></svg>`;
+const C = { ivory: '#F5F4ED', peach: '#EBC9B7', sand: '#E3DACB', blue: '#C0D2DE', sage: '#C9D6CB', clay: '#D97757' };
+const cap = (on, off) => `<div class="cap">${on} <span class="n">${off}</span></div>`;
+
+let SEED = 1; // bumped by the boil loop
+const ink = () => ({ stroke: '#141413', strokeWidth: 4.5, roughness: 0.6, bowing: 0.6, disableMultiStroke: true, seed: SEED });
+const chalk = () => ({ ...ink(), stroke: '#FBFAF6', strokeWidth: 5.5, roughness: 0.7 });
+function rr(x, y, w, h, r) { return `M${x+r} ${y} H${x+w-r} Q${x+w} ${y} ${x+w} ${y+r} V${y+h-r} Q${x+w} ${y+h} ${x+w-r} ${y+h} H${x+r} Q${x} ${y+h} ${x} ${y+h-r} V${y+r} Q${x} ${y} ${x+r} ${y} Z`; }
+function box(rc, x, y, w, h, fill, rot = 0) {
+  const n = rc.path(rr(x, y, w, h, 14), { ...ink(), fill, fillStyle: 'solid' });
+  if (rot) n.setAttribute('transform', `rotate(${rot} ${x + w / 2} ${y + h / 2})`);
+  return n;
+}
+function arrow(rc, g, pts, o = ink()) {
+  g(rc.curve(pts, o));
+  const [a, b] = pts.slice(-2), ang = Math.atan2(b[1] - a[1], b[0] - a[0]), L = 30;
+  g(rc.linearPath([[b[0] - L * Math.cos(ang - .55), b[1] - L * Math.sin(ang - .55)], b, [b[0] - L * Math.cos(ang + .55), b[1] - L * Math.sin(ang + .55)]], o));
+}
+function metro(svg, d, col) {
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', col); p.setAttribute('stroke-width', 5); p.setAttribute('stroke-linecap', 'round');
+  p.dataset.static = 1; svg.appendChild(p);
+}
+/** Marker strike measured on a word: two quick passes, slight upward slant, overshoot. */
+function strike(rc, g, el, frame, color, w = 9) {
+  const fr = frame.getBoundingClientRect(), r = el.getBoundingClientRect(), k = 1080 / fr.width;
+  const x0 = (r.left - fr.left) * k - 14, x1 = (r.right - fr.left) * k + 14;
+  const y = (r.top - fr.top + r.height * 0.56) * k;
+  g(rc.line(x0, y + 5, x1, y - 6, { stroke: color, strokeWidth: w, roughness: 0.9, bowing: 1.2, disableMultiStroke: true, seed: SEED }));
+  g(rc.line(x0 + 30, y + 12, x1 - 10, y + 1, { stroke: color, strokeWidth: w * 0.55, roughness: 1, bowing: 1, disableMultiStroke: true, seed: SEED + 3 }));
+}
+// White line icons drawn over the camera (Claude reel "Documents" device).
+const ICONS = {
+  course(rc, g, x, y) { // certificate with ribbon
+    g(rc.path(`M${x} ${y} h150 v110 h-150 Z`, chalk()));
+    g(rc.line(x + 22, y + 30, x + 128, y + 30, chalk()));
+    g(rc.line(x + 22, y + 55, x + 100, y + 55, chalk()));
+    g(rc.circle(x + 118, y + 88, 34, chalk()));
+    g(rc.linearPath([[x + 108, y + 104], [x + 102, y + 140], [x + 118, y + 128], [x + 134, y + 140], [x + 128, y + 104]], chalk()));
+  },
+  bolt(rc, g, x, y) {
+    g(rc.polygon([[x + 70, y], [x + 18, y + 86], [x + 62, y + 86], [x + 44, y + 160], [x + 112, y + 60], [x + 66, y + 60], [x + 90, y]], chalk()));
+  },
+};
+
+const frames = [
+{ label: '0:00 · FULL — titular serif suave sobre la cabeza (reel de Claude), se escribe palabra por palabra', mode: 'full', img: 'f1.jpg',
+  html: `<div class="a serif soft" style="left:0;right:0;top:262px;text-align:center;font-size:84px;line-height:1.08">¿Quieres aprender<br>inteligencia artificial?</div>${cap('Si realmente', 'quieres aprender')}`,
+  draw() {} },
+{ label: '0:05 · CARD — tiles clay + cajas grises (DeEs); tachón de marcador medido sobre cada curso; cámara centrada', mode: 'card', img: 'f3.jpg',
+  html: `
+  <div class="a serif" style="left:90px;top:262px;font-size:66px">Lo que <i style="color:#C15F3C">no</i> te recomiendo</div>
+  <div class="a tile" style="left:90px;top:392px;width:150px;height:150px"></div>
+  <div class="a gray hd" style="left:262px;top:392px;width:728px;height:150px;flex-direction:column;align-items:flex-start;justify-content:center"><div class="caps">Universidad</div><div style="font-size:40px"><span class="w1">Curso de universidad</span></div></div>
+  <div class="a tile" style="left:90px;top:566px;width:150px;height:150px"></div>
+  <div class="a gray hd" style="left:262px;top:566px;width:728px;height:150px;flex-direction:column;align-items:flex-start;justify-content:center"><div class="caps">En línea</div><div style="font-size:40px"><span class="w2">Curso en línea</span></div></div>
+  <div class="a serif" style="left:262px;top:742px;font-size:40px;color:#6B6A65;font-style:italic">…ni nada de eso.</div>
+  ${cap('ningún curso', 'en línea')}`,
+  draw(rc, _g, _s, g, fr) {
+    g(rc.polygon([[165,430],[215,452],[165,474],[115,452]], { fill: '#fff', fillStyle: 'solid', ...ink() }));
+    g(rc.path('M135 462 L135 495 Q165 515 195 495 L195 462', ink()));
+    g(rc.line(215,452,215,490, ink()));
+    g(rc.rectangle(122,600,86,58, { fill: '#fff', fillStyle: 'solid', ...ink() }));
+    g(rc.path('M108 670 L222 670 L212 684 L118 684 Z', { fill: '#fff', fillStyle: 'solid', ...ink() }));
+    g(rc.path('M155 618 L148 629 L155 640 M175 618 L182 629 L175 640', ink()));
+    strike(rc, g, fr.querySelector('.w1'), fr, '#141413', 7);
+    strike(rc, g, fr.querySelector('.w2'), fr, '#141413', 7);
+  } },
+{ label: '0:08 · FULL — ícono blanco dibujado a mano + etiqueta serif, al lado de la cabeza (como “Documents”)', mode: 'full', img: 'f9.jpg',
+  html: `<div class="a serif soft" style="left:120px;top:416px;width:330px;text-align:center;font-size:52px;line-height:1.1">Curso de IA</div>
+  <div class="a serif soft" style="left:120px;top:480px;width:330px;text-align:center;font-size:34px;opacity:.85;font-style:italic">grabado hace 8 meses</div>
+  <div class="a serif soft" style="left:640px;top:416px;width:330px;text-align:center;font-size:52px;line-height:1.1">La IA</div>
+  <div class="a serif soft" style="left:640px;top:480px;width:330px;text-align:center;font-size:34px;opacity:.85;font-style:italic">cambia cada semana</div>
+  ${cap('se actualiza', 'demasiado rápido')}`,
+  draw(rc, g) { ICONS.course(rc, g, 210, 262); ICONS.bolt(rc, g, 750, 245); } },
+{ label: '0:14 · CARD — UI real de Claude + líneas de metro + chips de código (Ddu)', mode: 'card', img: 'f14.jpg',
+  html: `
+  <div class="a serif" style="left:90px;top:262px;font-size:58px">Cada semana, algo nuevo</div>
+  ${[['openai','#141413','dots','ChatGPT','nuevo','#C2668A'],['claude','#D97757','Claude Design','Claude','hace semanas','#5E9C7C'],['claude','#D97757','Skills','Claude','antes','#6E9CC8'],['claude','#D97757','Memoria','Claude','antes','#E5A852']].map(([l,f,n,s,c,col],i)=>`
+  <div class="a ui" style="left:90px;top:${370+i*118}px;width:470px;height:96px;display:flex;align-items:center;gap:20px;padding:0 24px">${logo(l,40,f)}<div><div style="font-size:32px;font-weight:600">${n}</div><div style="font-size:22px;color:#6B6A65">${s}</div></div></div>
+  <div class="a" style="left:710px;top:${370+i*118+50}px"><span class="code" style="background:${col}">${c}</span></div>`).join('')}
+  ${cap('salió dots', 'de ChatGPT')}`,
+  draw(rc, g, svg) {
+    ['#C2668A','#5E9C7C','#6E9CC8','#E5A852'].forEach((col, i) => {
+      const y = 418 + i * 118, x = 590 + i * 26, y2 = y + 22;
+      metro(svg, `M560 ${y} H${x - 16} Q${x} ${y} ${x} ${y + 16} V${y2 - 16} Q${x} ${y2} ${x + 16} ${y2} H700`, col);
+    });
+  } },
+{ label: '0:28 · CARD — caja a mano + corchete a 3 filas tile + caja gris (DeEs)', mode: 'card', img: 'f27.jpg',
+  html: `
+  <div class="a serif" style="left:90px;top:262px;font-size:62px">Lo que <i style="color:#3E8E5B">sí</i> te recomiendo</div>
+  <div class="a hd serif" style="left:90px;top:500px;width:330px;height:150px;font-size:42px;text-align:center;justify-content:center">Una buena suscripción</div>
+  ${[['claude','#D97757','Claude'],['openai','#141413','ChatGPT'],['gemini','','Gemini']].map(([l,f,n],i)=>`
+  <div class="a ui" style="left:520px;top:${390+i*150}px;width:120px;height:120px;display:grid;place-items:center;border-radius:10px">${logo(l,64,f)}</div>
+  <div class="a gray hd" style="left:654px;top:${390+i*150}px;width:336px;height:120px;flex-direction:column;align-items:flex-start;justify-content:center;padding:0 26px"><div class="caps">${n}</div><div style="font-size:28px">Pruébalo tú mismo</div></div>`).join('')}
+  ${cap('de Claude,', 'de ChatGPT')}`,
+  draw(rc, g) {
+    g(box(rc, 90, 500, 330, 150, C.sand));
+    g(rc.line(420, 575, 470, 575, ink()));
+    g(rc.line(470, 450, 470, 750, ink()));
+    [450, 600, 750].forEach(y => g(rc.line(470, y, 515, y, ink())));
+  } },
+{ label: '0:38 · CARD — diagrama de bucle con flechas curvas (DbL)', mode: 'card', img: 'f38.jpg',
+  html: `
+  <div class="a hd" style="left:90px;top:270px;width:420px;height:120px;font-size:34px">Le dices qué quieres</div>
+  <div class="a hd" style="left:640px;top:420px;width:300px;height:110px;font-size:40px;font-weight:600;justify-content:center">¿Te sale?</div>
+  <div class="a hd" style="left:90px;top:560px;width:420px;height:120px;font-size:34px">Si no, le preguntas<br>por qué no te sale</div>
+  <div class="a hd" style="left:600px;top:690px;width:380px;height:110px;font-size:40px;font-weight:600;justify-content:center">Lo aprendes</div>
+  <div class="a hd" style="left:560px;top:648px;height:56px;font-size:24px;transform:rotate(-4deg);padding:0 18px">Así se aprende IA</div>
+  ${cap('le preguntas', 'por qué no')}`,
+  draw(rc, g) {
+    g(box(rc, 90, 270, 420, 120, C.ivory)); g(box(rc, 640, 420, 300, 110, C.peach));
+    g(box(rc, 90, 560, 420, 120, C.ivory)); g(box(rc, 600, 690, 380, 110, C.sand));
+    g(box(rc, 560, 648, 262, 56, C.blue, -4));
+    arrow(rc, g, [[520, 320], [700, 320], [790, 405]]);
+    arrow(rc, g, [[640, 500], [580, 560], [520, 600]]);
+    arrow(rc, g, [[300, 690], [360, 760], [590, 750]]);
+  } },
+{ label: '0:43 · CARD — caja a mano con etiqueta inclinada GRATIS; resultados de YouTube', mode: 'card', img: 'f45.jpg',
+  html: `
+  <div class="a" style="left:120px;top:300px;display:flex;align-items:center;gap:16px;font-size:44px;font-weight:600">${logo('youtube',56,'#FF0000')} Guía paso a paso</div>
+  ${[['#1d1d1b','dots','Probé dots de ChatGPT','hace 2 días'],['#E9B9A3','Design','Claude Design paso a paso','hace 1 semana']].map(([bg,tt,t,s],i)=>`
+  <div class="a" style="left:130px;top:${400+i*190}px;width:280px;height:158px;border-radius:14px;background:${bg};display:grid;place-items:center;font-family:'Source Serif 4';font-size:40px;color:${i?'#141413':'#fff'}">${tt}</div>
+  <div class="a" style="left:436px;top:${430+i*190}px;width:520px"><div style="font-size:32px;font-weight:600">${t}</div><div style="font-size:24px;color:#6B6A65;margin-top:6px">${s}</div></div>`).join('')}
+  <div class="a hd" style="left:700px;top:262px;height:66px;font-size:32px;font-weight:700;transform:rotate(4deg);padding:0 26px">GRATIS</div>
+  ${cap('totalmente gratis', 'en YouTube')}`,
+  draw(rc, g) { g(box(rc, 90, 280, 900, 520, C.ivory)); g(box(rc, 700, 262, 190, 66, C.clay, 4)); } },
+{ label: '0:49 · FULL — titular serif suave; tachón clay de marcador medido sobre “curso”', mode: 'full', img: 'f49.jpg',
+  html: `<div class="a serif soft" style="left:0;right:0;top:282px;text-align:center;font-size:86px;line-height:1.08">¿Para qué pagar<br>un <span class="w">curso</span>?</div>
+  ${cap('¿para qué pagar', 'un curso')}`,
+  draw(rc, _g, _s, g, fr) { strike(rc, g, fr.querySelector('.w'), fr, '#D97757', 11); } },
+{ label: '0:56 · FULL + cámara baja (opción nueva) — pregunta serif y chat de claude.ai encima de ti, sin flecha; sin subtítulo (el titular ya dice la frase y el chip caería en tu boca)', mode: 'lower', img: 'f56.jpg',
+  html: `
+  <div class="a serif soft" style="left:0;right:0;top:262px;text-align:center;font-size:92px">¿Tú qué opinas?</div>
+  <div class="a ui" style="left:120px;top:400px;width:840px;height:200px;border-radius:32px"><div style="position:absolute;left:40px;top:36px;font-size:36px;color:#8C8A83">Escríbelo en los comentarios…</div><div style="position:absolute;left:40px;bottom:26px;font-size:46px">+</div><div style="position:absolute;right:30px;bottom:24px;width:64px;height:64px;border-radius:16px;background:#D97757;color:#fff;display:grid;place-items:center;font-size:36px;font-weight:700">↑</div></div>
+`,
+  draw() {} },
+];
+
+const grid = document.getElementById('grid');
+const built = frames.map(f => {
+  const fig = document.createElement('figure');
+  const cls = f.mode === 'full' || f.mode === 'lower' ? 'frame full' : 'frame paper';
+  const cam = f.mode === 'card' ? `<div class="camcard"><img src="../ref/${f.img}"></div>` : '';
+  const bg = f.mode === 'full' ? `<img class="bleed" src="../ref/${f.img}"><div class="scrim"></div>` : f.mode === 'lower' ? `<img class="bleed" style="filter:blur(28px) brightness(.97);transform:scale(1.25)" src="../ref/${f.img}"><img class="bleed" style="transform:translateY(260px) scale(1.06);-webkit-mask-image:linear-gradient(transparent 0,#000 220px)" src="../ref/${f.img}"><div class="scrim"></div>` : '';
+  fig.innerHTML = `<div class="${cls}">${bg}<svg class="ink" viewBox="0 0 1080 1920"></svg>${f.html}${cam}<svg class="ink over" viewBox="0 0 1080 1920"></svg></div><figcaption>${f.label}</figcaption>`;
+  grid.appendChild(fig);
+  return { f, frame: fig.querySelector('.frame'), under: fig.querySelector('svg'), over: fig.querySelector('svg.over') };
+});
+
+// Draw-on for 1.4 s, then a gentle boil: new seed every 4 frames at 60 fps (~67 ms), cycling 3 seeds.
+const T0 = performance.now();
+function render() {
+  const t = (performance.now() - T0) / 1000;
+  SEED = 1 + (Math.floor(t * 15) % 3);
+  const p = Math.min(1, t / 1.4), e = 1 - Math.pow(1 - p, 3);
+  for (const b of built) {
+    b.under.innerHTML = ''; b.over.innerHTML = '';
+    const rc = rough.svg(b.under);
+    b.f.draw(rc, n => b.under.appendChild(n), b.under, n => b.over.appendChild(n), b.frame);
+    for (const path of [...b.under.querySelectorAll('path'), ...b.over.querySelectorAll('path')]) {
+      if (path.getAttribute('fill') && path.getAttribute('fill') !== 'none' && !path.getAttribute('stroke')) { path.style.opacity = e; continue; }
+      path.setAttribute('pathLength', 1); path.style.strokeDasharray = '1 1'; path.style.strokeDashoffset = 1 - e;
+    }
+  }
+  if (t < 30) setTimeout(render, 67);
+}
+document.fonts.ready.then(render);
+</script></body></html>
