@@ -14,6 +14,7 @@ Finished videos:
 | Workflows reel (talking head) | `videos/2026-09-27-workflows` | `WorkflowsReel` | Claude-UI kit (menus, pastel tiles, input box, cursor), voice-only "off" mode, event flyer, sheep stickers |
 | MCP vs WhatsApp reel (talking head) | `videos/2026-09-27-mcp-vs-whatsapp` | `McpReel` | Ali Abdaal style (soft serif + gold keywords, handwriting, stickers, light caption chip), chunked render |
 | Agents vs automations reel (talking head, 2 takes) | `videos/2026-09-28-fusion` | `FusionReel` | Ali × Sketch: Ali elements + rough.js/Excalifont strokes + frameless camera drop, one macOS window |
+| Don't buy AI courses reel (talking head) | `videos/2026-10-07-cursos-ia` | `CursosReel` | Claude Carousel: Claude's IG carousels (grid paper, hand boxes, tabs, arrows) + reel devices (soft serif, chalk icons), CC0 stroke SFX |
 
 For talking-head reels, load the skill `talking-head-reel`: it holds the full pipeline and the proven layout numbers. Its single source of truth is `skills/talking-head-reel/` in this repo; `~/.claude/skills/talking-head-reel` is a symlink to it, so edit the repo copy and commit.
 
@@ -61,7 +62,7 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - An idea the speaker did not say but the video depends on (e.g. "en empresas") gets a headline beat, not a small note.
 - Remotion `--frames` is 0-based and must stay below duration×fps.
 - REFERENCE FIDELITY: when the user names a style or gives a reference (image, site, shorts, past reel), study it concretely (download it, contact-sheet it, extract real fonts/hex colors/positions) and show an HTML style board over his real frames BEFORE building. A generic approximation cost a full rebuild twice. See the skill's `references/styles.md`.
-- Style verdicts: Claude-UI kit = liked; Ali Abdaal = liked a lot; Ali × Sketch = liked a lot (Ali elements, Excalidraw strokes only, Claude-UI camera drop without frame); Liquid Glass = rejected; Claude-UI graphics mixed with Ali = rejected.
+- Style verdicts: Claude Carousel (Claude's own IG carousels + reels) = liked; Claude-UI kit = liked; Ali Abdaal = liked a lot; Ali × Sketch = liked a lot (Ali elements, Excalidraw strokes only, Claude-UI camera drop without frame); Liquid Glass = rejected; Claude-UI graphics mixed with Ali = rejected.
 - Cut only silences by default. Never remove words he said (self-corrections, fillers) without asking.
 - A clip that ends mid-word means a missing take: ask for it and join the takes in `work/join/`.
 - Work inline for video editing; delegating the build to a subagent lost context (generic v1, idle waits, overwritten `work/audio.wav`).
@@ -71,6 +72,11 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - Offer SFX as A/B/C candidates (`scripts/sfx_samples.py`); approved set: A everywhere, time-lapse B.
 - Render with `tools/render-chunks.sh <slug> <Comp>`: a fix re-renders only its 10 s chunk. `--gl=angle`, JPEG frames and keyframe tweaks gave no useful gain; `cut.py` uses `-preset fast`.
 - On the phone (Remote Control), send a 720p crf 24 copy with SendUserFile.
+- "Claude style" can mean Claude's Instagram, not only the claude.ai UI: fetch the carousels/reels he links and build from them (`claude-carousel` kit).
+- Animated boards (draw-on + boil) sell hand-drawn styles better than static ones; he judges the motion, not just the layout.
+- Camera card: anchor the eye line (~0.47 of the card); the default 0.30 left his face too low.
+- Stroke SFX come from real CC0 recordings (Freesound, OpenGameArt), never synthesized; use them sparingly (~1 per scene, 0.25) and keep chalk icons over the camera silent.
+- Filler cuts: verify each with a splice test of the joined audio; a cut 110 ms early ate the "-que" of "porque".
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)
 
