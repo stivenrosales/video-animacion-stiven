@@ -23,6 +23,7 @@ FRAMES = {  # style -> (published reel, second)
     "sketch": ("2026-09-25-poema-milena-h264", 9.8),
     "ali-sketch": ("2026-09-28-fusion", 44.3),
     "claude-carousel": ("2026-10-07-cursos-ia", 40.6),
+    "ali-youtube": ("2026-10-07-whatsapp-agentes", 43.6),
 }
 GLASS_BOARD = ROOT / "videos" / "2026-09-27-mcp-vs-whatsapp" / "out" / "glass" / "index.html"
 

@@ -39,16 +39,17 @@ The whole workflow ships as a **Claude Code skill**, so you describe the reel an
 
 ## 🎨 Styles
 
-Six visual languages, each built from real references (fonts, hex colors and positions measured from the source, never approximated).
+Seven visual languages, each built from real references (fonts, hex colors and positions measured from the source, never approximated).
 
 <table>
 <tr>
-<td align="center" width="16%"><img src="docs/assets/styles/claude-ui.webp" width="200" alt="Claude-UI style: a menu card with Claude, ChatGPT and OpenCode above a camera card"></td>
-<td align="center" width="16%"><img src="docs/assets/styles/ali-abdaal.webp" width="200" alt="Ali Abdaal style: soft serif headline with a gold italic keyword over the talking head"></td>
-<td align="center" width="16%"><img src="docs/assets/styles/claude-carousel.webp" width="200" alt="Claude Carousel style: hand-drawn boxes and curved arrows on grid paper above a camera card"></td>
-<td align="center" width="16%"><img src="docs/assets/styles/ali-sketch.webp" width="200" alt="Ali × Sketch style: white icon boxes joined by hand-drawn arrows above a lowered camera"></td>
-<td align="center" width="16%"><img src="docs/assets/styles/sketch.webp" width="200" alt="Sketch style: hand-drawn silhouettes in front of a glowing door"></td>
-<td align="center" width="16%"><img src="docs/assets/styles/liquid-glass.webp" width="200" alt="Liquid Glass style: refractive glass notifications over the talking head"></td>
+<td align="center" width="14%"><img src="docs/assets/styles/claude-ui.webp" width="200" alt="Claude-UI style: a menu card with Claude, ChatGPT and OpenCode above a camera card"></td>
+<td align="center" width="14%"><img src="docs/assets/styles/ali-abdaal.webp" width="200" alt="Ali Abdaal style: soft serif headline with a gold italic keyword over the talking head"></td>
+<td align="center" width="14%"><img src="docs/assets/styles/ali-youtube.webp" width="200" alt="Ali YouTube style: WhatsApp reply buttons in a white panel above a lilac-bordered camera card"></td>
+<td align="center" width="14%"><img src="docs/assets/styles/claude-carousel.webp" width="200" alt="Claude Carousel style: hand-drawn boxes and curved arrows on grid paper above a camera card"></td>
+<td align="center" width="14%"><img src="docs/assets/styles/ali-sketch.webp" width="200" alt="Ali × Sketch style: white icon boxes joined by hand-drawn arrows above a lowered camera"></td>
+<td align="center" width="14%"><img src="docs/assets/styles/sketch.webp" width="200" alt="Sketch style: hand-drawn silhouettes in front of a glowing door"></td>
+<td align="center" width="14%"><img src="docs/assets/styles/liquid-glass.webp" width="200" alt="Liquid Glass style: refractive glass notifications over the talking head"></td>
 </tr>
 <tr>
 <td valign="top">
@@ -67,7 +68,14 @@ Six visual languages, each built from real references (fonts, hex colors and pos
 </td>
 <td valign="top">
 
-**Claude Carousel** <sup>new</sup><br>
+**Ali YouTube** <sup>new</sup><br>
+<sub>Ali's long-form graphics: cream canvas with a soft swoosh, a lilac-bordered camera card under a white panel, chapter cards, serif words that arrive blurred, and real screenshots with a source line.</sub><br><br>
+<a href="skills/talking-head-reel/assets/styles/ali-youtube"><code>styles/ali-youtube</code></a>
+
+</td>
+<td valign="top">
+
+**Claude Carousel**<br>
 <sub>Claude's own Instagram language: grid paper, hand-drawn boxes with tilted tabs, curved arrows, clay tiles and metro lines, plus the reels' soft serif headlines and chalk icons drawn over the camera.</sub><br><br>
 <a href="skills/talking-head-reel/assets/styles/claude-carousel"><code>styles/claude-carousel</code></a>
 
@@ -104,6 +112,7 @@ Six visual languages, each built from real references (fonts, hex colors and pos
 |-------|------|---------|
 | Claude-UI | Source Serif 4 · Inter · JetBrains Mono | ![](https://img.shields.io/badge/%23FAF9F5-FAF9F5?style=flat-square) ![](https://img.shields.io/badge/%23141413-141413?style=flat-square) ![](https://img.shields.io/badge/%23C15F3C-C15F3C?style=flat-square) ![](https://img.shields.io/badge/%23E4EEFA-E4EEFA?style=flat-square) ![](https://img.shields.io/badge/%23F9EBDD-F9EBDD?style=flat-square) ![](https://img.shields.io/badge/%23EEEAF8-EEEAF8?style=flat-square) ![](https://img.shields.io/badge/%23E6F2E8-E6F2E8?style=flat-square) |
 | Ali Abdaal | Fraunces SOFT 100 (for Recoleta) · Poppins · Gaegu · Oswald | ![](https://img.shields.io/badge/%23F9F6F3-F9F6F3?style=flat-square) ![](https://img.shields.io/badge/%231B1624-1B1624?style=flat-square) ![](https://img.shields.io/badge/%23F7C95B-F7C95B?style=flat-square) ![](https://img.shields.io/badge/%235DCDF1-5DCDF1?style=flat-square) ![](https://img.shields.io/badge/%23FD976D-FD976D?style=flat-square) ![](https://img.shields.io/badge/%238EF0A8-8EF0A8?style=flat-square) ![](https://img.shields.io/badge/%23C9B6FF-C9B6FF?style=flat-square) |
+| Ali YouTube | Fraunces (opsz 72, SOFT 30) · Inter | ![](https://img.shields.io/badge/%23FAF8F4-FAF8F4?style=flat-square) ![](https://img.shields.io/badge/%23F2EDE8-F2EDE8?style=flat-square) ![](https://img.shields.io/badge/%231C1A19-1C1A19?style=flat-square) ![](https://img.shields.io/badge/%23F17E3C-F17E3C?style=flat-square) ![](https://img.shields.io/badge/%23FF8675-FF8675?style=flat-square) ![](https://img.shields.io/badge/%235CC6EE-5CC6EE?style=flat-square) ![](https://img.shields.io/badge/%237DC88E-7DC88E?style=flat-square) ![](https://img.shields.io/badge/%23B9B4F2-B9B4F2?style=flat-square) |
 | Claude Carousel | Source Serif 4 · DM Sans · JetBrains Mono | ![](https://img.shields.io/badge/%23F0F1EB-F0F1EB?style=flat-square) ![](https://img.shields.io/badge/%23F5F4ED-F5F4ED?style=flat-square) ![](https://img.shields.io/badge/%23EBC9B7-EBC9B7?style=flat-square) ![](https://img.shields.io/badge/%23E3DACB-E3DACB?style=flat-square) ![](https://img.shields.io/badge/%23C0D2DE-C0D2DE?style=flat-square) ![](https://img.shields.io/badge/%23D97757-D97757?style=flat-square) ![](https://img.shields.io/badge/%23141413-141413?style=flat-square) |
 | Ali × Sketch | Fraunces SOFT 100 · Poppins · Excalifont · Oswald | ![](https://img.shields.io/badge/%23FFFFFF-FFFFFF?style=flat-square) ![](https://img.shields.io/badge/%23F7C95B-F7C95B?style=flat-square) ![](https://img.shields.io/badge/%23A5D8FF-A5D8FF?style=flat-square) ![](https://img.shields.io/badge/%23FDD46B-FDD46B?style=flat-square) ![](https://img.shields.io/badge/%238EF0A8-8EF0A8?style=flat-square) ![](https://img.shields.io/badge/%23FD976D-FD976D?style=flat-square) ![](https://img.shields.io/badge/%231E1E1E-1E1E1E?style=flat-square) |
 | Sketch | Kalam | ![](https://img.shields.io/badge/%23ECE8DF-ECE8DF?style=flat-square) ![](https://img.shields.io/badge/%232B1B1E-2B1B1E?style=flat-square) ![](https://img.shields.io/badge/%230D0B24-0D0B24?style=flat-square) ![](https://img.shields.io/badge/%23D9774E-D9774E?style=flat-square) ![](https://img.shields.io/badge/%23FFD46B-FFD46B?style=flat-square) ![](https://img.shields.io/badge/%236E3F8F-6E3F8F?style=flat-square) ![](https://img.shields.io/badge/%23F06FA8-F06FA8?style=flat-square) |
@@ -211,7 +220,7 @@ Then just talk to Claude Code:
 | [`references/pipeline.md`](skills/talking-head-reel/references/pipeline.md) | Commands, layout numbers, render benchmarks, gotchas |
 | [`references/styles.md`](skills/talking-head-reel/references/styles.md) | How to study a reference, plus every style kit |
 | [`assets/template/`](skills/talking-head-reel/assets/template) | A working Remotion project with `cut.py`, `captions.py`, `voice.py`, `sfx_samples.py` |
-| [`assets/styles/`](skills/talking-head-reel/assets/styles) | Claude-UI, Claude Carousel, Ali Abdaal, Ali × Sketch and Liquid Glass kits with their HTML style boards |
+| [`assets/styles/`](skills/talking-head-reel/assets/styles) | Claude-UI, Claude Carousel, Ali Abdaal, Ali YouTube, Ali × Sketch and Liquid Glass kits with their HTML style boards |
 
 **Guardrails it enforces**
 
@@ -236,6 +245,7 @@ Then just talk to Claude Code:
 | 2026-09-27 | [MCP vs WhatsApp](videos/2026-09-27-mcp-vs-whatsapp) | `McpReel` | Ali Abdaal | 60 |
 | 2026-09-28 | [Agents vs automations](videos/2026-09-28-fusion) | `FusionReel` | Ali × Sketch, two takes joined | 60 |
 | 2026-10-07 | [Don't buy AI courses](videos/2026-10-07-cursos-ia) | `CursosReel` | Claude Carousel, CC0 stroke sounds | 60 |
+| 2026-10-07 | [WhatsApp agents](videos/2026-10-07-whatsapp-agentes) | `WhatsAppReel` | Ali YouTube, four camera modes | 60 |
 
 ## 🗂️ Repo map
 
@@ -273,7 +283,7 @@ python3 docs/art/gallery.py   # phone mockups (needs the local finals/)
 - Excalifont (Excalidraw): [SIL Open Font License 1.1](videos/2026-09-28-fusion/public/fonts/OFL-Excalifont.txt). Hand strokes by [rough.js](https://github.com/rough-stuff/rough) (MIT).
 - Sound effects are synthesized with code, except the stroke sounds of the Claude Carousel reel: CC0 recordings from [Freesound](https://freesound.org/s/655051/) ([655051](https://freesound.org/s/655051/), [751055](https://freesound.org/s/751055/)) and [OpenGameArt](https://opengameart.org/node/132692) (see [SFX-CREDITS](skills/talking-head-reel/assets/styles/claude-carousel/SFX-CREDITS.md)).
 - Claude, Claude Code, Clawd and the Claude logo are trademarks of Anthropic. OpenAI, ChatGPT, Gemini, WhatsApp, Meta, Apple and other names belong to their owners and appear only to refer to their products. The pixel-art Clawd is fan art.
-- The Claude Carousel, Ali Abdaal, Ali × Sketch and Liquid Glass kits are study recreations. They are not affiliated with or endorsed by their creators.
+- The Claude Carousel, Ali Abdaal, Ali YouTube, Ali × Sketch and Liquid Glass kits are study recreations. They are not affiliated with or endorsed by their creators.
 
 <div align="center">
 <br>
