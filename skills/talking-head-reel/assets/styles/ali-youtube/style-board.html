@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ali YouTube Board</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fraunces stands in for Ali's YouTube serif; Inter for the UI labels. -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..800,30&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, sans-serif;
+    --canvas: #FAF8F4; --swoosh: #F2EDE8; --ink: #1C1A19;
+    --orange: #F17E3C; --salmon: #FF8675; --salmonText: #FF9A80; --sky: #5CC6EE;
+    --green: #7DC88E; --lilac: #B9B4F2; --lilacPill: #C7B6F8; --chapter: #FBEDE6;
+    --scale: 0.4;
+    --T: 7s;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #EEEBE6; color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  main { max-width: 1500px; margin: 0 auto; padding: 44px 16px 90px; }
+  header h1 { font-family: var(--serif); font-weight: 600; font-size: 44px; letter-spacing: -1px; margin: 0; }
+  header h1 span { color: var(--orange); }
+  header p { color: #6E6A66; font-size: 16px; margin: 10px 0 34px; max-width: 860px; line-height: 1.55; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(1080px * var(--scale)), 1fr)); gap: 44px 26px; justify-items: center; }
+  figure { margin: 0; width: calc(1080px * var(--scale)); max-width: 100%; }
+  figcaption { margin-top: 14px; }
+  figcaption b { display: block; font-family: var(--serif); font-size: 20px; font-weight: 600; }
+  figcaption span { display: block; color: #6E6A66; font-size: 13.5px; margin-top: 4px; line-height: 1.45; }
+  .frame { width: calc(1080px * var(--scale)); height: calc(1920px * var(--scale)); border-radius: 28px; overflow: hidden; position: relative; box-shadow: 0 24px 60px rgba(40,30,20,.18), 0 0 0 1px rgba(40,30,20,.06); }
+  .screen { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform: scale(var(--scale)); transform-origin: 0 0; overflow: hidden; background: var(--canvas); }
+  .abs { position: absolute; }
+  .cam { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: push 9s ease-in-out infinite alternate; }
+  @keyframes push { from { transform: scale(1.0) } to { transform: scale(1.05) } }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,14,10,.58) 0%, rgba(20,14,10,.34) 24%, rgba(20,14,10,0) 40%); }
+  .swoosh { position: absolute; inset: 0; }
+
+  /* ---------- word blur-in (Ali: incoming word blurred and gray) ---------- */
+  .w { display: inline-block; opacity: 0; animation: wordIn var(--T) infinite; animation-delay: calc(var(--i) * .17s); }
+  @keyframes wordIn {
+    0% { opacity: 0; filter: blur(14px); transform: translateY(10px); }
+    5% { opacity: .55; filter: blur(5px); }
+    9%, 88% { opacity: 1; filter: blur(0); transform: none; }
+    96%, 100% { opacity: 0; filter: blur(8px); }
+  }
+  .serif { font-family: var(--serif); font-variation-settings: "opsz" 72; letter-spacing: -1.2px; }
+
+  /* full-frame headline over the camera */
+  .over { color: #fff; font-weight: 560; font-size: 92px; line-height: 1.04; text-shadow: 0 2px 18px rgba(0,0,0,.25); }
+  .over .k { color: var(--salmonText); font-weight: 700; }
+
+  /* serif caption, no chip */
+  .cap { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--serif); font-variation-settings: "opsz" 72; font-weight: 600; font-size: 56px; letter-spacing: -.6px; white-space: nowrap; }
+  .cap.light { color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.45), 0 0 2px rgba(0,0,0,.4); top: 1405px; }
+  .cap.dark { color: var(--ink); top: 818px; }
+  .cap .n { color: rgba(255,255,255,.55); filter: blur(3px); }
+  .cap.dark .n { color: rgba(28,26,25,.35); }
+
+  /* camera card (canvas scenes) */
+  .camcard { position: absolute; left: 90px; top: 940px; width: 900px; height: 920px; border-radius: 40px; overflow: hidden; border: 4px solid var(--lilac); box-shadow: 0 0 0 6px rgba(185,180,242,.18), 0 20px 50px rgba(40,30,20,.12); animation: camIn var(--T) infinite; }
+  .camcard img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 54%; }
+  @keyframes camIn { 0% { transform: translateY(40px) scale(.96); opacity: 0 } 6%, 92% { transform: none; opacity: 1 } 100% { opacity: 0 } }
+
+  .panel { position: absolute; left: 60px; right: 60px; top: 230px; height: 560px; background: #fff; border-radius: 44px; box-shadow: 0 24px 70px rgba(60,40,20,.08), 0 0 0 1px rgba(60,40,20,.03); }
+
+  /* chat pills */
+  .pill { position: absolute; padding: 18px 36px 20px; border-radius: 999px; color: #fff; font-family: var(--serif); font-variation-settings: "opsz" 48; font-weight: 600; font-size: 40px; letter-spacing: -.3px; white-space: nowrap; opacity: 0; animation: pop var(--T) infinite; animation-delay: var(--d); }
+  .pill.s { background: var(--salmon); }
+  .pill.b { background: var(--sky); }
+  @keyframes pop { 0% { opacity: 0; transform: translateY(24px) scale(.9) } 4%, 50% { opacity: 1; transform: none } 55%, 100% { opacity: 0; transform: translateY(-20px) scale(.92) } }
+  .badge { position: absolute; padding: 8px 22px 10px; border-radius: 999px; background: var(--orange); color: #fff; font-family: var(--serif); font-weight: 700; font-size: 34px; box-shadow: 0 6px 14px rgba(241,126,60,.3); }
+  .merged { position: absolute; left: 140px; top: 420px; width: 800px; padding: 30px 40px 34px; border-radius: 40px; background: var(--salmon); color: #fff; font-family: var(--serif); font-weight: 600; font-size: 40px; line-height: 1.25; opacity: 0; animation: merge var(--T) infinite; }
+  @keyframes merge { 0%, 59% { opacity: 0; transform: scale(.9) } 64%, 92% { opacity: 1; transform: none } 100% { opacity: 0 } }
+  .merged .badge { position: static; display: inline-block; margin-left: 14px; padding: 4px 18px 6px; vertical-align: 4px; background: #fff; color: var(--salmon); font-size: 30px; box-shadow: none; }
+
+  /* text slide covering the camera */
+  .slide { position: absolute; inset: 0; background: var(--canvas); animation: slideUp var(--T) infinite; }
+  @keyframes slideUp {
+    0% { transform: translateY(1920px); filter: blur(0) }
+    3% { filter: blur(6px) }
+    7%, 80% { transform: translateY(0); filter: blur(0) }
+    84% { filter: blur(10px) }
+    90%, 100% { transform: translateY(-1920px); filter: blur(0) }
+  }
+  .slide .t { position: absolute; left: 90px; right: 90px; top: 640px; text-align: center; font-family: var(--serif); font-variation-settings: "opsz" 72; font-weight: 600; font-size: 98px; line-height: 1.08; letter-spacing: -2px; color: var(--ink); }
+  .slide .t .k { color: var(--orange); }
+
+  /* chapter card */
+  .chapter { background: var(--chapter); }
+  .chapter .title { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-family: var(--serif); font-weight: 600; font-size: 104px; line-height: 1.02; letter-spacing: -2px; }
+  .chapter svg { position: absolute; left: 0; top: 0; }
+  .chapter .line { stroke: var(--lilacPill); stroke-width: 7; fill: none; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw var(--T) infinite; }
+  @keyframes draw { 0%, 6% { stroke-dashoffset: 1 } 22%, 100% { stroke-dashoffset: 0 } }
+  .step { position: absolute; left: 590px; top: 1030px; padding: 14px 36px 18px; border-radius: 999px; background: var(--lilacPill); color: #fff; font-family: var(--serif); font-weight: 600; font-size: 46px; opacity: 0; animation: pop2 var(--T) infinite; }
+  @keyframes pop2 { 0%, 20% { opacity: 0; transform: scale(.7) } 26%, 92% { opacity: 1; transform: none } 100% { opacity: 0 } }
+
+  /* tiles */
+  .tile { position: absolute; width: 290px; height: 300px; background: #FBF7F4; border: 2px solid #EFE9E4; border-radius: 36px; text-align: center; opacity: 0; animation: pop2 var(--T) infinite; animation-delay: var(--d); }
+  .tile .dot { width: 120px; height: 120px; border-radius: 50%; margin: 44px auto 22px; display: grid; place-items: center; }
+  .tile .dot svg { width: 62px; height: 62px; }
+  .tile b { font-family: var(--serif); font-weight: 700; font-size: 38px; line-height: 1.05; display: block; }
+  .tile.press { animation: pop2 var(--T) infinite, press var(--T) infinite; animation-delay: var(--d), 0s; }
+  @keyframes press { 0%, 48% { box-shadow: none; } 52% { transform: scale(.94) } 56%, 92% { transform: scale(1.04); box-shadow: 0 0 0 6px var(--orange), 0 18px 40px rgba(241,126,60,.25); } }
+  .msg { position: absolute; left: 110px; top: 300px; width: 860px; padding: 26px 34px; border-radius: 28px 28px 28px 8px; background: #FBF7F4; border: 2px solid #EFE9E4; font-family: var(--serif); font-weight: 560; font-size: 44px; }
+  .msg small { display: flex; align-items: center; gap: 12px; font-family: var(--sans); font-size: 26px; color: #8A847E; font-weight: 500; margin-bottom: 8px; }
+
+
+  /* whatsapp reply buttons */
+  .wa-in { position: absolute; left: 100px; top: 250px; width: 760px; padding: 18px 32px 22px; border-radius: 30px 30px 30px 8px; background: #FBF7F4; border: 2px solid #EFE9E4; font-family: var(--serif); font-weight: 600; font-size: 50px; opacity: 0; animation: pop2 var(--T) infinite; }
+  .wa-in small { display: flex; align-items: center; gap: 12px; font-family: var(--sans); font-size: 25px; color: #8A847E; font-weight: 500; margin-bottom: 6px; }
+  .row { position: absolute; left: 100px; width: 880px; height: 84px; display: flex; align-items: center; gap: 20px; padding: 0 22px; border-radius: 22px; background: #fff; border: 2px solid #EFE9E4; box-shadow: 0 6px 16px rgba(60,40,20,.06); font-family: var(--serif); font-weight: 700; font-size: 44px; opacity: 0; animation: pop2 var(--T) infinite; animation-delay: var(--d); }
+  .row i { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+  .row i svg { width: 28px; height: 28px; }
+  .row.tap { animation: pop2 var(--T) infinite, tap var(--T) infinite; animation-delay: var(--d), 0s; }
+  @keyframes tap { 0%, 44% { } 47% { transform: scale(.96); } 50%, 92% { transform: scale(1.02); border-color: var(--orange); box-shadow: 0 0 0 4px rgba(241,126,60,.9), 0 14px 30px rgba(241,126,60,.22); } }
+  .finger { position: absolute; width: 64px; height: 64px; border-radius: 50%; background: rgba(28,26,25,.18); border: 3px solid rgba(255,255,255,.9); box-shadow: 0 6px 16px rgba(0,0,0,.18); animation: finger var(--T) infinite; }
+  @keyframes finger { 0%, 30% { opacity: 0; transform: translate(240px, 260px) } 42% { opacity: 1; transform: translate(0,0) } 47% { transform: scale(.8) } 52% { transform: scale(1); opacity: 1 } 60%, 100% { opacity: 0 } }
+  .wa-out { position: absolute; right: 100px; top: 696px; padding: 16px 30px 20px; border-radius: 28px 28px 8px 28px; background: var(--salmon); color: #fff; font-family: var(--serif); font-weight: 650; font-size: 40px; opacity: 0; animation: out var(--T) infinite; }
+  @keyframes out { 0%, 54% { opacity: 0; transform: translateY(20px) scale(.9) } 60%, 92% { opacity: 1; transform: none } 100% { opacity: 0 } }
+
+  /* comparison cards */
+  .cmp { position: absolute; top: 262px; width: 410px; height: 490px; border-radius: 36px; background: #FBF7F4; border: 2px solid #EFE9E4; text-align: center; opacity: 0; animation: pop2 var(--T) infinite; animation-delay: var(--d); }
+  .cmp .dot { width: 130px; height: 130px; border-radius: 50%; margin: 56px auto 22px; display: grid; place-items: center; }
+  .cmp b { display: block; font-family: var(--serif); font-weight: 700; font-size: 46px; }
+  .chip { display: inline-block; margin-top: 18px; padding: 8px 22px 10px; border-radius: 999px; background: #ECE7E2; color: #7A736C; font-family: var(--sans); font-weight: 600; font-size: 26px; }
+  .cmp.dim { animation: pop2 var(--T) infinite, dim var(--T) infinite; animation-delay: var(--d), 0s; }
+  @keyframes dim { 0%, 34% { filter: none } 42%, 92% { filter: grayscale(1) opacity(.55) } }
+  .cmp.win { animation: pop2 var(--T) infinite, win var(--T) infinite; animation-delay: var(--d), 0s; }
+  @keyframes win { 0%, 34% { } 42%, 92% { transform: scale(1.04); background: #fff; border-color: var(--orange); box-shadow: 0 0 0 4px rgba(241,126,60,.9), 0 20px 44px rgba(241,126,60,.18); } }
+  .tag { position: absolute; padding: 8px 24px 12px; border-radius: 999px; background: var(--orange); color: #fff; font-family: var(--serif); font-weight: 700; font-size: 34px; white-space: nowrap; box-shadow: 0 6px 14px rgba(241,126,60,.3); opacity: 0; animation: tagIn var(--T) infinite; animation-delay: var(--d); }
+  @keyframes tagIn { 0%, 40% { opacity: 0; transform: translateY(12px) scale(.8) } 46%, 92% { opacity: 1; transform: none } 100% { opacity: 0 } }
+  .cmp .tag { position: static; display: inline-block; margin: 10px 6px 0; }
+
+
+  /* McDonald's screenshot card */
+  .shot { position: absolute; left: 150px; top: 400px; width: 780px; height: 940px; border-radius: 36px; overflow: hidden; background: #fff; box-shadow: 0 30px 80px rgba(60,40,20,.16), 0 0 0 1px rgba(60,40,20,.05); opacity: 0; animation: shotIn var(--T) infinite; }
+  .shot img { width: 100%; display: block; animation: scroll var(--T) infinite; }
+  @keyframes shotIn { 0% { opacity: 0; transform: translateY(80px) scale(.94); filter: blur(8px) } 7%, 92% { opacity: 1; transform: none; filter: none } 100% { opacity: 0 } }
+  @keyframes scroll { 0%, 22% { transform: translateY(0) } 50%, 100% { transform: translateY(-180px) } }
+  .src { position: absolute; left: 0; right: 0; top: 1372px; text-align: center; font-family: var(--sans); font-weight: 500; font-size: 26px; color: #8A847E; letter-spacing: .5px; }
+  .src b { color: var(--ink); font-weight: 600; }
+
+  /* strike + white pills over footage */
+  .strike { position: absolute; padding: 18px 40px 22px; border-radius: 999px; background: var(--salmon); color: #fff; font-family: var(--serif); font-weight: 650; font-size: 60px; white-space: nowrap; opacity: 0; animation: pop2 var(--T) infinite; animation-delay: var(--d); }
+  .strike i { font-style: normal; position: relative; }
+  .strike i::after { content: ""; position: absolute; left: -6px; right: -6px; top: 54%; height: 5px; background: #fff; border-radius: 3px; transform-origin: left; transform: scaleX(0); animation: strikeOn var(--T) infinite; }
+  @keyframes strikeOn { 0%, 22% { transform: scaleX(0) } 30%, 100% { transform: scaleX(1) } }
+  .wpill { position: absolute; padding: 16px 34px 20px; border-radius: 22px; background: #fff; color: var(--ink); font-family: var(--serif); font-weight: 650; font-size: 54px; box-shadow: 0 10px 30px rgba(0,0,0,.18); opacity: 0; animation: pop2 var(--T) infinite; animation-delay: var(--d); }
+
+  /* flow row */
+  .wide { position: absolute; left: 60px; top: 240px; width: 960px; height: 1010px; border-radius: 40px; overflow: hidden; border: 4px solid var(--lilac); }
+  .wide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 59%; }
+  .node { position: absolute; top: 1290px; width: 280px; text-align: center; opacity: 0; animation: pop2 var(--T) infinite; animation-delay: var(--d); }
+  .node small { display: block; font-family: var(--sans); font-weight: 500; font-size: 28px; color: #55504B; margin-bottom: 16px; }
+  .node span { display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; background: #fff; border-radius: 18px; box-shadow: 0 6px 20px rgba(60,40,20,.10), 0 0 0 1px rgba(60,40,20,.05); font-family: var(--sans); font-weight: 600; font-size: 32px; }
+  .dots { position: absolute; top: 1372px; width: 70px; border-top: 5px dotted #A9A29B; }
+
+  /* balance */
+  .scale-svg { position: absolute; left: 90px; top: 300px; }
+  .beam { transform-origin: 450px 210px; animation: tip var(--T) infinite; }
+  @keyframes tip { 0%, 20% { transform: rotate(0) } 34%, 92% { transform: rotate(-9deg) } 100% { transform: rotate(0) } }
+
+  /* lower third */
+  .lt { position: absolute; left: 80px; top: 1180px; color: #fff; font-family: var(--serif); font-weight: 650; font-size: 70px; text-shadow: 0 2px 14px rgba(0,0,0,.4); opacity: 0; animation: pop2 var(--T) infinite; }
+  .lt span { display: inline-block; margin-top: 10px; padding: 8px 22px 10px; border-radius: 999px; background: var(--salmon); font-family: var(--sans); font-weight: 600; font-size: 30px; text-shadow: none; }
+
+  .guide { position: absolute; left: 539px; top: 0; bottom: 0; width: 2px; background: rgba(255,0,120,.0); }
+  @media (prefers-reduced-motion: reduce) { * { animation-duration: 0s !important; animation-iteration-count: 1 !important; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Ali Abdaal · <span>YouTube</span> → reel 9:16</h1>
+    <p>Tokens medidos de su video real (6-ZxPvpV8ec) y de tus capturas: crema <code>#FAF8F4</code>, swoosh <code>#F2EDE8</code>, naranja <code>#F17E3C</code>, salmón <code>#FF8675</code>, cielo <code>#5CC6EE</code>, verde <code>#7DC88E</code>, borde lila de la cámara. Serif suave (Fraunces como sustituto) + Inter para etiquetas. Adaptaciones forzadas por tu toma: scrim arriba porque tu cielo es claro; "cámara a la izquierda" pasa a "gráfico arriba + cámara abajo".</p>
+  </header>
+
+  <div class="grid">
+
+    <!-- 1 hook -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <img class="cam" src="f2.jpg" alt="">
+        <div class="scrim"></div>
+        <div class="abs serif over" style="left:80px; right:80px; top:280px;">
+          <span class="w" style="--i:0">WhatsApp</span> <span class="w" style="--i:1">ahora</span> <span class="w" style="--i:2">cobra</span><br>
+          <span class="w k" style="--i:3">por</span> <span class="w k" style="--i:4">cada</span> <span class="w k" style="--i:5">mensaje</span>
+        </div>
+              </div></div>
+      <figcaption><b>1 · Hook sobre la cámara</b><span>Texto blanco en serif con la palabra clave en salmón, palabras que entran con blur (como "$50 million"). Sin nombre.</span></figcaption>
+    </figure>
+
+    <!-- 2 chapter -->
+    <figure>
+      <div class="frame"><div class="screen chapter">
+        <svg width="1080" height="1920" viewBox="0 0 1080 1920"><path class="line" pathLength="1" d="M900 0 L900 990 Q900 1062 830 1062"/></svg>
+        <div class="title"><span class="w" style="--i:0">Un</span> <span class="w" style="--i:1">solo</span><br><span class="w" style="--i:2">mensaje</span></div>
+        <div class="step">Consejo 1</div>
+      </div></div>
+      <figcaption><b>2 · Tarjeta de capítulo</b><span>Fondo rosado crema, línea lila que baja y termina en la pill "Consejo 1" (su "The 10x Question · Step 2"). Una por consejo: 3 en total.</span></figcaption>
+    </figure>
+
+    <!-- 3 bubbles -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <svg class="swoosh" viewBox="0 0 1080 1920"><path fill="#F2EDE8" d="M-80 1920 C 380 1760 640 1240 860 860 C 960 690 1060 620 1180 600 L1180 1080 C 1040 1120 900 1360 760 1920 Z"/></svg>
+        <div class="panel"></div>
+        <div class="pill s" style="left:130px; top:320px; --d:0s">Hola 👋</div>
+        <div class="pill s" style="left:130px; top:430px; --d:.35s">Te cuento cómo funciona…</div>
+        <div class="pill s" style="left:130px; top:540px; --d:.7s">¿Te ayudo con algo?</div>
+        <div class="badge" style="left:820px; top:330px; opacity:0; animation: pop var(--T) infinite; animation-delay:.2s">$</div>
+        <div class="badge" style="left:820px; top:440px; opacity:0; animation: pop var(--T) infinite; animation-delay:.5s">$</div>
+        <div class="badge" style="left:820px; top:550px; opacity:0; animation: pop var(--T) infinite; animation-delay:.9s">$</div>
+        <div class="merged">Hola 👋 Te cuento cómo funciona y te ayudo en un solo mensaje.<span class="badge">× 1</span></div>
+        <div class="cap dark">todo en <span style="color:var(--orange)">uno solo</span> <span class="n">pero</span></div>
+        <div class="camcard"><img src="f30.jpg" alt=""></div>
+      </div></div>
+      <figcaption><b>3 · Burbujas → un solo mensaje</b><span>Panel blanco arriba, cámara abajo con borde lila. Pills salmón (sus chat pills) con badge naranja "$" inclinado (su "× 10"); se fusionan en una sola con "× 1".</span></figcaption>
+    </figure>
+
+    <!-- 4 text slide -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <img class="cam" src="f60.jpg" alt="">
+        <div class="slide">
+          <svg class="swoosh" viewBox="0 0 1080 1920"><path fill="#F2EDE8" d="M-80 1920 C 380 1760 640 1240 860 860 C 960 690 1060 620 1180 600 L1180 1080 C 1040 1120 900 1360 760 1920 Z"/></svg>
+          <div class="t">
+            <span class="w" style="--i:2">El</span> <span class="w" style="--i:3">bot</span> <span class="w" style="--i:4">tiene</span> <span class="w" style="--i:5">que</span> <span class="w" style="--i:6">ser</span> <span class="w" style="--i:7">muy</span> <span class="w k" style="--i:8">específico</span> <span class="w" style="--i:9">con</span> <span class="w" style="--i:10">lo</span> <span class="w" style="--i:11">que</span> <span class="w" style="--i:12">pregunta.</span>
+          </div>
+        </div>
+      </div></div>
+      <figcaption><b>4 · Slide de texto que tapa la cámara</b><span>Sube con blur de movimiento, las palabras entran una a una, clave en naranja; luego se va hacia arriba (su "stating a fact").</span></figcaption>
+    </figure>
+
+    <!-- 5 buttons -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <svg class="swoosh" viewBox="0 0 1080 1920"><path fill="#F2EDE8" d="M-80 1920 C 380 1760 640 1240 860 860 C 960 690 1060 620 1180 600 L1180 1080 C 1040 1120 900 1360 760 1920 Z"/></svg>
+        <div class="panel"></div>
+        <div class="wa-in"><small><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Tu negocio</small>¡Hola! ¿Qué necesitas hoy?</div>
+        <div class="row tap" style="top:412px; --d:.35s"><i style="background:var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i>Agendar una cita</div>
+        <div class="row" style="top:504px; --d:.5s"><i style="background:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-2 9H8L6 3H3"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg></i>Ver precios</div>
+        <div class="row" style="top:596px; --d:.65s"><i style="background:var(--sky)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></i>Hablar con un asesor</div>
+        <div class="finger" style="left:700px; top:422px"></div>
+        <div class="wa-out">Agendar una cita ✓</div>
+        <div class="cap dark">le das <span style="color:var(--orange)">las opciones</span> <span class="n">y</span></div>
+        <div class="camcard"><img src="f95.jpg" alt=""></div>
+      </div></div>
+      <figcaption><b>5 · Botones de WhatsApp (v2)</b><span>Mensaje entrante + 3 botones de respuesta como los de WhatsApp, en filas Ali (círculo de color + serif bold). Un toque en "Agendar" y sale la respuesta en salmón: sin párrafos.</span></figcaption>
+    </figure>
+
+    <!-- 6 strike -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <img class="cam" src="f60.jpg" alt="">
+        <div class="scrim"></div>
+        <div class="strike" style="left:150px; top:300px; --d:0s"><i>ChatGPT en WhatsApp</i></div>
+        <div class="wpill" style="left:200px; top:470px; --d:1.6s">Agendar</div>
+        <div class="wpill" style="left:560px; top:470px; --d:1.9s">Comprar</div>
+        <div class="cap light">lograr el <span style="color:var(--salmonText)">objetivo</span> <span class="n">de</span></div>
+      </div></div>
+      <figcaption><b>6 · Pill tachada + pills blancas</b><span>"ChatGPT en WhatsApp" en pill salmón tachada (su "burnout"); luego el objetivo en pills blancas serif (su "Business" / "Job"). Subtítulo serif sin chip, la palabra siguiente entra borrosa.</span></figcaption>
+    </figure>
+
+    <!-- 6b mcdonalds -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <svg class="swoosh" viewBox="0 0 1080 1920"><path fill="#F2EDE8" d="M-80 1920 C 380 1760 640 1240 860 860 C 960 690 1060 620 1180 600 L1180 1080 C 1040 1120 900 1360 760 1920 Z"/></svg>
+        <div class="shot"><img src="mcd/mcd-crop.jpg" alt=""></div>
+        <div class="abs" style="left:0; right:0; top:262px; display:flex; justify-content:center"><div class="strike" style="position:relative; --d:.6s"><i>ChatGPT en WhatsApp</i></div></div>
+        <div class="src">FUENTE · <b>@Graphseo</b> en X · abril 2026</div>
+        <div class="cap dark" style="top:1428px">el chat de <span style="color:var(--orange)">McDonald's</span> <span class="n">para</span></div>
+      </div></div>
+      <figcaption><b>6b · El meme del chat de McDonald's</b><span>Captura real (sin el texto del reel de abajo) en tarjeta blanca recta, entra con blur y baja sola de la pregunta al código. La pill salmón "ChatGPT en WhatsApp" va arriba, separada, y se tacha. Lienzo completo unos segundos, como sus slides; FUENTE debajo.</span></figcaption>
+    </figure>
+
+    <!-- 7 flow -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <svg class="swoosh" viewBox="0 0 1080 1920"><path fill="#F2EDE8" d="M-80 1920 C 380 1760 640 1240 860 860 C 960 690 1060 620 1180 600 L1180 1080 C 1040 1120 900 1360 760 1920 Z"/></svg>
+        <div class="wide"><img src="f30.jpg" alt=""></div>
+        <div class="node" style="left:40px; --d:.2s"><small>Explica poco</small><span><svg width="34" height="34" viewBox="0 0 24 24"><path fill="#25D366" d="M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0012.05 0Z"/></svg>Bot</span></div>
+        <div class="dots" style="left:320px; opacity:0; animation: pop2 var(--T) infinite; animation-delay:.5s"></div>
+        <div class="node" style="left:400px; --d:.8s"><small>Si quiere más</small><span>🙋 Humano</span></div>
+        <div class="dots" style="left:690px; opacity:0; animation: pop2 var(--T) infinite; animation-delay:1.1s"></div>
+        <div class="node" style="left:760px; --d:1.4s"><small>Cierra</small><span>📞 Llamada</span></div>
+        <div class="cap dark" style="top:1440px">pasarlos a <span style="color:var(--orange)">un humano</span></div>
+      </div></div>
+      <figcaption><b>7 · Cámara ancha + fila de flujo</b><span>Su "Data source · Meta Ads ··· Claude ··· Gemini": etiqueta Inter gris arriba, pill blanca con logo, conectores punteados.</span></figcaption>
+    </figure>
+
+    <!-- 8 compare -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <svg class="swoosh" viewBox="0 0 1080 1920"><path fill="#F2EDE8" d="M-80 1920 C 380 1760 640 1240 860 860 C 960 690 1060 620 1180 600 L1180 1080 C 1040 1120 900 1360 760 1920 Z"/></svg>
+        <div class="panel"></div>
+        <div class="cmp dim" style="left:110px; --d:.1s"><div class="dot" style="background:#fff; box-shadow:0 0 0 2px #EFE9E4"><svg width="78" height="78" viewBox="0 0 24 24"><path fill="#0467DF" d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></div><b>Meta AI</b><span class="chip">En desarrollo</span></div>
+        <div class="cmp win" style="left:560px; --d:.35s"><div class="dot" style="background:var(--orange)"><svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="4"/><path d="M12 4v4M9 13v1M15 13v1M2 13v3M22 13v3"/></svg></div><b>Tu agente</b><br><span class="tag" style="--d:.1s">más barato</span><br><span class="tag" style="--d:.4s">más efectivo</span></div>
+        <div class="cap dark">mucho más <span style="color:var(--orange)">barato</span> <span class="n">y</span></div>
+        <div class="camcard"><img src="f2.jpg" alt=""></div>
+      </div></div>
+      <figcaption><b>8 · Meta AI vs tu agente (v2)</b><span>Reemplaza la balanza: dos tiles de su set de "×10". Meta AI se apaga con la chip gris "En desarrollo"; tu agente se enciende con aro naranja y dentro aparecen "más barato" y "más efectivo".</span></figcaption>
+    </figure>
+
+  </div>
+</main>
+<script>
+  // Freeze every animation at #t=<ms> so a still can be checked.
+  const m = location.hash.match(/t=(\d+)/);
+  if (m) addEventListener('load', () => document.getAnimations().forEach(a => { a.pause(); a.currentTime = +m[1]; }));
+</script>
+</body>
+</html>

@@ -72,6 +72,15 @@ The user asked for "Claude style" and then pointed at Claude's own Instagram: ca
 - Rejected in the rounds: a hand-drawn box floating over the sky in full mode (use chalk icons instead), the end arrow, an off-mode end card.
 - Stroke SFX: real CC0 recordings (`SFX-CREDITS.md`), only on reveals that carry the idea, volume ≈0.25, none on the chalk icons over the camera.
 
+### Ali YouTube (`ali-youtube/`) — liked (whatsapp-agentes reel, 2026-10-07)
+Ali's long-form YouTube graphics, not his Shorts. Tokens from video 6-ZxPvpV8ec in `ali-youtube/spec.md`; board `style-board.html` (expects `f*.jpg` frames next to it).
+- **Canvas:** cream `#FAF8F4` with a big soft S swoosh `#F2EDE8`; white panel (radius 44) on top, camera card below with a 4 px lilac `#B9B4F2` border. Camera card y 940, h 920 (eyes at 0.42); a wide card (y 240, h 1010) for flow rows. Four modes in `Camera.tsx`: full, card, off, wide, all driven by `blend(t, valueOf(mode))`.
+- **Type:** Fraunces (opsz 72, SOFT 30) for everything that speaks; Inter for labels and the FUENTE line. Words arrive blurred and gray, then settle (`Words`).
+- **Devices:** chapter cards (pink `#FBEDE6`, lilac line into a "Consejo N" pill, entering as a slide), canvas text slides with an orange `#F17E3C` keyword, salmon `#FF8675` chat pills and strike pill, white serif pills over footage, tiles with orange/green icon circles, flow row (Inter label over a white pill with logo, dotted joins), real screenshots in a straight white card.
+- **Captions:** no chip; white serif with a soft shadow over the camera, ink on the canvas, keywords colored.
+- **Rejected in the rounds:** a name lower third, a balance illustration, tilted badges and pills straddling card edges.
+- **Gotcha:** the outdoor scrim must be a fixed full-frame layer in `Main.tsx` that only fades; inside a Scene its edges showed while scaling in.
+
 ### Liquid Glass (`liquid-glass/`) — REJECTED by the user ("interesante, pero no me gusta")
 Keep it as a technique only. Per element, a canvas displacement map is built from a rounded-rect SDF (inward normal × (1−t)^2.4 inside the bezel). It feeds an SVG filter (feImage + blur + three feDisplacementMap passes for mild dispersion + saturate 1.18) applied via `backdrop-filter:url(#id)`, which works in Chrome and Remotion. macOS 27 tuning: a dark edge line, a brighter rim, and a `--t` tint from clear to tinted. Gotchas:
 - Saturation above 1.2 turns glass over skin orange.
