@@ -17,6 +17,7 @@ Finished videos:
 | Don't buy AI courses reel (talking head) | `videos/2026-10-07-cursos-ia` | `CursosReel` | Claude Carousel: Claude's IG carousels (grid paper, hand boxes, tabs, arrows) + reel devices (soft serif, chalk icons), CC0 stroke SFX |
 | WhatsApp agents reel (talking head) | `videos/2026-10-07-whatsapp-agentes` | `WhatsAppReel` | Ali Abdaal YouTube (long-form): cream canvas + swoosh, lilac-bordered camera card, chapter cards, word blur-in serif, real meme screenshot with FUENTE |
 | Gentle AI + Engram reel (talking head) | `videos/2026-10-08-gentle-ai` | `GentleReel` | Ali Abdaal YouTube with a fade split (no camera card): graphic on cream, camera edge to edge below, sky dissolving into the canvas; Gentle AI brand medallions |
+| Repo + 3 styles reel (talking head) | `videos/2026-10-09-repo-estilos` | `RepoReel` | Ali YouTube base with Ali's real S band; the reel itself switches to Claude Carousel, Ali Shorts and Liquid Glass (`glass.tsx`) as each style is named; past reel cited as an Ali video card; real GitHub repo + Star CTA |
 
 For talking-head reels, load the skill `talking-head-reel`: it holds the full pipeline and the proven layout numbers. Its single source of truth is `skills/talking-head-reel/` in this repo; `~/.claude/skills/talking-head-reel` is a symlink to it, so edit the repo copy and commit.
 
@@ -84,6 +85,10 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - Camera under a graphic: he prefers a fade split (camera full width from y 740, eased 150 px top fade into the cream, hair kept out of the fade) over a framed card, arch, cutout or bubble. Never fill zoom-out gaps with blur or side fades; full width is the zoom-out limit.
 - In split mode the swoosh lives only in the graphics band; a curve crossing the camera looks like a stain.
 - When he flags a repeated phrase or a filler, find the edges with a 25 ms RMS scan plus splice tests: Whisper word times drift up to 0.9 s there. Retime later cues from the new transcription, not by shifting.
+- When he names a style, the reel itself turns into that style (graphics, captions, camera treatment); never insert clips of past reels to show it. Citing a past video is a separate device (Ali-style video card with an animated thumbnail).
+- Ali YouTube background: canvas `#F7F7F5` and a WIDE flat `#ECE7E4` band that enters grazing the bottom edge, sweeps up in an S and exits the right edge (the frame crops its ends). Not a uniform ring and not a tapered stroke. His saved frames are in `videos/2026-10-07-whatsapp-agentes/ref/yt-*.jpg` (gitignored; list with `fd -I`).
+- "Ali Abdaal" can mean his Shorts (full camera, gold soft serif, Poppins chip), not only his YouTube look; ask or check which. A real photo of the person (channel avatar via `yt-dlp --write-thumbnail`) makes the reference instantly clear.
+- When top graphics hit his head in full mode, lower HIM (lowered window, ~140 px for close framing, no punch-in, blurred copy of the same shot fills the sky gap) and keep the graphics ending by ~y 620. 220 px pushed his chin into the caption chip.
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)
 

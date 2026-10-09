@@ -247,6 +247,7 @@ Then just talk to Claude Code:
 | 2026-10-07 | [Don't buy AI courses](videos/2026-10-07-cursos-ia) | `CursosReel` | Claude Carousel, CC0 stroke sounds | 60 |
 | 2026-10-07 | [WhatsApp agents](videos/2026-10-07-whatsapp-agentes) | `WhatsAppReel` | Ali YouTube, four camera modes | 60 |
 | 2026-10-08 | [Gentle AI + Engram](videos/2026-10-08-gentle-ai) | `GentleReel` | Ali YouTube, fade-split camera | 60 |
+| 2026-10-09 | [This repo + 3 styles](videos/2026-10-09-repo-estilos) | `RepoReel` | Ali YouTube that switches to Claude Carousel, Ali Shorts and Liquid Glass | 60 |
 
 ## 🗂️ Repo map
 
