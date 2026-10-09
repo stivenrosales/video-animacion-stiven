@@ -16,6 +16,7 @@ Finished videos:
 | Agents vs automations reel (talking head, 2 takes) | `videos/2026-09-28-fusion` | `FusionReel` | Ali × Sketch: Ali elements + rough.js/Excalifont strokes + frameless camera drop, one macOS window |
 | Don't buy AI courses reel (talking head) | `videos/2026-10-07-cursos-ia` | `CursosReel` | Claude Carousel: Claude's IG carousels (grid paper, hand boxes, tabs, arrows) + reel devices (soft serif, chalk icons), CC0 stroke SFX |
 | WhatsApp agents reel (talking head) | `videos/2026-10-07-whatsapp-agentes` | `WhatsAppReel` | Ali Abdaal YouTube (long-form): cream canvas + swoosh, lilac-bordered camera card, chapter cards, word blur-in serif, real meme screenshot with FUENTE |
+| Gentle AI + Engram reel (talking head) | `videos/2026-10-08-gentle-ai` | `GentleReel` | Ali Abdaal YouTube with a fade split (no camera card): graphic on cream, camera edge to edge below, sky dissolving into the canvas; Gentle AI brand medallions |
 
 For talking-head reels, load the skill `talking-head-reel`: it holds the full pipeline and the proven layout numbers. Its single source of truth is `skills/talking-head-reel/` in this repo; `~/.claude/skills/talking-head-reel` is a symlink to it, so edit the repo copy and commit.
 
@@ -80,6 +81,9 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - Filler cuts: verify each with a splice test of the joined audio; a cut 110 ms early ate the "-que" of "porque".
 - No "broken" cards: badges and pills never straddle a card edge, nothing is tilted, and two elements never overlap mid-transition, unless the user asks (even if the reference does it).
 - The dark top scrim is one fixed full-frame layer that only fades; inside an animated Scene its edges show while it scales in.
+- Camera under a graphic: he prefers a fade split (camera full width from y 740, eased 150 px top fade into the cream, hair kept out of the fade) over a framed card, arch, cutout or bubble. Never fill zoom-out gaps with blur or side fades; full width is the zoom-out limit.
+- In split mode the swoosh lives only in the graphics band; a curve crossing the camera looks like a stain.
+- When he flags a repeated phrase or a filler, find the edges with a 25 ms RMS scan plus splice tests: Whisper word times drift up to 0.9 s there. Retime later cues from the new transcription, not by shifting.
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)
 

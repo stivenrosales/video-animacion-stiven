@@ -1,4 +1,4 @@
-node_modules/
+node_modules
 .DS_Store
 
 # Per-video renders, QA stills and intermediates (regenerable)
