@@ -246,6 +246,7 @@ Then just talk to Claude Code:
 | 2026-09-28 | [Agents vs automations](videos/2026-09-28-fusion) | `FusionReel` | Ali × Sketch, two takes joined | 60 |
 | 2026-10-07 | [Don't buy AI courses](videos/2026-10-07-cursos-ia) | `CursosReel` | Claude Carousel, CC0 stroke sounds | 60 |
 | 2026-10-07 | [WhatsApp agents](videos/2026-10-07-whatsapp-agentes) | `WhatsAppReel` | Ali YouTube, four camera modes | 60 |
+| 2026-10-08 | [Gentle AI + Engram](videos/2026-10-08-gentle-ai) | `GentleReel` | Ali YouTube, fade-split camera | 60 |
 
 ## 🗂️ Repo map
 
