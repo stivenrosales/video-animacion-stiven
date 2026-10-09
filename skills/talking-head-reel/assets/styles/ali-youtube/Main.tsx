@@ -7,15 +7,29 @@ import { Sfx } from "./Sfx";
 import { A } from "./theme";
 import { ease, easeIn, useSec } from "./ui";
 
-/** Ali's canvas: warm cream with the big soft S-curve swoosh in the lower right. */
-export const Swoosh: React.FC = () => (
-  <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: "absolute", inset: 0 }}>
-    <path
-      fill={A.swoosh}
-      d="M-80 1920 C 380 1760 640 1240 860 860 C 960 690 1060 620 1180 600 L1180 1080 C 1040 1120 900 1360 760 1920 Z"
-    />
-  </svg>
-);
+/** Ali's band, traced from his YouTube frames (6-ZxPvpV8ec): a WIDE flat band that enters grazing the
+ *  bottom edge, sweeps up in an S (upper edge S, lower edge C) and exits through the right edge; the frame
+ *  crops both ends. Not a ring and not a tapered stroke. It drifts slowly. */
+export const Swoosh: React.FC = () => {
+  const t = useSec();
+  return (
+    <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: "absolute", inset: 0 }}>
+      <path fill={A.swoosh} transform={`translate(${-24 * Math.sin(t * 0.35)} ${18 * Math.sin(t * 0.28)})`} d="M-60 1920 C 380 1915, 560 1520, 680 1170 C 790 860, 930 640, 1140 600 L 1140 1010 C 980 1040, 830 1380, 770 1920 Z" />
+    </svg>
+  );
+};
+
+/** Split layouts (graphic above, camera below): the same band enters from the top edge and leaves by the
+ *  right edge, so it lives only in the graphics band and never crosses the camera (a curve over the camera
+ *  reads as a stain; a V-shaped wedge here looked odd). */
+export const TopBand: React.FC = () => {
+  const t = useSec();
+  return (
+    <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: "absolute", inset: 0 }}>
+      <path fill={A.swoosh} transform={`translate(${-18 * Math.sin(t * 0.35)} 0)`} d="M420 -40 C 560 200, 800 420, 1140 560 L 1140 300 C 980 230, 840 110, 760 -40 Z" />
+    </svg>
+  );
+};
 
 /** Full-frame headline windows (scenes.tsx): the sky gets darkened only while text sits on it. */
 const SCRIM: Array<[number, number]> = [

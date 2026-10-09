@@ -5,8 +5,8 @@ Reference: Ali's YouTube video 6-ZxPvpV8ec ("If you're ambitious but feel stuckâ
 ## Tokens (sampled)
 | Token | Value | Source |
 |---|---|---|
-| Canvas | `#FAF8F4` | chart / text slides |
-| Swoosh (big S curve, lower right) | `#F2EDE8` | every canvas scene |
+| Canvas | `#F7F7F5` | chart / text slides (sampled at 854x480, 2026-10-09) |
+| Band (wide flat S: enters grazing the bottom edge, exits the right edge, ends cropped by the frame) | `#ECE7E4` | every canvas scene; `TopBand` variant for split layouts |
 | Panel | `#FFFFFF`, radius ~40, shadow `0 20px 60px rgba(60,40,20,.08)` | 10x tiles, distribution |
 | Tile | `#FBF7F4`, 1.5px border `#EFE9E4`, radius 32 | 10x tiles |
 | Ink | `#1C1A19` | text slides, chart line |

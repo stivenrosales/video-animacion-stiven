@@ -68,6 +68,9 @@ The user judges the reel by how close it is to HIS reference. A generic approxim
 | User asks for Ali Abdaal's YouTube (long-form) look, not his Shorts | Use `ali-youtube` (cream canvas + swoosh, lilac camera card, chapter cards, blur-in serif words, no caption chip); no tilted or edge-straddling badges |
 | Hand-drawn strokes need sound | Offer real CC0 recordings (Freesound/OpenGameArt) as A/B/C in context; use them on key reveals only, ≈0.25 |
 | Face looks low in the camera card | Anchor the eye line (`FACE_Y`) at ~0.47 of the card instead of the default 0.30 |
+| Speaker names several styles one after another | Turn the reel itself into each style during its beat (background, graphics, caption look, camera); never insert clips of past reels. See "Style switching" in `references/styles.md` |
+| Speaker cites a past video of his | Ali-style video card (animated thumbnail, title, date) in split mode |
+| Top graphics hit the head in full mode | Lower the camera (~140 px for close framing, no punch-in, blurred copy fills the sky gap) and end graphics by ~y 620; re-check the chin against the caption |
 | User asks to fuse two styles | Show a board per round; expect to keep one side's elements and borrow only motion/strokes from the other (see `ali-sketch`) |
 | Recording ends mid-sentence | Ask for the continuation take; concat both into `work/join/src.mov` (own `audio.wav`) and cut that |
 | Speaker self-corrects ("X, mejor dicho, Y") | Keep it unless the user asks to cut it: cutting spoken content without asking felt like an aggressive intro |

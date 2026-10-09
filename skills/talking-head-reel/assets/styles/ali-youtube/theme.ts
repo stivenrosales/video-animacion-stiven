@@ -23,8 +23,8 @@ new FontFace(serif, `url(${staticFile("fonts/Fraunces.ttf")}) format("truetype")
 
 /** Tokens sampled from Ali Abdaal's long-form YouTube graphics (ref/yt-*.jpg + user screenshots). */
 export const A = {
-  canvas: "#FAF8F4",
-  swoosh: "#F2EDE8",
+  canvas: "#F7F7F5", // measured on 6-ZxPvpV8ec text slides
+  swoosh: "#ECE7E4", // the wide S band, flat
   panel: "#FFFFFF",
   tile: "#FBF7F4",
   tileBorder: "#EFE9E4",

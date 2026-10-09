@@ -74,18 +74,21 @@ The user asked for "Claude style" and then pointed at Claude's own Instagram: ca
 
 ### Ali YouTube (`ali-youtube/`) — liked (whatsapp-agentes reel, 2026-10-07)
 Ali's long-form YouTube graphics, not his Shorts. Tokens from video 6-ZxPvpV8ec in `ali-youtube/spec.md`; board `style-board.html` (expects `f*.jpg` frames next to it).
-- **Canvas:** cream `#FAF8F4` with a big soft S swoosh `#F2EDE8`; white panel (radius 44) on top, camera card below with a 4 px lilac `#B9B4F2` border. Camera card y 940, h 920 (eyes at 0.42); a wide card (y 240, h 1010) for flow rows. Four modes in `Camera.tsx`: full, card, off, wide, all driven by `blend(t, valueOf(mode))`.
+- **Canvas:** `#F7F7F5` with Ali's band `#ECE7E4` (`Swoosh` in `Main.tsx`): a WIDE flat band that enters grazing the bottom edge, sweeps up in an S and exits the right edge, its ends cropped by the frame. It is not a ring and not a tapered stroke; his frames are in `videos/2026-10-07-whatsapp-agentes/ref/yt-*.jpg`. Split layouts use `TopBand` (top edge → right edge, stays in the graphics band); white panel (radius 44) on top, camera card below with a 4 px lilac `#B9B4F2` border. Camera card y 940, h 920 (eyes at 0.42); a wide card (y 240, h 1010) for flow rows. Four modes in `Camera.tsx`: full, card, off, wide, all driven by `blend(t, valueOf(mode))`.
 - **Type:** Fraunces (opsz 72, SOFT 30) for everything that speaks; Inter for labels and the FUENTE line. Words arrive blurred and gray, then settle (`Words`).
 - **Devices:** chapter cards (pink `#FBEDE6`, lilac line into a "Consejo N" pill, entering as a slide), canvas text slides with an orange `#F17E3C` keyword, salmon `#FF8675` chat pills and strike pill, white serif pills over footage, tiles with orange/green icon circles, flow row (Inter label over a white pill with logo, dotted joins), real screenshots in a straight white card.
 - **Captions:** no chip; white serif with a soft shadow over the camera, ink on the canvas, keywords colored.
 - **Rejected in the rounds:** a name lower third, a balance illustration, tilted badges and pills straddling card edges.
 - **Gotcha:** the outdoor scrim must be a fixed full-frame layer in `Main.tsx` that only fades; inside a Scene its edges showed while scaling in.
 
-### Liquid Glass (`liquid-glass/`) — REJECTED by the user ("interesante, pero no me gusta")
-Keep it as a technique only. Per element, a canvas displacement map is built from a rounded-rect SDF (inward normal × (1−t)^2.4 inside the bezel). It feeds an SVG filter (feImage + blur + three feDisplacementMap passes for mild dispersion + saturate 1.18) applied via `backdrop-filter:url(#id)`, which works in Chrome and Remotion. macOS 27 tuning: a dark edge line, a brighter rim, and a `--t` tint from clear to tinted. Gotchas:
+### Liquid Glass (`liquid-glass/`) — rejected as a whole-reel look, liked as a style beat
+As the look of a whole reel the user rejected it ("interesante, pero no me gusta"). As a 5 s beat inside the repo-estilos reel (2026-10-09) it worked: an Apple notification, an alert that asks the spoken question, a segmented control, a "Sí se puede" button + switch, and glass caption capsules, all refracting his footage. `glass.tsx` is the Remotion port (`<Glass x y w h r tint refract bezel frost>` + `AppTile`); `glass-board.html` stays as the board. Per element, a canvas displacement map is built from a rounded-rect SDF (inward normal × (1−t)^2.4 inside the bezel). It feeds an SVG filter (feImage + blur + three feDisplacementMap passes for mild dispersion + saturate 1.18) applied via `backdrop-filter:url(#id)`, which works in Chrome and Remotion. macOS 27 tuning: a dark edge line, a brighter rim, and a `--t` tint from clear to tinted. Gotchas:
 - Saturation above 1.2 turns glass over skin orange.
 - Labels must sit above lens thumbs.
 - Build nested glass innermost first.
+
+### Style switching inside one reel (repo-estilos, 2026-10-09) — liked
+When the speaker names styles one after another, the reel itself becomes each style while he talks about it: background, graphics, caption costume and camera treatment all change (Claude Carousel grid paper + rough boxes + camera card + ink captions → Ali Shorts gold serif + photo pill + Poppins chip → Liquid Glass alerts + glass capsules). He rejected inserting clips of past reels to show a style. Citing a past video is a different device: an Ali-style white video card with an animated thumbnail, title and date. Build per-style caption looks as time windows in `Captions.tsx` and one extra camera mode per treatment.
 
 ### Layout rule for every kit: no broken edges
 The user rejected badges and pills that straddle a card border, tilted cards and tilted badges ("quiebres de las tarjetas"), even when the reference does it. Default: cards stay straight, badges sit INSIDE their card (or in their own row above it with a clear gap), and transitions never let two elements overlap mid-animation. Use tilts or overlaps only when he asks for them.
