@@ -18,6 +18,7 @@ Finished videos:
 | WhatsApp agents reel (talking head) | `videos/2026-10-07-whatsapp-agentes` | `WhatsAppReel` | Ali Abdaal YouTube (long-form): cream canvas + swoosh, lilac-bordered camera card, chapter cards, word blur-in serif, real meme screenshot with FUENTE |
 | Gentle AI + Engram reel (talking head) | `videos/2026-10-08-gentle-ai` | `GentleReel` | Ali Abdaal YouTube with a fade split (no camera card): graphic on cream, camera edge to edge below, sky dissolving into the canvas; Gentle AI brand medallions |
 | Repo + 3 styles reel (talking head) | `videos/2026-10-09-repo-estilos` | `RepoReel` | Ali YouTube base with Ali's real S band; the reel itself switches to Claude Carousel, Ali Shorts and Liquid Glass (`glass.tsx`) as each style is named; past reel cited as an Ali video card; real GitHub repo + Star CTA |
+| Pessoa narrated poem (feed post, 4:5) | `videos/2026-10-09-quiet-poema` | `QuietPoema` | Quiet Please: one stick figure doing loops on a flat-color grainy background, 12 stations cued to words, Marcellus captions |
 
 For talking-head reels, load the skill `talking-head-reel`: it holds the full pipeline and the proven layout numbers. Its single source of truth is `skills/talking-head-reel/` in this repo; `~/.claude/skills/talking-head-reel` is a symlink to it, so edit the repo copy and commit.
 
@@ -89,6 +90,11 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - Ali YouTube background: canvas `#F7F7F5` and a WIDE flat `#ECE7E4` band that enters grazing the bottom edge, sweeps up in an S and exits the right edge (the frame crops its ends). Not a uniform ring and not a tapered stroke. His saved frames are in `videos/2026-10-07-whatsapp-agentes/ref/yt-*.jpg` (gitignored; list with `fd -I`).
 - "Ali Abdaal" can mean his Shorts (full camera, gold soft serif, Poppins chip), not only his YouTube look; ask or check which. A real photo of the person (channel avatar via `yt-dlp --write-thumbnail`) makes the reference instantly clear.
 - When top graphics hit his head in full mode, lower HIM (lowered window, ~140 px for close framing, no punch-in, blurred copy of the same shot fills the sky gap) and keep the graphics ending by ~y 620. 220 px pushed his chin into the caption chip.
+
+- Quiet Please style (narrated animation): one stick figure (kit `quiet-please/`: `rig.ts`, board, `grain.py`) in loops per idea, elements enter on the word that names them. Long narration (4+ min) ships as a 4:5 (1080x1350) feed post, not a reel.
+- Stick figure anatomy: shoulder on the spine (never at the neck), fixed segment lengths in head units, two-bone IK with elbows out and knees forward; a writing hand follows a real pen path (loops, line returns, dip, page flip) and the eyes follow it. Crossed forearms read as broken.
+- Judge grain at 100% size: a board cell shown at 1/3 hides grain that is loud in the full render.
+- Props must read as what they are: a lone bowler hat looked like a UFO; use the full silhouette. Hands hold objects by their grip (cup handle), arm drawn behind the object.
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)
 
