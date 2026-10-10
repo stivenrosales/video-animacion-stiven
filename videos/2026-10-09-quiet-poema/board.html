@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiet Poem Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#121212; --fg:#f3f3e4; --muted:#9a9a90; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:Marcellus, Georgia, serif; padding:28px 16px 60px; }
+  h1 { font-weight:400; font-size:34px; letter-spacing:3px; margin:0 0 6px; text-align:center; }
+  h2 { font-weight:400; font-size:22px; letter-spacing:1px; margin:40px 0 14px; text-align:center; }
+  p.sub { color:var(--muted); text-align:center; margin:0 0 18px; font-family:system-ui, sans-serif; font-size:14px; }
+  .row { display:flex; gap:22px; justify-content:center; flex-wrap:wrap; }
+  .cell { width:min(340px, 100%); }
+  .cell.big { width:min(440px, 100%); }
+  .cell svg { width:100%; height:auto; display:block; border-radius:6px; }
+  .lab { text-align:center; margin-top:8px; font-size:17px; }
+  .lab small { display:block; color:var(--muted); font-family:system-ui, sans-serif; font-size:12px; margin-top:2px; }
+  .tog { display:flex; justify-content:center; gap:8px; font-family:system-ui, sans-serif; font-size:14px; color:var(--muted); }
+  .sw { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:10px; font-family:system-ui, sans-serif; font-size:11px; color:var(--muted); }
+  .sw div { text-align:center; }
+  .sw span { display:block; width:46px; height:46px; border-radius:6px; margin-bottom:4px; }
+</style>
+</head>
+<body>
+<h1>QUIET PLEASE · PESSOA</h1>
+<p class="sub">Post 4:5 (1080×1350) · personaje A · rig con proporciones y articulaciones reales · loops a 12 fps</p>
+<div class="sw" id="sw"></div>
+
+<h2>1 · Anatomía del personaje</h2>
+<div class="tog"><label><input type="checkbox" id="bones"> ver esqueleto, articulaciones y trayectoria de la pluma</label></div>
+<div class="row" style="margin-top:14px">
+  <div class="cell"><div id="sheet"></div><div class="lab">Hoja de modelo<small>medido en cabezas · hombro en la columna · codos afuera</small></div></div>
+  <div class="cell big"><div id="write"></div><div class="lab">Escribe en la Rua dos Douradores<small>moja la pluma · escribe 3 renglones · voltea la hoja</small></div></div>
+</div>
+
+<h2>2 · Estaciones</h2>
+<div class="row" id="row2"></div>
+
+<script>
+const C = { ink:'#192425', cream:'#f3f3e4', sage:'#6b9b68', deep:'#1a543a', mint:'#4e986e', blue:'#3271a9',
+  night:'#1c2b45', yellow:'#f2cf3a', tan:'#d8cba6', tear:'#bfe0f0', bone:'#e8553a' };
+document.getElementById('sw').innerHTML = [['sage','fondo'],['mint','fondo'],['deep','sombras'],['blue','mar/cielo'],['night','noche'],['cream','papel/texto'],['ink','tinta'],['yellow','acento']]
+  .map(([k,n]) => `<div><span style="background:${C[k]}"></span>${C[k]}<br>${n}</div>`).join('');
+
+/* ---------- math ---------- */
+const f = n => n.toFixed(1);
+const add = (a, b) => [a[0]+b[0], a[1]+b[1]], sub = (a, b) => [a[0]-b[0], a[1]-b[1]], mul = (a, k) => [a[0]*k, a[1]*k];
+const len = a => Math.hypot(a[0], a[1]), lerp = (a, b, k) => a + (b-a)*k, lp = (a, b, k) => [lerp(a[0], b[0], k), lerp(a[1], b[1], k)];
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x)), cl01 = x => clamp(x, 0, 1);
+const ease = k => k < .5 ? 4*k*k*k : 1 - Math.pow(-2*k + 2, 3)/2;
+const easeOutBack = k => 1 + 2.2*Math.pow(k-1, 3) + 1.2*Math.pow(k-1, 2);
+const qpt = (a, c, b, t) => [(1-t)*(1-t)*a[0] + 2*(1-t)*t*c[0] + t*t*b[0], (1-t)*(1-t)*a[1] + 2*(1-t)*t*c[1] + t*t*b[1]];
+const P = pts => 'M' + pts.map(p => f(p[0]) + ' ' + f(p[1])).join(' L');
+const st = (d, col, w, extra = '') => `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+
+/* ---------- rig (head diameter D = 116 is the unit) ---------- */
+const R = 58, SEG = { neck: 16, spine: 174, up: 86, fo: 80, th: 99, sn: 99 };
+let BONES = false;
+
+// Two-bone IK with fixed lengths; the joint bends toward `pref` (elbows out, knees forward).
+function ik(a, t, L1, L2, pref) {
+  const v = sub(t, a), d = Math.max(1, len(v)), u = mul(v, 1/d);
+  const dc = clamp(d, Math.abs(L1-L2) + 1, L1 + L2 - 0.5);
+  const al = (L1*L1 - L2*L2 + dc*dc) / (2*dc), h = Math.sqrt(Math.max(0, L1*L1 - al*al));
+  let p = [-u[1], u[0]]; if (p[0]*pref[0] + p[1]*pref[1] < 0) p = mul(p, -1);
+  return { j: add(add(a, mul(u, al)), mul(p, h)), e: add(a, mul(u, dc)) };
+}
+// Spine from pelvis: angle 0 = upright, + leans right; bow curves the back (+ = toward the right-hand normal).
+function body(o) {
+  const L = o.spine || SEG.spine, a = o.angle || 0, dir = [Math.sin(a), -Math.cos(a)];
+  const neck = add(o.pelvis, mul(dir, L)), nrm = [-dir[1], dir[0]];
+  const ctrl = add(lp(o.pelvis, neck, .5), mul(nrm, o.bow || 0));
+  const sh = qpt(neck, ctrl, o.pelvis, 0.14);
+  let tn = sub(neck, ctrl); tn = mul(tn, 1/len(tn));
+  const head = add(add(neck, mul(tn, R + SEG.neck)), o.nod || [0, 0]);
+  return { neck, ctrl, sh, head, pelvis: o.pelvis, tn };
+}
+const arm = (b, t, pref, k = 1) => { const r = ik(b.sh, t, SEG.up, SEG.fo*k, pref); return { pts: [b.sh, r.j, r.e], e: r.e }; };
+const leg = (b, t, pref) => { const r = ik(b.pelvis, t, SEG.th, SEG.sn, pref); return { pts: [b.pelvis, r.j, r.e], e: r.e }; };
+const limbD = l => st(P(l.pts), C.ink, 13);
+function torsoD(b) {
+  const hb = sub(b.head, mul(b.tn, R));
+  return st(`M${f(hb[0])} ${f(hb[1])} L${f(b.neck[0])} ${f(b.neck[1])} Q${f(b.ctrl[0])} ${f(b.ctrl[1])} ${f(b.pelvis[0])} ${f(b.pelvis[1])}`, C.ink, 13);
+}
+function headD(b, o = {}) {
+  const [x, y] = b.head, lx = o.lx || 0, ly = o.ly || 0;
+  let s = `<circle cx="${f(x)}" cy="${f(y)}" r="${R}" fill="${C.cream}" stroke="${C.ink}" stroke-width="10"/>`;
+  if (o.view === 'right') {
+    const ex = x + 26 + lx, ey = y - 4 + ly;
+    s += o.blink ? st(`M${f(ex-7)} ${f(ey)} l14 0`, C.ink, 7) : `<circle cx="${f(ex)}" cy="${f(ey)}" r="7.5" fill="${C.ink}"/>`;
+    const my = ey + 28;
+    s += o.sad ? st(`M${f(ex+2)} ${f(my)} q8 -5 16 3`, C.ink, 6) : st(`M${f(ex+2)} ${f(my)} l14 -1`, C.ink, 6);
+    return s;
+  }
+  const ex = x + lx, ey = y + ly;
+  if (o.blink) s += st(`M${f(ex-28)} ${f(ey)} l14 0 M${f(ex+14)} ${f(ey)} l14 0`, C.ink, 7);
+  else s += `<circle cx="${f(ex-21)}" cy="${f(ey)}" r="7.5" fill="${C.ink}"/><circle cx="${f(ex+21)}" cy="${f(ey)}" r="7.5" fill="${C.ink}"/>`;
+  const my = ey + 26;
+  if (o.sad) s += st(`M${f(ex-13)} ${f(my+5)} Q${f(ex)} ${f(my-6)} ${f(ex+13)} ${f(my+5)}`, C.ink, 6);
+  else if (o.smile) s += st(`M${f(ex-14)} ${f(my-2)} Q${f(ex)} ${f(my+10)} ${f(ex+14)} ${f(my-2)}`, C.ink, 6);
+  else s += st(`M${f(ex-9)} ${f(my)} l18 0`, C.ink, 6);
+  return s;
+}
+function bonesD(b, limbs) {
+  if (!BONES) return '';
+  const dot = p => `<circle cx="${f(p[0])}" cy="${f(p[1])}" r="9" fill="${C.bone}" stroke="${C.cream}" stroke-width="3"/>`;
+  return `<g opacity=".95">${[b.neck, b.sh, b.pelvis, ...limbs.flatMap(l => l.pts.slice(1))].map(dot).join('')}</g>`;
+}
+const blinkAt = t => (t % 3.4) > 3.25;
+
+function caption(lines, t, loop) {
+  const words = []; lines.forEach((l, li) => l.split(' ').forEach(w => words.push([w, li])));
+  const lt = t % loop, out = cl01((loop - 0.4 - lt) / 0.3);
+  return lines.map((_, li) => `<text x="540" y="${1222 + li*66}" text-anchor="middle" font-family="Marcellus, Georgia, serif" font-size="50" fill="${C.cream}">` +
+    words.map(([w, wl], i) => wl !== li ? '' : `<tspan opacity="${(cl01((lt - 0.3 - i*0.32) / 0.25) * out).toFixed(2)}">${w} </tspan>`).join('') + '</text>').join('');
+}
+
+/* ---------- model sheet ---------- */
+function sheet(t) {
+  const b = body({ pelvis: [540 + 2*Math.sin(t*1.1), 842], angle: 0.01*Math.sin(t*1.1), spine: SEG.spine + 2*Math.sin(t*2) });
+  const aL = arm(b, [452, 1000], [-1, 0.2]), aR = arm(b, [628, 1000], [1, 0.2]);
+  const lL = leg(b, [492, 1034], [-0.3, -1]), lR = leg(b, [588, 1034], [0.3, -1]);
+  const top = b.head[1] - R, D = 2*R;
+  let g = `<ellipse cx="540" cy="1040" rx="170" ry="16" fill="${C.deep}" opacity=".35"/>`;
+  for (let i = 0; i <= 5; i++) { const y = top + i*D; if (y > 1060) break;
+    g += st(`M230 ${f(y)} L850 ${f(y)}`, C.cream, 3, 'stroke-dasharray="10 12" opacity=".55"') +
+      `<text x="222" y="${f(y+10)}" text-anchor="end" font-family="system-ui" font-size="30" fill="${C.cream}" opacity=".8">${i}</text>`; }
+  let fg = limbD(lL) + limbD(lR) + torsoD(b) + limbD(aL) + limbD(aR) + headD(b, { blink: blinkAt(t) });
+  const save = BONES; BONES = true; fg += bonesD(b, [aL, aR, lL, lR]); BONES = save;
+  g += fg;
+  const note = (x, y, s, a = 'start') => `<text x="${x}" y="${y}" text-anchor="${a}" font-family="system-ui" font-size="30" fill="${C.cream}">${s}</text>`;
+  g += note(650, 650, 'hombro en la columna') + st(`M640 642 L${f(b.sh[0]+14)} ${f(b.sh[1])}`, C.cream, 3);
+  g += note(700, 780, 'codo → afuera') + note(700, 1000, 'rodilla → adelante');
+  g += note(430, 935, 'mano = medio muslo', 'end');
+  const txt = `<text x="540" y="200" text-anchor="middle" font-family="Marcellus, Georgia, serif" font-size="64" fill="${C.cream}">≈ 4,3 cabezas de alto</text>
+    <text x="540" y="1170" text-anchor="middle" font-family="system-ui" font-size="30" fill="${C.cream}" opacity=".85">torso 1,5 · brazo 0,74 + 0,69 · pierna 0,85 + 0,85</text>`;
+  return { bg: C.sage, g, txt };
+}
+
+/* ---------- station 1: writing ---------- */
+const BOOK = 500, INK = [692, 846], LINES = [[512, 902], [512, 914], [512, 926]], LW = 92;
+// Pen-tip timeline over a 7.4 s loop: flip page → dip → write 3 lines (returns between them).
+const PH = [['flip', 0, .7], ['toInk', .7, 1.25], ['dip', 1.25, 1.95], ['toLine', 1.95, 2.45],
+  ['w0', 2.45, 3.85], ['r1', 3.85, 4.1], ['w1', 4.1, 5.5], ['r2', 5.5, 5.75], ['w2', 5.75, 7.15], ['rest', 7.15, 7.4]];
+const LOOPW = 7.4;
+const writeAt = (i, u) => { const [x0, y0] = LINES[i], ue = u*u*(3-2*u)*.25 + u*.75;
+  return [x0 + LW*ue + 5*Math.sin(u*Math.PI*2*7), y0 - 1 + 5*Math.cos(u*Math.PI*2*7) * Math.sin(u*Math.PI)]; };
+const lineEnd = i => writeAt(i, 1);
+const corner = k => [BOOK + 116*Math.cos(Math.PI*k), 936 - 70*Math.sin(Math.PI*k)];
+function tipAt(lt) {
+  const ph = PH.find(p => lt >= p[1] && lt < p[2]) || PH[PH.length-1], u = cl01((lt - ph[1]) / (ph[2] - ph[1])), n = ph[0];
+  const arc = (a, b, k, hgt) => { const e = ease(k), p = lp(a, b, e); return [p[0], p[1] - hgt*Math.sin(Math.PI*e)]; };
+  if (n === 'flip') { const k = ease(u); return lp(lineEnd(2), add(corner(k), [0, -8]), cl01(u*3)); }
+  if (n === 'toInk') return arc(add(corner(1), [0, -8]), INK, u, 50);
+  if (n === 'dip') return [INK[0], INK[1] + 16*Math.abs(Math.sin(u*Math.PI*2))];
+  if (n === 'toLine') return arc(INK, LINES[0], u, 40);
+  if (n[0] === 'w') return writeAt(+n[1], u);
+  if (n[0] === 'r' && n !== 'rest') { const i = +n[1]; return arc(lineEnd(i-1), LINES[i], u, 14); }
+  return lineEnd(2);
+}
+function trail(i, lt) {
+  const ph = PH.find(p => p[0] === 'w' + i); if (lt < ph[1]) return '';
+  const u = cl01((lt - ph[1]) / (ph[2] - ph[1])), pts = [];
+  for (let s = 0; s <= u + 1e-6; s += 0.012) pts.push(writeAt(i, s));
+  return pts.length > 1 ? st(P(pts), C.ink, 4) : '';
+}
+function writing(t) {
+  const lt = t % LOOPW, tip = tipAt(lt);
+  const inkLean = PH.slice(1, 4).some(p => lt >= p[1] && lt < p[2]) ? Math.sin(Math.PI*cl01((lt - .7) / 1.75)) : 0;
+  const angle = 0.025 + 0.2*inkLean + (tip[0] - 560)*0.0005 + 0.006*Math.sin(t*2.1);
+  const b = body({ pelvis: [540, 968], angle, bow: -8, nod: [0, 6 + 4*Math.sin(t*1.7)] });
+  const hand = add(tip, [7, -15]);
+  const aR = arm(b, hand, [1, 0.55], 0.72), aL = arm(b, [446 + 6*inkLean, 918], [-1, 0.55], 0.72);
+  const look = [clamp((tip[0] - b.head[0]) * 0.09, -10, 14), clamp(12 + (tip[1] - 880)*0.05, 6, 18)];
+  const flipK = lt < .7 ? ease(cl01(lt / .7)) : 1, sx = Math.cos(Math.PI*flipK);
+  let pageR = `<path d="M${BOOK} 890 L${BOOK+120} 895 L${BOOK+140} 942 L${BOOK} 936Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="7" stroke-linejoin="round"/>`;
+  const turning = lt < .7;
+  const written = turning ? [0, 1, 2].map(i => trail(i, 99)).join('') : [0, 1, 2].map(i => trail(i, lt)).join('');
+  const page = turning
+    ? `<g transform="translate(${BOOK} 0) scale(${f(sx)} 1) translate(${-BOOK} ${f(-28*Math.sin(Math.PI*flipK))})">${pageR}${sx > 0 ? written : ''}</g>`
+    : '';
+  let g = `<ellipse cx="560" cy="1158" rx="420" ry="26" fill="${C.deep}" opacity=".35"/>`;
+  g += `<path d="M452 940 L452 760 Q452 744 468 744 L612 744 Q628 744 628 760 L628 940" fill="${C.tan}" stroke="${C.ink}" stroke-width="10" opacity=".0"/>`;
+  g += torsoD(b) + headD(b, { blink: blinkAt(t), lx: look[0], ly: look[1] });
+  g += `<path d="M230 880 L850 880 L890 950 L190 950Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="10" stroke-linejoin="round"/>
+    <rect x="210" y="950" width="660" height="200" fill="${C.tan}" stroke="${C.ink}" stroke-width="10"/>
+    ${st('M300 1010 L780 1010', C.ink, 6)}<circle cx="540" cy="1060" r="9" fill="${C.ink}"/>
+    <path d="M${BOOK} 890 L${BOOK-120} 895 L${BOOK-140} 942 L${BOOK} 936Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="7" stroke-linejoin="round"/>
+    ${st(`M${BOOK-112} 904 l96 -2 M${BOOK-116} 916 l100 -2 M${BOOK-120} 928 l104 -2`, C.ink, 4, 'opacity=".7"')}
+    ${turning ? `<path d="M${BOOK} 890 L${BOOK+120} 895 L${BOOK+140} 942 L${BOOK} 936Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="7" stroke-linejoin="round"/>` : pageR + written}
+    ${page}
+    <rect x="${INK[0]-30}" y="860" width="60" height="44" rx="9" fill="${C.ink}"/><rect x="${INK[0]-13}" y="846" width="26" height="18" fill="${C.ink}"/>`;
+  g += limbD(aL) + limbD(aR);
+  const q = sub(tip, add(tip, [-4, 0])), qe = add(tip, [30, -62]);
+  g += st(P([tip, qe]), C.ink, 22) + st(P([add(tip, [4, -8]), qe]), C.cream, 11);
+  if (BONES) { const pts = []; for (let s = 0; s < LOOPW; s += 0.03) pts.push(tipAt(s));
+    g += st(P(pts), C.bone, 3, 'stroke-dasharray="4 7"') + bonesD(b, [aL, aR]); }
+  const tail = 1060 + 18*Math.sin(t*2.1);
+  let cat = `<path d="M880 1150 Q868 1062 905 1032 L898 990 L926 1016 Q946 1009 966 1016 L992 990 L986 1032 Q1022 1062 1010 1150Z" fill="${C.ink}"/>${st(`M1004 1140 Q1062 1120 ${f(tail)} 1070`, C.ink, 16)}`;
+  cat += blinkAt(t + 1.1) ? st('M916 1046 l20 0 M956 1046 l20 0', C.yellow, 5)
+    : `<circle cx="926" cy="1046" r="10" fill="${C.yellow}"/><circle cx="966" cy="1046" r="10" fill="${C.yellow}"/><circle cx="${f(927 + look[0]*.3)}" cy="1047" r="4" fill="${C.ink}"/><circle cx="${f(967 + look[0]*.3)}" cy="1047" r="4" fill="${C.ink}"/>`;
+  g += `<g transform="translate(300 922) scale(.72) translate(-945 -1150)">${cat}</g>`;
+  g = `<g transform="translate(540 1150) scale(1.45) translate(-540 -1150)">${g}</g>`;
+  const title = `<text x="540" y="235" text-anchor="middle" font-family="Marcellus, Georgia, serif" font-size="118" letter-spacing="3" fill="${C.cream}">DESASOSIEGO</text>`;
+  return { bg: C.sage, g, txt: title + caption(['me imaginé liberado para siempre', 'de la Rua dos Douradores'], t, LOOPW) };
+}
+
+/* ---------- station 2: island daydream (seen from above) ---------- */
+function island(t) {
+  const br = Math.sin(t*2*Math.PI*0.22), tap = Math.sin(t*2*Math.PI*1.2);
+  const b = body({ pelvis: [468, 912], angle: 0.68, spine: SEG.spine + 3*br, bow: 6 });
+  const behind = add(b.head, [-6, -62]);
+  const a1 = arm(b, behind, [-0.3, -1]), a2 = arm(b, [500 + 2*br, 868], [0.6, 0.8], 0.9);
+  const l1 = leg(b, [318, 1074], [0.7, 0.3]), l2 = leg(b, [296 + 6*tap, 1050 - 4*tap], [-0.7, -0.3]);
+  const bob = Math.sin(t*1.6)*8, cx = 330, cy = 390 + bob, wv = (t*30) % 60;
+  let g = `<path d="M560 0 L1080 0 L1080 720 Q990 650 920 700 Q840 610 770 540 Q650 480 690 370 Q560 300 600 140 Q540 80 560 0Z" fill="${C.deep}" filter="url(#rough_ID)"/>`;
+  let fig = `<ellipse cx="480" cy="890" rx="300" ry="190" fill="${C.deep}" opacity=".18"/>`;
+  fig += limbD(l1) + limbD(l2) + limbD(a1) + torsoD(b) + headD(b, { blink: true, smile: true }) + limbD(a2) + bonesD(b, [a1, a2, l1, l2]);
+  fig += `<circle cx="532" cy="${f(612+bob*0.5)}" r="13" fill="${C.cream}" stroke="${C.ink}" stroke-width="6"/>
+    <circle cx="480" cy="${f(556+bob*0.7)}" r="22" fill="${C.cream}" stroke="${C.ink}" stroke-width="7"/>
+    <clipPath id="bub_ID"><circle cx="${cx}" cy="${f(cy)}" r="150"/></clipPath>
+    <g clip-path="url(#bub_ID)"><rect x="170" y="${f(cy-160)}" width="320" height="320" fill="${C.cream}"/>
+      <circle cx="${cx-60}" cy="${f(cy-70)}" r="26" fill="${C.yellow}"/>
+      <rect x="170" y="${f(cy+20)}" width="320" height="160" fill="${C.blue}"/>
+      <ellipse cx="${cx+20}" cy="${f(cy+28)}" rx="70" ry="22" fill="${C.yellow}" stroke="${C.ink}" stroke-width="6"/>
+      ${st(`M${cx+30} ${f(cy+20)} Q${cx+40} ${f(cy-20)} ${cx+14} ${f(cy-62)}`, C.ink, 9)}
+      ${[[-50,-8],[-30,20],[40,-4],[30,26]].map(([a, c]) => st(`M${cx+14} ${f(cy-62)} q${a/2} ${c/2-14} ${a} ${c}`, C.deep, 13)).join('')}
+      ${[0,1,2].map(i => st(`M${f(180 - wv + i*120)} ${f(cy+75+i*22)} q15 -10 30 0 t30 0`, C.cream, 5)).join('')}</g>
+    <circle cx="${cx}" cy="${f(cy)}" r="150" fill="none" stroke="${C.ink}" stroke-width="10"/>`;
+  g += `<g transform="translate(480 900) scale(1.12) translate(-480 -900)">${fig}</g>`;
+  return { bg: C.sage, g, txt: caption(['como si los mares del sur', 'me hubieran ofrecido islas'], t, 6) };
+}
+
+/* ---------- station 4: sorrow (profile, hugging knees) ---------- */
+function person(x, y, h, kind, a) {
+  if (a <= 0) return '';
+  const sc = 0.92 + 0.08*a, w = h*0.27, bh = h*0.56, r = h*0.115;
+  let s = `<g opacity="${a.toFixed(2)}" transform="translate(${x} ${y}) scale(${sc.toFixed(3)}) translate(${-x} ${-y})">
+    <rect x="${f(x-w/2)}" y="${f(y-bh)}" width="${f(w)}" height="${f(bh)}" rx="${f(w*0.42)}" fill="${C.ink}"/>
+    <circle cx="${x}" cy="${f(y-bh-r*0.9)}" r="${f(r)}" fill="${C.ink}"/>`;
+  if (kind === 'hat') s += `<ellipse cx="${x}" cy="${f(y-bh-r*1.55)}" rx="${f(r*1.5)}" ry="${f(r*0.28)}" fill="${C.ink}"/><path d="M${f(x-r*0.85)} ${f(y-bh-r*1.5)} Q${x} ${f(y-bh-r*3.1)} ${f(x+r*0.85)} ${f(y-bh-r*1.5)}Z" fill="${C.ink}"/>`;
+  if (kind === 'letters') s += `<rect x="${f(x+w*0.3)}" y="${f(y-bh*0.62)}" width="46" height="32" fill="${C.cream}" stroke="${C.ink}" stroke-width="6" transform="rotate(-8 ${x} ${y})"/>`;
+  return s + '</g>';
+}
+function sorrow(t) {
+  const lt = t % 7, ap = k => cl01((lt - 0.5 - k) / 0.35) * cl01((6.7 - lt) / 0.3);
+  const br = Math.sin(t*2*Math.PI*0.25);
+  const b = body({ pelvis: [478, 1062], angle: 0.5 + 0.02*br, bow: -34, spine: SEG.spine - 4, nod: [8, 16] });
+  const lFar = leg(b, [628, 1074], [0.4, -1]), lNear = leg(b, [646, 1070], [0.4, -1]);
+  const aFar = arm(b, [652 + 2*br, 984], [-0.3, 1]), aNear = arm(b, [660 + 2*br, 996], [-0.3, 1]);
+  const ph = (t % 2.4) / 2.4, eye = add(b.head, [26, 10]), ty = eye[1] + 10 + ph*ph*(1066 - eye[1]);
+  let g = `<ellipse cx="540" cy="1086" rx="470" ry="24" fill="${C.deep}" opacity=".4"/>`;
+  g += person(150, 1080, 400, 'hat', ap(0)) + person(282, 1080, 440, '', ap(1)) + person(820, 1080, 360, '', ap(2)) + person(944, 1080, 300, 'letters', ap(3));
+  if (ap(4) > 0) g += `<g opacity="${ap(4).toFixed(2)}"><path d="M736 1080 Q730 1030 748 1012 L744 990 L758 1004 Q768 1000 778 1004 L792 990 L788 1012 Q806 1030 800 1080Z" fill="${C.ink}"/>${st(`M798 1074 Q836 1070 ${f(838+8*Math.sin(t*2))} 1040`, C.ink, 9)}</g>`;
+  g += limbD(aFar) + limbD(lFar) + limbD(lNear) + torsoD(b) + headD(b, { view: 'right', blink: blinkAt(t), sad: true, ly: 12 }) + limbD(aNear) + bonesD(b, [aFar, aNear, lFar, lNear]);
+  if (ty < 1066) g += `<path d="M${f(eye[0])} ${f(ty)} q-9 14 0 20 q9 -6 0 -20Z" fill="${C.tear}" stroke="${C.ink}" stroke-width="4"/>`;
+  g = `<g transform="translate(540 1086) scale(1.12) translate(-540 -1086)">${g}</g>`;
+  return { bg: C.mint, g, txt: caption(['el patrón Vasques,', 'el tenedor de libros Moreira'], t, 7) };
+}
+
+/* ---------- station 9: stars (front, lifts the inkwell) ---------- */
+const STARS = Array.from({ length: 46 }, (_, i) => { const r = Math.sin(i*91.7)*43758.5, r2 = Math.sin(i*12.9)*24634.6;
+  return [(r - Math.floor(r))*1080, (r2 - Math.floor(r2))*820 + 20, 2 + (i % 4)*1.4, i]; });
+function stars(t) {
+  const lt = t % 6.4;
+  const k = lt < .35 ? -0.08*Math.sin(Math.PI*lt/.35) : lt < 1.9 ? easeOutBack(cl01((lt-.35)/1.55)) : lt < 3.9 ? 1 + 0.02*Math.sin((lt-1.9)*3) : lt < 5.6 ? 1 - ease(cl01((lt-3.9)/1.7)) : 0;
+  const b = body({ pelvis: [544, 838], angle: -0.04*k + 0.01*Math.sin(t*1.2), bow: 4, nod: [0, -4*k] });
+  const rest = [612, 812], up = [676, 548], hR = lp(rest, up, k);
+  const aR = arm(b, hR, [1, 0.25 - 0.6*k]), aL = arm(b, [468, 1002], [-1, 0.2]);
+  const lL = leg(b, [508, 1022], [-0.25, -1]), lR = leg(b, [592, 1022], [0.25, -1]);
+  let g = STARS.map(([x, y, r, i]) => { const a = 0.45 + 0.55*Math.abs(Math.sin(t*0.9 + i));
+    return i % 7 === 0 ? `<path d="M${f(x)} ${f(y-r*3)} L${f(x+r*0.7)} ${f(y)} L${f(x)} ${f(y+r*3)} L${f(x-r*0.7)} ${f(y)}Z M${f(x-r*3)} ${f(y)} L${f(x)} ${f(y+r*0.7)} L${f(x+r*3)} ${f(y)} L${f(x)} ${f(y-r*0.7)}Z" fill="${C.cream}" opacity="${a.toFixed(2)}"/>`
+      : `<circle cx="${f(x)}" cy="${f(y)}" r="${f(r)}" fill="${C.cream}" opacity="${a.toFixed(2)}"/>`; }).join('');
+  const sp = (t % 6.4) / 1.1; if (sp < 1) g += st(`M${f(820 - sp*500)} ${f(120 + sp*180)} l90 -32`, C.cream, 5);
+  g += `<path d="M-60 1110 Q540 930 1140 1110 L1140 1360 L-60 1360Z" fill="${C.deep}" stroke="${C.ink}" stroke-width="10"/>`;
+  const e = aR.e;
+  let fig = limbD(lL) + limbD(lR) + limbD(aL) + torsoD(b) + headD(b, { blink: blinkAt(t), lx: 4 + 6*k, ly: 8 - 26*k }) + limbD(aR);
+  fig += `<rect x="${f(e[0]-20)}" y="${f(e[1]-50)}" width="40" height="34" rx="6" fill="${C.ink}" stroke="${C.cream}" stroke-width="4"/>
+    <rect x="${f(e[0]-9)}" y="${f(e[1]-62)}" width="18" height="14" fill="${C.ink}" stroke="${C.cream}" stroke-width="4"/>` + bonesD(b, [aR, aL, lL, lR]);
+  g += `<g transform="translate(540 1022) scale(1.1) translate(-540 -1022)">${fig}</g>`;
+  return { bg: C.night, g, txt: caption(['que a la gran indiferencia', 'de las estrellas'], t, 6.4) };
+}
+
+/* ---------- frame + loop ---------- */
+function frame(id, scene, seed) {
+  const g = scene.g.replace(/_ID/g, '_' + id);
+  return `<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="boil_${id}" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="2" seed="${seed}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter>
+      <filter id="rough_${id}"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="${seed}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="34" xChannelSelector="R" yChannelSelector="G"/></filter>
+      <filter id="gd_${id}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0.1  0 0 0 0 0.14  0 0 0 0 0.15  3.2 0 0 0 -1.75"/></filter>
+      <filter id="gl_${id}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="9"/><feColorMatrix values="0 0 0 0 0.96  0 0 0 0 0.96  0 0 0 0 0.9  -3.2 0 0 0 1.45"/></filter>
+    </defs>
+    <rect width="1080" height="1350" fill="${scene.bg}"/>
+    <g filter="url(#boil_${id})">${g}</g>
+    ${scene.txt}
+    <rect width="1080" height="1350" filter="url(#gd_${id})" opacity=".55"/>
+    <rect width="1080" height="1350" filter="url(#gl_${id})" opacity=".35"/>
+  </svg>`;
+}
+
+const row2 = [[island, 'Islas del sur', 'echado, sueña · respira, golpea el pie · 0:18'], [sorrow, 'Iba a tener pena', 'de perfil, abraza las rodillas, espalda curva · 0:52'], [stars, 'Las estrellas', 'anticipa, sube el tintero, sostiene, baja · 3:50']];
+document.getElementById('row2').innerHTML = row2.map(([_, n, d], i) => `<div class="cell"><div id="r2_${i}"></div><div class="lab">${n}<small>${d}</small></div></div>`).join('');
+document.getElementById('bones').onchange = e => { BONES = e.target.checked; };
+const params = new URLSearchParams(location.search);
+if (params.has('bones')) { BONES = true; document.getElementById('bones').checked = true; }
+const T0 = params.has('t') ? +params.get('t') : null;
+
+const t0 = performance.now();
+let last = -1;
+function tick() {
+  const t = T0 ?? Math.floor((performance.now() - t0) / 1000 * 12) / 12;
+  if (t !== last || T0 !== null) {
+    last = t; const seed = Math.floor(t * 6) % 5 + 1;
+    document.getElementById('sheet').innerHTML = frame('s', sheet(t), seed);
+    document.getElementById('write').innerHTML = frame('w', writing(t), seed);
+    row2.forEach(([fn], i) => document.getElementById('r2_' + i).innerHTML = frame('b' + i, fn(t), seed));
+  }
+  if (T0 === null) requestAnimationFrame(tick);
+}
+tick();
+</script>
+</body>
+</html>
