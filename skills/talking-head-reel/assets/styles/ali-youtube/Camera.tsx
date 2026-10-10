@@ -73,7 +73,7 @@ export const Camera: React.FC<{ t: number }> = ({ t }) => {
   const off = offProgress(t);
   const g = (k: keyof Rect) => blend(t, (m) => rectOf(m)[k]);
   const [x, y, w, h, radius, anchor, border] = [g("x"), g("y"), g("w"), g("h"), g("r"), g("anchor"), g("border")];
-  const zoom = lerp(cutZoom(t), 1, p) * (1 + 0.012 * Math.sin(t * 0.6));
+  const zoom = lerp(cutZoom(t), 1, p) * (1 + 0.006 * (1 + Math.sin(t * 0.6)));
   const coverW = Math.max(w, h * ASPECT) * zoom;
   const coverH = coverW / ASPECT;
   const top = Math.min(0, Math.max(h - coverH, anchor * h - FACE_Y * coverH));

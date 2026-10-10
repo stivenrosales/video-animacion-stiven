@@ -90,7 +90,7 @@ export const Camera: React.FC<{ t: number }> = ({ t }) => {
   const y = lerp(0, LAYOUT.cardTop, p);
   const radius = lerp(0, 48, p);
   // While lowered for the chat, drop the jump-cut punch-in so the chin stays above the captions.
-  const zoom = lerp(lerp(lerp(cutZoom(t), 1, lowerAmount(t)), ZOOM_OUT_TO, zoomOutAmount(t)), 1, p) * (1 + 0.012 * Math.sin(t * 0.6) * (1 - zoomOutAmount(t)));
+  const zoom = lerp(lerp(lerp(cutZoom(t), 1, lowerAmount(t)), ZOOM_OUT_TO, zoomOutAmount(t)), 1, p) * (1 + 0.006 * (1 + Math.sin(t * 0.6)) * (1 - zoomOutAmount(t)));
   const coverW = Math.max(w, h * ASPECT) * zoom;
   const coverH = coverW / ASPECT;
   // Full-screen: face sits lower so top cards clear the head. Card: face high, captions below chin.
