@@ -19,6 +19,7 @@ Finished videos:
 | Gentle AI + Engram reel (talking head) | `videos/2026-10-08-gentle-ai` | `GentleReel` | Ali Abdaal YouTube with a fade split (no camera card): graphic on cream, camera edge to edge below, sky dissolving into the canvas; Gentle AI brand medallions |
 | Repo + 3 styles reel (talking head) | `videos/2026-10-09-repo-estilos` | `RepoReel` | Ali YouTube base with Ali's real S band; the reel itself switches to Claude Carousel, Ali Shorts and Liquid Glass (`glass.tsx`) as each style is named; past reel cited as an Ali video card; real GitHub repo + Star CTA |
 | Pessoa narrated poem (feed post, 4:5) | `videos/2026-10-09-quiet-poema` | `QuietPoema` | Quiet Please: one stick figure doing loops on a flat-color grainy background, 12 stations cued to words, Marcellus captions |
+| WhatsApp agents maintenance reel (talking head) | `videos/2026-10-10-agentes-mantenimiento` | `AgentesReel` | Ali YouTube latest (traced band + fade split), white panels with lucide icon circles, text slide, chapter card, chart; real respond.io/Airtable/Excel logos |
 
 For talking-head reels, load the skill `talking-head-reel`: it holds the full pipeline and the proven layout numbers. Its single source of truth is `skills/talking-head-reel/` in this repo; `~/.claude/skills/talking-head-reel` is a symlink to it, so edit the repo copy and commit.
 
@@ -66,7 +67,7 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - An idea the speaker did not say but the video depends on (e.g. "en empresas") gets a headline beat, not a small note.
 - Remotion `--frames` is 0-based and must stay below duration×fps.
 - REFERENCE FIDELITY: when the user names a style or gives a reference (image, site, shorts, past reel), study it concretely (download it, contact-sheet it, extract real fonts/hex colors/positions) and show an HTML style board over his real frames BEFORE building. A generic approximation cost a full rebuild twice. See the skill's `references/styles.md`.
-- Style verdicts: Claude Carousel (Claude's own IG carousels + reels) = liked; Claude-UI kit = liked; Ali Abdaal = liked a lot; Ali × Sketch = liked a lot (Ali elements, Excalidraw strokes only, Claude-UI camera drop without frame); Liquid Glass = rejected; Claude-UI graphics mixed with Ali = rejected.
+- Style verdicts: Claude Carousel (Claude's own IG carousels + reels) = liked; Claude-UI kit = liked; Ali Abdaal = liked a lot; Ali × Sketch = liked a lot (Ali elements, Excalidraw strokes only, Claude-UI camera drop without frame); Liquid Glass = rejected; Claude-UI graphics mixed with Ali = rejected; Ali's newer diagram look (color emoji icon tiles, connectors with traveling dots, numbered progress line) = rejected, he wants minimal lucide icons and calm motion.
 - Cut only silences by default. Never remove words he said (self-corrections, fillers) without asking.
 - A clip that ends mid-word means a missing take: ask for it and join the takes in `work/join/`.
 - Work inline for video editing; delegating the build to a subagent lost context (generic v1, idle waits, overwritten `work/audio.wav`).
@@ -83,6 +84,8 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - Filler cuts: verify each with a splice test of the joined audio; a cut 110 ms early ate the "-que" of "porque".
 - No "broken" cards: badges and pills never straddle a card edge, nothing is tilted, and two elements never overlap mid-transition, unless the user asks (even if the reference does it).
 - The dark top scrim is one fixed full-frame layer that only fades; inside an animated Scene its edges show while it scales in.
+- Camera breathing zoom must never go below 1: `1 + 0.012*sin` opened cream strips at both sides of the edge-to-edge split every 10.5 s. Use `1 + 0.006*(1+sin)` (fixed in the kits).
+- Never show an empty panel waiting for its first cue: hold the previous scene until the next one has content on screen.
 - Camera under a graphic: he prefers a fade split (camera full width from y 740, eased 150 px top fade into the cream, hair kept out of the fade) over a framed card, arch, cutout or bubble. Never fill zoom-out gaps with blur or side fades; full width is the zoom-out limit.
 - In split mode the swoosh lives only in the graphics band; a curve crossing the camera looks like a stain.
 - When he flags a repeated phrase or a filler, find the edges with a 25 ms RMS scan plus splice tests: Whisper word times drift up to 0.9 s there. Retime later cues from the new transcription, not by shifting.
