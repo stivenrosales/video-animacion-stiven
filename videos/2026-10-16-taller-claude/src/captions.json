@@ -1,0 +1,492 @@
+[
+ {
+  "text": " Huancayo,",
+  "startMs": 100,
+  "endMs": 500,
+  "timestampMs": 100,
+  "confidence": null
+ },
+ {
+  "text": " si",
+  "startMs": 500,
+  "endMs": 600,
+  "timestampMs": 500,
+  "confidence": null
+ },
+ {
+  "text": " quieres",
+  "startMs": 600,
+  "endMs": 950,
+  "timestampMs": 600,
+  "confidence": null
+ },
+ {
+  "text": " aprender",
+  "startMs": 950,
+  "endMs": 1340,
+  "timestampMs": 950,
+  "confidence": null
+ },
+ {
+  "text": " Inteligencia",
+  "startMs": 1350,
+  "endMs": 1950,
+  "timestampMs": 1350,
+  "confidence": null
+ },
+ {
+  "text": " Artificial",
+  "startMs": 1950,
+  "endMs": 2420,
+  "timestampMs": 1950,
+  "confidence": null
+ },
+ {
+  "text": " este",
+  "startMs": 2550,
+  "endMs": 2700,
+  "timestampMs": 2550,
+  "confidence": null
+ },
+ {
+  "text": " sábado",
+  "startMs": 2700,
+  "endMs": 3080,
+  "timestampMs": 2700,
+  "confidence": null
+ },
+ {
+  "text": " tenemos",
+  "startMs": 3080,
+  "endMs": 3390,
+  "timestampMs": 3080,
+  "confidence": null
+ },
+ {
+  "text": " un",
+  "startMs": 3390,
+  "endMs": 3480,
+  "timestampMs": 3390,
+  "confidence": null
+ },
+ {
+  "text": " evento",
+  "startMs": 3480,
+  "endMs": 3760,
+  "timestampMs": 3480,
+  "confidence": null
+ },
+ {
+  "text": " totalmente",
+  "startMs": 3760,
+  "endMs": 4260,
+  "timestampMs": 3760,
+  "confidence": null
+ },
+ {
+  "text": " gratis",
+  "startMs": 4360,
+  "endMs": 4630,
+  "timestampMs": 4360,
+  "confidence": null
+ },
+ {
+  "text": " para",
+  "startMs": 4630,
+  "endMs": 4880,
+  "timestampMs": 4630,
+  "confidence": null
+ },
+ {
+  "text": " poder",
+  "startMs": 4880,
+  "endMs": 5190,
+  "timestampMs": 4880,
+  "confidence": null
+ },
+ {
+  "text": " aplicar",
+  "startMs": 5190,
+  "endMs": 5610,
+  "timestampMs": 5190,
+  "confidence": null
+ },
+ {
+  "text": " Inteligencia",
+  "startMs": 5610,
+  "endMs": 6360,
+  "timestampMs": 5610,
+  "confidence": null
+ },
+ {
+  "text": " Artificial",
+  "startMs": 6360,
+  "endMs": 6980,
+  "timestampMs": 6360,
+  "confidence": null
+ },
+ {
+  "text": " en",
+  "startMs": 6980,
+  "endMs": 7100,
+  "timestampMs": 6980,
+  "confidence": null
+ },
+ {
+  "text": " negocios.",
+  "startMs": 7100,
+  "endMs": 7880,
+  "timestampMs": 7100,
+  "confidence": null
+ },
+ {
+  "text": " Vamos",
+  "startMs": 7980,
+  "endMs": 8100,
+  "timestampMs": 7980,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 8100,
+  "endMs": 8140,
+  "timestampMs": 8100,
+  "confidence": null
+ },
+ {
+  "text": " ver",
+  "startMs": 8140,
+  "endMs": 8270,
+  "timestampMs": 8140,
+  "confidence": null
+ },
+ {
+  "text": " cosas",
+  "startMs": 8270,
+  "endMs": 8490,
+  "timestampMs": 8270,
+  "confidence": null
+ },
+ {
+  "text": " bastante",
+  "startMs": 8490,
+  "endMs": 8840,
+  "timestampMs": 8490,
+  "confidence": null
+ },
+ {
+  "text": " básicas,",
+  "startMs": 8840,
+  "endMs": 9220,
+  "timestampMs": 8840,
+  "confidence": null
+ },
+ {
+  "text": " luego",
+  "startMs": 9220,
+  "endMs": 9440,
+  "timestampMs": 9220,
+  "confidence": null
+ },
+ {
+  "text": " vamos",
+  "startMs": 9440,
+  "endMs": 9660,
+  "timestampMs": 9440,
+  "confidence": null
+ },
+ {
+  "text": " a",
+  "startMs": 9660,
+  "endMs": 9720,
+  "timestampMs": 9660,
+  "confidence": null
+ },
+ {
+  "text": " subir",
+  "startMs": 9720,
+  "endMs": 9920,
+  "timestampMs": 9720,
+  "confidence": null
+ },
+ {
+  "text": " un",
+  "startMs": 9920,
+  "endMs": 10000,
+  "timestampMs": 9920,
+  "confidence": null
+ },
+ {
+  "text": " poquito",
+  "startMs": 10000,
+  "endMs": 10300,
+  "timestampMs": 10000,
+  "confidence": null
+ },
+ {
+  "text": " de",
+  "startMs": 10300,
+  "endMs": 10420,
+  "timestampMs": 10300,
+  "confidence": null
+ },
+ {
+  "text": " nivel",
+  "startMs": 10440,
+  "endMs": 10600,
+  "timestampMs": 10440,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 10600,
+  "endMs": 10640,
+  "timestampMs": 10600,
+  "confidence": null
+ },
+ {
+  "text": " cosas",
+  "startMs": 10640,
+  "endMs": 10920,
+  "timestampMs": 10640,
+  "confidence": null
+ },
+ {
+  "text": " prácticas",
+  "startMs": 10920,
+  "endMs": 11520,
+  "timestampMs": 10920,
+  "confidence": null
+ },
+ {
+  "text": " y",
+  "startMs": 11570,
+  "endMs": 11620,
+  "timestampMs": 11570,
+  "confidence": null
+ },
+ {
+  "text": " finalmente",
+  "startMs": 11620,
+  "endMs": 12080,
+  "timestampMs": 11620,
+  "confidence": null
+ },
+ {
+  "text": " explorar",
+  "startMs": 12080,
+  "endMs": 12480,
+  "timestampMs": 12080,
+  "confidence": null
+ },
+ {
+  "text": " todas",
+  "startMs": 12480,
+  "endMs": 12730,
+  "timestampMs": 12480,
+  "confidence": null
+ },
+ {
+  "text": " las",
+  "startMs": 12730,
+  "endMs": 12880,
+  "timestampMs": 12730,
+  "confidence": null
+ },
+ {
+  "text": " posibilidades",
+  "startMs": 12880,
+  "endMs": 13530,
+  "timestampMs": 12880,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 13530,
+  "endMs": 13680,
+  "timestampMs": 13530,
+  "confidence": null
+ },
+ {
+  "text": " nos",
+  "startMs": 13680,
+  "endMs": 13800,
+  "timestampMs": 13680,
+  "confidence": null
+ },
+ {
+  "text": " da",
+  "startMs": 13830,
+  "endMs": 13930,
+  "timestampMs": 13830,
+  "confidence": null
+ },
+ {
+  "text": " la",
+  "startMs": 13930,
+  "endMs": 14050,
+  "timestampMs": 13930,
+  "confidence": null
+ },
+ {
+  "text": " Inteligencia",
+  "startMs": 14130,
+  "endMs": 14600,
+  "timestampMs": 14130,
+  "confidence": null
+ },
+ {
+  "text": " Artificial,",
+  "startMs": 14660,
+  "endMs": 15270,
+  "timestampMs": 14660,
+  "confidence": null
+ },
+ {
+  "text": " principalmente",
+  "startMs": 15270,
+  "endMs": 15840,
+  "timestampMs": 15270,
+  "confidence": null
+ },
+ {
+  "text": " usando",
+  "startMs": 15940,
+  "endMs": 16340,
+  "timestampMs": 15940,
+  "confidence": null
+ },
+ {
+  "text": " Claude.",
+  "startMs": 16350,
+  "endMs": 17040,
+  "timestampMs": 16350,
+  "confidence": null
+ },
+ {
+  "text": " Si",
+  "startMs": 17040,
+  "endMs": 17150,
+  "timestampMs": 17040,
+  "confidence": null
+ },
+ {
+  "text": " tú",
+  "startMs": 17150,
+  "endMs": 17260,
+  "timestampMs": 17150,
+  "confidence": null
+ },
+ {
+  "text": " ya",
+  "startMs": 17260,
+  "endMs": 17370,
+  "timestampMs": 17260,
+  "confidence": null
+ },
+ {
+  "text": " dominas,",
+  "startMs": 17370,
+  "endMs": 17870,
+  "timestampMs": 17370,
+  "confidence": null
+ },
+ {
+  "text": " también",
+  "startMs": 17870,
+  "endMs": 18250,
+  "timestampMs": 17870,
+  "confidence": null
+ },
+ {
+  "text": " sería",
+  "startMs": 18250,
+  "endMs": 18540,
+  "timestampMs": 18250,
+  "confidence": null
+ },
+ {
+  "text": " genial",
+  "startMs": 18540,
+  "endMs": 18880,
+  "timestampMs": 18540,
+  "confidence": null
+ },
+ {
+  "text": " que",
+  "startMs": 18880,
+  "endMs": 19050,
+  "timestampMs": 18880,
+  "confidence": null
+ },
+ {
+  "text": " vengas",
+  "startMs": 19050,
+  "endMs": 19160,
+  "timestampMs": 19050,
+  "confidence": null
+ },
+ {
+  "text": " para",
+  "startMs": 19380,
+  "endMs": 19560,
+  "timestampMs": 19380,
+  "confidence": null
+ },
+ {
+  "text": " compartir",
+  "startMs": 19560,
+  "endMs": 19960,
+  "timestampMs": 19560,
+  "confidence": null
+ },
+ {
+  "text": " qué",
+  "startMs": 19960,
+  "endMs": 20100,
+  "timestampMs": 19960,
+  "confidence": null
+ },
+ {
+  "text": " proyectos",
+  "startMs": 20100,
+  "endMs": 20400,
+  "timestampMs": 20100,
+  "confidence": null
+ },
+ {
+  "text": " estás",
+  "startMs": 20500,
+  "endMs": 20710,
+  "timestampMs": 20500,
+  "confidence": null
+ },
+ {
+  "text": " realizando.",
+  "startMs": 20710,
+  "endMs": 21360,
+  "timestampMs": 20710,
+  "confidence": null
+ },
+ {
+  "text": " Ahí",
+  "startMs": 21420,
+  "endMs": 21550,
+  "timestampMs": 21420,
+  "confidence": null
+ },
+ {
+  "text": " nos",
+  "startMs": 21550,
+  "endMs": 21700,
+  "timestampMs": 21550,
+  "confidence": null
+ },
+ {
+  "text": " vemos.",
+  "startMs": 21700,
+  "endMs": 21960,
+  "timestampMs": 21700,
+  "confidence": null
+ }
+]

@@ -1,0 +1,18 @@
+{
+  "fps": 60,
+  "duration": 300,
+  "ignite": 4,
+  "claude": 30,
+  "greet": 76,
+  "box": 96,
+  "typeStart": 118,
+  "typeEnd": 170,
+  "prompt": "Help me build a reel with Claude",
+  "cursorIn": 176,
+  "click": 194,
+  "whip": 200,
+  "code": 204,
+  "word1": 252,
+  "word2": 266,
+  "spark": 282
+}
