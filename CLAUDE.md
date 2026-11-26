@@ -20,6 +20,9 @@ Finished videos:
 | Repo + 3 styles reel (talking head) | `videos/2026-10-09-repo-estilos` | `RepoReel` | Ali YouTube base with Ali's real S band; the reel itself switches to Claude Carousel, Ali Shorts and Liquid Glass (`glass.tsx`) as each style is named; past reel cited as an Ali video card; real GitHub repo + Star CTA |
 | Pessoa narrated poem (feed post, 4:5) | `videos/2026-10-09-quiet-poema` | `QuietPoema` | Quiet Please: one stick figure doing loops on a flat-color grainy background, 12 stations cued to words, Marcellus captions |
 | WhatsApp agents maintenance reel (talking head) | `videos/2026-10-10-agentes-mantenimiento` | `AgentesReel` | Ali YouTube latest (traced band + fade split), white panels with lucide icon circles, text slide, chapter card, chart; real respond.io/Airtable/Excel logos |
+| Hackathon Transforma+ MIPYME recap (b-roll + voiceover) | `videos/2026-10-17-transforma-recap` | `TransformaRecap` | Event recap: 7 iPhone clips cut to his VO, UC deck brand (#120B1E, lilac, Bebas Neue + DM Sans, event logos), Suno music via Kie (`scripts/suno.py`), logo end card |
+| Rue Vieille du Temple song cover (feed post, 4:5) | `videos/2026-10-14-rue-vieille` | `RueVieille` | Quiet Please ink/boil/grain in space: one continuous camera, lunar-lander rocket physics sim, eyelid seam → voice waveform, pink star → jungle planet; ported verbatim from the approved HTML animatic (`work/board-v4.html` → `src/board.ts`) |
+| Jhey batch: nine TikTok reels recorded 2026-11-25 (talking head) | `videos/2026-11-25-*` (sfx-elevenlabs is the pilot) | `<Name>Reel` (`SfxReel`, `PropiReel`, `WahaReel`, `SapReel`, `MetaReel`, `BucleReel`, `DisenoReel`, `OpenReel`, `HuancayoReel`) | Koan "cercano": full camera, one-word Satoshi captions, punch-in by cut, sumi cutaways, pen icons, real brand logos, ElevenLabs SFX + Suno bed. Kit: `skills/talking-head-reel/assets/styles/koan/REEL-KIT.md`; tracking: `odd/tasks/jhey-batch-reels.md` |
 
 For talking-head reels, load the skill `talking-head-reel`: it holds the full pipeline and the proven layout numbers. Its single source of truth is `skills/talking-head-reel/` in this repo; `~/.claude/skills/talking-head-reel` is a symlink to it, so edit the repo copy and commit.
 
@@ -70,7 +73,9 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - Style verdicts: Claude Carousel (Claude's own IG carousels + reels) = liked; Claude-UI kit = liked; Ali Abdaal = liked a lot; Ali × Sketch = liked a lot (Ali elements, Excalidraw strokes only, Claude-UI camera drop without frame); Liquid Glass = rejected; Claude-UI graphics mixed with Ali = rejected; Ali's newer diagram look (color emoji icon tiles, connectors with traveling dots, numbered progress line) = rejected, he wants minimal lucide icons and calm motion.
 - Cut only silences by default. Never remove words he said (self-corrections, fillers) without asking.
 - A clip that ends mid-word means a missing take: ask for it and join the takes in `work/join/`.
-- Work inline for video editing; delegating the build to a subagent lost context (generic v1, idle waits, overwritten `work/audio.wav`).
+- Work inline for a new style or a single video; delegating that build lost context (generic v1, idle waits, overwritten `work/audio.wav`). A batch in an already approved style can be delegated: one builder and one read-only aesthetic reviewer per video, with a written kit as the brief (see the Koan `REEL-KIT.md`, "Running a batch with subagents").
+- Heavy jobs (renders, encodes, denoise) run one at a time, across subagents too: prefix them with `tools/wait-heavy.sh &&`.
+- `tools/finalize.sh <slug> <Comp>` does the final: chunked render, mix renormalized to -14 LUFS, 0.3 s fade, copy to `finals/`. `tools/islands.py`, `tools/setcut.py`, `tools/zoom.py` and `tools/cutcheck.sh` are the fine-cut helpers.
 - Never overwrite `work/audio.wav`: it is `cut.py`'s silence source. Name other audio `voice-in.wav`, `mix.wav`, etc.
 - Keep the breath after the last word (`LAST_WORD_END` in `cut.py`) and fade the final audio 0.3 s. An edit that ends on the word feels chopped.
 - Captions must clear THIS speaker's chin: scan the chin band of the final at 1 fps. For close framing, chip center y 1462 and punch-ins 1.06/1.12.
@@ -97,6 +102,9 @@ The README art is generated: `python3 docs/art/clawd.py` (pixel-art hero) and `p
 - Quiet Please style (narrated animation): one stick figure (kit `quiet-please/`: `rig.ts`, board, `grain.py`) in loops per idea, elements enter on the word that names them. Long narration (4+ min) ships as a 4:5 (1080x1350) feed post, not a reel.
 - Stick figure anatomy: shoulder on the spine (never at the neck), fixed segment lengths in head units, two-bone IK with elbows out and knees forward; a writing hand follows a real pen path (loops, line returns, dip, page flip) and the eyes follow it. Crossed forearms read as broken.
 - Judge grain at 100% size: a board cell shown at 1/3 hides grain that is loud in the full render.
+- Song/narration animations: validate with a full-length HTML animatic synced to the audio (word times from whisper, `?t=` stills, chapter jump buttons), then port its logic verbatim into Remotion. He judges flow on the animatic, not on boards.
+- He wants subtle, non-literal metaphors (no stick figures there, no hearts, no drawn eyes): a thought bubble for "soñar", a falling star for "llorar", a wave for "sentir".
+- Moving vehicles need real physics: thrust only along the nose, torque-limited turning, gravity, engine-off inertia. Check tilt ranges with a diagnostics dump before showing it. Keep the camera still once something lands on a screen-space set piece.
 - Props must read as what they are: a lone bowler hat looked like a UFO; use the full silhouette. Hands hold objects by their grip (cup handle), arm drawn behind the object.
 
 ## Next direction: hybrid pipeline (animation separate, Remotion assembles)

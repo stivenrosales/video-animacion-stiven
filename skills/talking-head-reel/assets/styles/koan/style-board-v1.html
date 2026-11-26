@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>Koan · Style board de reels</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Koan reel style: Ali Abdaal YouTube structure (band, panel + camera card, text slides, chapter cards,
+     word blur-in) dressed in the Koan brand (sumi/washi/arena, moss accent, Satoshi, traced ink grooves,
+     canto stone, enso). Frames are Stiven's real footage (assets/f-*.jpg). -->
+<style>
+  @font-face { font-family: "Satoshi"; src: url("assets/Satoshi-Variable.woff2") format("woff2"); font-weight: 300 900; }
+  @font-face { font-family: "Newsreader"; src: url("assets/Newsreader.ttf") format("truetype"); font-weight: 200 800; font-style: normal italic; }
+
+  :root {
+    --sans: "Satoshi", system-ui, sans-serif;
+    --serif: "Newsreader", Georgia, serif;
+    --sumi: #1A1A18; --washi: #F6F4EF; --arena: #E4DFD3;
+    --line-light: #CFC8B8; --line-dark: #3A3A36;
+    --moss: #3E5A3A; --moss-light: #8FA85A;
+    --ease: cubic-bezier(.32,.72,0,1);
+    --scale: 0.4;
+    --T: 7s;
+  }
+  /* Theme tokens for the canvas scenes (footage scenes do not change). */
+  [data-theme="dark"] { --bg: var(--sumi); --ink: var(--washi); --mute: #9C978C; --band: var(--line-dark); --panel: #232320; --panelLine: #33332F; --tile: #2A2A26; --accent: var(--moss-light); --cardLine: #3A3A36; }
+  [data-theme="light"] { --bg: var(--washi); --ink: var(--sumi); --mute: #7A756B; --band: var(--line-light); --panel: #FFFFFF; --panelLine: #ECE8DF; --tile: #FAF8F3; --accent: var(--moss); --cardLine: #CFC8B8; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #DEDAD0; color: var(--sumi); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  main { max-width: 1520px; margin: 0 auto; padding: 44px 18px 90px; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 34px; }
+  header h1 { font-weight: 500; font-size: 46px; letter-spacing: -1.6px; margin: 0; }
+  header p { color: #6B665C; font-size: 16px; margin: 10px 0 0; max-width: 880px; line-height: 1.55; }
+  .toggle { display: flex; gap: 6px; padding: 6px; background: #F6F4EF; border-radius: 999px; box-shadow: 0 0 0 1px #CFC8B8; }
+  .toggle button { font: 500 15px var(--sans); border: 0; padding: 10px 20px; border-radius: 999px; background: transparent; color: #4A463F; cursor: pointer; transition: background .3s var(--ease), color .3s var(--ease); }
+  .toggle button[aria-pressed="true"] { background: var(--sumi); color: var(--washi); }
+  h2 { font-weight: 500; font-size: 28px; letter-spacing: -.8px; margin: 70px 0 22px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(1080px * var(--scale)), 1fr)); gap: 46px 26px; justify-items: center; }
+  figure { margin: 0; width: calc(1080px * var(--scale)); max-width: 100%; }
+  figcaption { margin-top: 14px; }
+  figcaption b { display: block; font-size: 19px; font-weight: 600; letter-spacing: -.3px; }
+  figcaption span { display: block; color: #6B665C; font-size: 13.5px; margin-top: 4px; line-height: 1.45; }
+  .frame { width: calc(1080px * var(--scale)); height: calc(1920px * var(--scale)); border-radius: 26px; overflow: hidden; position: relative; box-shadow: 0 24px 60px rgba(26,26,24,.18), 0 0 0 1px rgba(26,26,24,.06); }
+  .screen { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform: scale(var(--scale)); transform-origin: 0 0; overflow: hidden; background: var(--bg); color: var(--ink); transition: background .5s var(--ease); }
+  .abs { position: absolute; }
+
+  /* footage */
+  .cam { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: push 9s ease-in-out infinite alternate; }
+  @keyframes push { from { transform: scale(1.0) } to { transform: scale(1.05) } }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(26,26,24,.66) 0%, rgba(26,26,24,.42) 26%, rgba(26,26,24,0) 44%); }
+  .scrim-b { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(26,26,24,.86) 0%, rgba(26,26,24,.5) 32%, rgba(26,26,24,0) 56%); }
+
+  /* ink elements: traced SVGs used as masks so the theme recolors them */
+  .ink { position: absolute; background: var(--band); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-position: center; mask-position: center; }
+  .grooves { -webkit-mask-image: url("assets/divisor-1.svg"); mask-image: url("assets/divisor-1.svg"); }
+  .garden { -webkit-mask-image: url("assets/jardin-lineas.svg"); mask-image: url("assets/jardin-lineas.svg"); }
+  .enso { -webkit-mask-image: url("assets/enso-1.svg"); mask-image: url("assets/enso-1.svg"); }
+  .sumi { -webkit-mask-image: url("assets/sumi-1.svg"); mask-image: url("assets/sumi-1.svg"); }
+  /* Ali's S band, rebuilt from raked grooves: enters low-left, rises, leaves through the right edge. */
+  .band { width: 2300px; height: 986px; left: -420px; top: 1060px; transform: rotate(-38deg); transform-origin: 50% 50%; opacity: .9; animation: drift 14s ease-in-out infinite alternate; }
+  .band.top { width: 1500px; height: 643px; left: 330px; top: -130px; transform: rotate(28deg); }
+  @keyframes drift { from { translate: 0 0 } to { translate: -26px 16px } }
+  .rake { animation: rake var(--T) infinite var(--ease); }
+  @keyframes rake { 0% { clip-path: inset(0 100% 0 0) } 14%, 100% { clip-path: inset(0 0 0 0) } }
+
+  /* canto stone as the period */
+  .stone { display: inline-block; height: .2em; width: .4em; margin-left: .06em; vertical-align: baseline; fill: currentColor; }
+
+  /* word blur-in (Ali: incoming word blurred, then settles) */
+  .w { display: inline-block; opacity: 0; animation: wordIn var(--T) infinite var(--ease); animation-delay: calc(var(--i) * .16s); }
+  @keyframes wordIn {
+    0% { opacity: 0; filter: blur(14px); transform: translateY(12px); }
+    5% { opacity: .5; filter: blur(5px); }
+    9%, 88% { opacity: 1; filter: blur(0); transform: none; }
+    96%, 100% { opacity: 0; filter: blur(8px); }
+  }
+
+  /* headline over footage */
+  .over { color: var(--washi); font-weight: 500; font-size: 94px; line-height: 1.02; letter-spacing: -3.2px; text-shadow: 0 2px 22px rgba(0,0,0,.28); }
+  .over .k { color: var(--moss-light); }
+
+  /* captions: no chip; washi over footage, ink on the canvas; active word in moss */
+  .cap { position: absolute; left: 0; right: 0; text-align: center; font-weight: 600; font-size: 54px; letter-spacing: -1px; white-space: nowrap; }
+  .cap.light { color: var(--washi); text-shadow: 0 2px 14px rgba(0,0,0,.5), 0 0 2px rgba(0,0,0,.4); top: 1405px; }
+  .cap.dark { color: var(--ink); top: 880px; }
+  .cap .a { color: var(--moss-light); }
+  .cap.dark .a { color: var(--accent); }
+  .cap .n { opacity: .4; filter: blur(3px); }
+
+  /* camera card */
+  .camcard { position: absolute; left: 90px; top: 1010px; width: 900px; height: 860px; border-radius: 40px; overflow: hidden; box-shadow: 0 0 0 3px var(--cardLine), 0 24px 60px rgba(0,0,0,.18); animation: camIn var(--T) infinite var(--ease); }
+  .camcard img { width: 100%; height: 170%; object-fit: cover; object-position: 50% 100%; transform: translateY(-41%); }
+  .camcard.wide { top: 240px; height: 1010px; }
+  .camcard.wide img { height: 170%; transform: translateY(-41%); }
+  @keyframes camIn { 0% { transform: translateY(40px) scale(.97); opacity: 0 } 7%, 92% { transform: none; opacity: 1 } 100% { opacity: 0 } }
+
+  .panel { position: absolute; left: 60px; right: 60px; top: 250px; height: 580px; background: var(--panel); border-radius: 40px; box-shadow: 0 0 0 1.5px var(--panelLine), 0 24px 70px rgba(26,26,24,.08); animation: up var(--T) infinite var(--ease); }
+  @keyframes up { 0% { opacity: 0; transform: translateY(30px) } 7%, 92% { opacity: 1; transform: none } 100% { opacity: 0 } }
+  .label { font-weight: 500; font-size: 28px; color: var(--mute); letter-spacing: .2px; }
+
+  /* icon circles (lucide, thin and calm) */
+  .ic { width: 112px; height: 112px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+  .ic svg { width: 54px; height: 54px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .ic.sm { width: 76px; height: 76px; } .ic.sm svg { width: 38px; height: 38px; }
+  .ic.mute { background: color-mix(in srgb, var(--mute) 16%, transparent); color: var(--mute); }
+
+  /* meter */
+  .meter { position: absolute; left: 70px; right: 70px; top: 330px; height: 34px; border-radius: 999px; background: color-mix(in srgb, var(--mute) 22%, transparent); overflow: hidden; }
+  .meter i { position: absolute; inset: 0; border-radius: 999px; background: var(--accent); transform-origin: 0 50%; animation: drain var(--T) infinite var(--ease); }
+  @keyframes drain { 0%, 12% { transform: scaleX(1) } 70%, 100% { transform: scaleX(.02) } }
+  .count { position: absolute; right: 70px; top: 400px; font-weight: 500; font-size: 92px; letter-spacing: -3px; }
+  .count small { font-size: 34px; letter-spacing: -.5px; color: var(--mute); margin-left: 8px; }
+
+  /* text slide that rises over the camera */
+  .slide { position: absolute; inset: 0; background: var(--bg); animation: slideUp var(--T) infinite var(--ease); }
+  @keyframes slideUp {
+    0% { transform: translateY(1920px); filter: blur(0) }
+    3% { filter: blur(6px) }
+    8%, 82% { transform: translateY(0); filter: blur(0) }
+    86% { filter: blur(10px) }
+    92%, 100% { transform: translateY(-1920px); filter: blur(0) }
+  }
+  .slide .t { position: absolute; left: 90px; right: 90px; top: 600px; text-align: center; font-weight: 500; font-size: 100px; line-height: 1.04; letter-spacing: -3.4px; }
+  .slide .t .k { color: var(--accent); }
+
+  /* chapter card */
+  .chapter .title { position: absolute; left: 0; right: 0; top: 820px; text-align: center; font-weight: 500; font-size: 108px; line-height: 1.0; letter-spacing: -3.6px; }
+  .chapter .enso { width: 560px; height: 553px; left: 260px; top: 560px; background: var(--accent); opacity: .22; animation: ensoIn var(--T) infinite var(--ease); }
+  @keyframes ensoIn { 0% { opacity: 0; transform: rotate(-24deg) scale(.92) } 16%, 90% { opacity: .22; transform: none } 100% { opacity: 0 } }
+  .paso { position: absolute; left: 0; right: 0; top: 700px; text-align: center; }
+  .pill { display: inline-block; padding: 14px 34px 16px; border-radius: 999px; font-weight: 600; font-size: 38px; letter-spacing: -.4px; }
+  .pill.moss { background: var(--accent); color: var(--bg); }
+  .pill.ghost { box-shadow: inset 0 0 0 2px var(--accent); color: var(--accent); }
+  .pop { opacity: 0; animation: pop var(--T) infinite var(--ease); animation-delay: var(--d, 0s); }
+  @keyframes pop { 0% { opacity: 0; transform: translateY(18px) scale(.96) } 6%, 90% { opacity: 1; transform: none } 100% { opacity: 0 } }
+
+  /* tiles */
+  .tile { position: absolute; top: 60px; width: 440px; height: 460px; background: var(--tile); border-radius: 32px; box-shadow: inset 0 0 0 1.5px var(--panelLine); padding: 40px 36px; }
+  .tile h4 { margin: 22px 0 18px; font-weight: 500; font-size: 52px; letter-spacing: -1.6px; }
+  .tile li { list-style: none; display: flex; align-items: center; gap: 14px; font-size: 32px; font-weight: 500; letter-spacing: -.4px; margin: 0 0 12px; }
+  .tile ul { margin: 0; padding: 0; }
+  .tile li svg { width: 32px; height: 32px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .tile li.yes svg { color: var(--accent); } .tile li.no { color: var(--mute); }
+
+  /* flow row */
+  .flow { position: absolute; left: 70px; right: 70px; top: 1300px; display: flex; align-items: flex-start; justify-content: space-between; }
+  .step { width: 250px; text-align: center; }
+  .step .ic { margin: 0 auto 16px; }
+  .step b { display: block; font-weight: 500; font-size: 36px; letter-spacing: -.8px; }
+  .step span { display: block; font-size: 25px; color: var(--mute); margin-top: 4px; }
+  .join { flex: 1; margin-top: 56px; height: 0; border-top: 4px dotted var(--band); }
+
+  /* logo */
+  .logo { position: absolute; display: block; }
+
+  /* cover crop guide (IG grid shows a 3:4 window) */
+  .crop { position: absolute; left: 0; right: 0; top: 240px; height: 1440px; box-shadow: 0 0 0 9999px rgba(26,26,24,.35); outline: 3px dashed rgba(246,244,239,.55); outline-offset: -3px; pointer-events: none; }
+  .crop-on .crop { display: block; } .crop { display: none; }
+
+  /* kit */
+  .kit { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 22px; }
+  .card { background: #F6F4EF; border-radius: 26px; padding: 26px; box-shadow: 0 0 0 1px #CFC8B8; }
+  .card.dk { background: #1A1A18; color: #F6F4EF; box-shadow: none; }
+  .card h3 { margin: 0 0 16px; font-size: 14px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: #8A857A; }
+  .sw { display: flex; gap: 10px; flex-wrap: wrap; }
+  .sw div { width: 92px; } .sw i { display: block; height: 70px; border-radius: 16px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+  .sw small { display: block; font-size: 12px; margin-top: 6px; color: #6B665C; line-height: 1.3; }
+  .spec1 { font-weight: 500; font-size: 52px; letter-spacing: -2px; line-height: 1; }
+  .spec2 { font-family: var(--serif); font-style: italic; font-size: 34px; margin-top: 14px; color: #3E5A3A; }
+  .spec3 { font-size: 16px; color: #6B665C; margin-top: 12px; line-height: 1.5; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; opacity: 1 !important; transition: none !important; } .slide { transform: none; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="canto" viewBox="723 905 591 298"><path transform="translate(0,2048) scale(0.1,-0.1)" d="M10285 11424 c-589 -45 -1039 -181 -1735 -525 -589 -291 -951 -548 -1149 -818 -212 -288 -225 -551 -43 -841 137 -216 331 -378 625 -520 306 -148 571 -218 907 -239 851 -56 2785 -31 3160 40 419 79 718 239 904 482 332 435 213 963 -340 1497 -505 487 -1180 816 -1856 904 -119 16 -383 27 -473 20z"/></symbol>
+    <!-- lucide icons -->
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.47.47 0 0 0-.75-.38L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></symbol>
+  </defs>
+</svg>
+
+<main>
+  <header>
+    <div>
+      <h1>Koan · reels</h1>
+      <p>La estructura de Ali Abdaal YouTube (banda en S, panel con tarjeta de cámara, láminas de texto, capítulos, palabras que entran desenfocadas) vestida con la marca Koan: sumi, washi y arena, acento musgo, Satoshi, surcos de tinta reales, la piedra canto como punto y el ensō. Ábrelo con <code>python3 -m http.server</code> en esta carpeta (las tintas no cargan desde file://). Las tomas son tuyas, de un reel anterior: grabado afuera, por eso el cielo. En el estudio el fondo será el librero y oscuro.</p>
+    </div>
+    <div class="toggle" role="group" aria-label="Fondo de las escenas">
+      <button type="button" data-t="dark" aria-pressed="true">Fondo sumi</button>
+      <button type="button" data-t="light" aria-pressed="false">Fondo washi</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- 1 · hook over footage -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <img class="cam" src="assets/f-full.jpg" alt="">
+        <div class="scrim"></div>
+        <div class="abs over" style="left:80px; right:80px; top:270px;">
+          <span class="w" style="--i:0">Alguien</span> <span class="w" style="--i:1">usó</span> <span class="w" style="--i:2">IA</span><br><span class="w" style="--i:3">para</span> <span class="w" style="--i:4">enviar</span><br>
+          <span class="w k" style="--i:6">70</span> <span class="w k" style="--i:7">boletas<svg class="stone"><use href="#canto"/></svg></span>
+        </div>
+        <div class="cap light">se quedó sin <span class="a">tokens</span> <span class="n">en</span></div>
+      </div></div>
+      <figcaption><b>1 · Gancho sobre la cámara</b><span>Titular en Satoshi medium, interletrado negativo, palabras que entran desenfocadas. La palabra clave en musgo luz y la piedra canto como punto. Subtítulo sin cajita, palabra activa en musgo.</span></figcaption>
+    </figure>
+
+    <!-- 2 · panel + camera card -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <div class="ink grooves band top rake"></div>
+        <div class="panel">
+          <div class="abs" style="left:70px; top:70px; display:flex; align-items:center; gap:26px;">
+            <div class="ic"><svg><use href="#i-receipt"/></svg></div>
+            <div><div class="label">El encargo</div><div style="font-weight:500; font-size:56px; letter-spacing:-1.8px;">70 boletas</div></div>
+          </div>
+          <div class="abs label" style="left:70px; top:280px;">Tokens restantes</div>
+          <div class="meter"><i></i></div>
+          <div class="abs" style="left:70px; top:430px; display:flex; align-items:center; gap:18px;"><div class="ic sm mute"><svg><use href="#i-clock"/></svg></div><span class="label">se acabaron en</span></div>
+          <div class="count">4<small>horas</small></div>
+        </div>
+        <div class="cap dark">y no <span class="a">funcionó</span> <span class="n">porque</span></div>
+        <div class="camcard"><img src="assets/f-card.jpg" alt=""></div>
+      </div></div>
+      <figcaption><b>2 · Panel + tarjeta de cámara</b><span>La banda de surcos baja desde arriba y no cruza tu cara. Panel con íconos lucide finos en círculo musgo. El medidor se vacía en calma, sin rebotes.</span></figcaption>
+    </figure>
+
+    <!-- 3 · text slide -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <img class="cam" src="assets/f-full.jpg" alt="">
+        <div class="slide">
+          <div class="ink grooves band rake"></div>
+          <div class="t"><span class="w" style="--i:2">Lo</span> <span class="w" style="--i:3">repetitivo,</span> <span class="w" style="--i:4">a</span> <span class="w" style="--i:5">un</span> <span class="w k" style="--i:6">flujo<svg class="stone"><use href="#canto"/></svg></span><br><br><span class="w" style="--i:9">El</span> <span class="w" style="--i:10">criterio,</span> <span class="w" style="--i:11">a</span> <span class="w" style="--i:12">la</span> <span class="w k" style="--i:13">IA<svg class="stone"><use href="#canto"/></svg></span></div>
+        </div>
+      </div></div>
+      <figcaption><b>3 · Lámina de texto</b><span>Sube sobre la cámara con un desenfoque de movimiento. Para la idea central del reel, la frase que quieres que se lleven.</span></figcaption>
+    </figure>
+
+    <!-- 4 · chapter card -->
+    <figure>
+      <div class="frame"><div class="screen chapter">
+        <div class="ink enso"></div>
+        <div class="paso"><span class="pill ghost pop" style="--d:.3s">Paso 1</span></div>
+        <div class="title"><span class="w" style="--i:3">Primero</span><br><span class="w" style="--i:4">el</span> <span class="w" style="--i:5">proceso<svg class="stone" style="color:var(--accent)"><use href="#canto"/></svg></span></div>
+        <div class="ink garden" style="left:40px; right:40px; width:auto; top:1330px; height:290px;"></div>
+      </div></div>
+      <figcaption><b>4 · Capítulo</b><span>El ensō gira y se asienta detrás del título; el jardín de líneas abajo. Reemplaza la tarjeta rosada con línea lila de Ali.</span></figcaption>
+    </figure>
+
+    <!-- 5 · comparison tiles -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <div class="ink grooves band top"></div>
+        <div class="panel">
+          <div class="tile pop" style="left:40px; --d:.2s">
+            <div class="ic sm mute"><svg><use href="#i-sprout"/></svg></div>
+            <h4>Gratis</h4>
+            <ul><li class="yes"><svg><use href="#i-check"/></svg>Redactar</li><li class="yes"><svg><use href="#i-check"/></svg>Resumir</li><li class="no"><svg><use href="#i-x"/></svg>Archivos largos</li></ul>
+          </div>
+          <div class="tile pop" style="right:40px; --d:.7s">
+            <div class="ic sm"><svg><use href="#i-sprout"/></svg></div>
+            <h4>De pago</h4>
+            <ul><li class="yes"><svg><use href="#i-check"/></svg>Proyectos</li><li class="yes"><svg><use href="#i-check"/></svg>Reportes</li><li class="yes"><svg><use href="#i-check"/></svg>Todo el equipo</li></ul>
+          </div>
+        </div>
+        <div class="cap dark">¿para qué <span class="a">alcanza</span> <span class="n">la</span></div>
+        <div class="camcard"><img src="assets/f-card.jpg" alt=""></div>
+      </div></div>
+      <figcaption><b>5 · Comparación</b><span>Dos tarjetas rectas dentro del panel (nada inclinado ni montado sobre los bordes). Lo positivo en musgo; lo que no, en gris. Nunca rojo.</span></figcaption>
+    </figure>
+
+    <!-- 6 · flow row under a wide camera card -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <div class="camcard wide"><img src="assets/f-card.jpg" alt=""></div>
+        <div class="flow">
+          <div class="step pop" style="--d:.3s"><div class="ic"><svg><use href="#i-video"/></svg></div><b>Grabo</b><span>con el iPhone</span></div>
+          <div class="join pop" style="--d:.6s"></div>
+          <div class="step pop" style="--d:.9s"><div class="ic"><svg><use href="#i-terminal"/></svg></div><b>Claude Code</b><span>corta y anima</span></div>
+          <div class="join pop" style="--d:1.2s"></div>
+          <div class="step pop" style="--d:1.5s"><div class="ic"><svg><use href="#i-send"/></svg></div><b>Publico</b><span>el mismo día</span></div>
+        </div>
+      </div></div>
+      <figcaption><b>6 · Flujo bajo la cámara ancha</b><span>Pasos que aparecen uno por uno con uniones punteadas quietas (sin puntitos viajando, eso ya lo descartaste).</span></figcaption>
+    </figure>
+
+    <!-- 7 · CTA end card -->
+    <figure>
+      <div class="frame"><div class="screen">
+        <div class="ink grooves band rake"></div>
+        <div class="abs" style="left:0; right:0; top:640px; text-align:center;">
+          <div class="w" style="--i:0; font-weight:500; font-size:64px; letter-spacing:-2px; color:var(--mute);">Comenta</div><br>
+          <span class="pill moss pop" style="--d:.4s; font-size:120px; padding:22px 72px 30px; letter-spacing:-3px; font-weight:500;">FLUJO</span><br><br>
+          <div class="w" style="--i:5; font-weight:500; font-size:52px; letter-spacing:-1.6px;">y te envío la guía<svg class="stone" style="color:var(--accent)"><use href="#canto"/></svg></div>
+        </div>
+        <img class="logo logo-dk" src="assets/koan-logo-oscuro.svg" alt="koan." style="left:400px; top:1360px; width:280px;">
+        <img class="logo logo-lt" src="assets/koan-logo-claro.svg" alt="koan." style="left:400px; top:1360px; width:280px;">
+      </div></div>
+      <figcaption><b>7 · Cierre con llamado a la acción</b><span>Una sola acción por reel. El logo "koan." firma el final; la banda de surcos hace de marco.</span></figcaption>
+    </figure>
+
+    <!-- 8 · reel cover -->
+    <figure class="crop-on">
+      <div class="frame"><div class="screen">
+        <img class="cam" src="assets/f-full.jpg" alt="" style="animation:none">
+        <div class="scrim-b"></div>
+        <div class="abs" style="left:90px; right:90px; top:1110px; color:var(--washi); font-weight:500; font-size:118px; line-height:.98; letter-spacing:-4.4px;">70 boletas.<br><span style="color:var(--moss-light)">0 tokens<svg class="stone"><use href="#canto"/></svg></span></div>
+        <div class="abs" style="left:94px; top:1400px; font-size:34px; font-weight:500; color:rgba(246,244,239,.75); letter-spacing:-.4px;">Cuándo NO usar IA</div>
+        <img class="logo" src="assets/koan-logo-oscuro.svg" alt="koan." style="left:90px; top:300px; width:170px;">
+        <div class="crop"></div>
+      </div></div>
+      <figcaption><b>8 · Portada del reel</b><span>Tu toma + 2 líneas grandes + tema chico. La línea punteada es lo que se ve en la cuadrícula de Instagram (3:4): todo lo importante va adentro.</span></figcaption>
+    </figure>
+  </div>
+
+  <h2>Kit</h2>
+  <div class="kit">
+    <div class="card"><h3>Paleta</h3>
+      <div class="sw">
+        <div><i style="background:#1A1A18"></i><small>Sumi<br>#1A1A18</small></div>
+        <div><i style="background:#F6F4EF"></i><small>Washi<br>#F6F4EF</small></div>
+        <div><i style="background:#E4DFD3"></i><small>Arena<br>#E4DFD3</small></div>
+        <div><i style="background:#3E5A3A"></i><small>Musgo<br>#3E5A3A</small></div>
+        <div><i style="background:#8FA85A"></i><small>Musgo luz<br>#8FA85A</small></div>
+        <div><i style="background:#3A3A36"></i><small>Surco oscuro<br>#3A3A36</small></div>
+      </div>
+    </div>
+    <div class="card"><h3>Tipografía</h3>
+      <div class="spec1">Claridad en la era de la IA<svg class="stone" style="color:#3E5A3A"><use href="#canto"/></svg></div>
+      <div class="spec2">"En medio del ruido, claridad"</div>
+      <div class="spec3">Satoshi medium para titulares, subtítulos y etiquetas. Newsreader en cursiva solo para una cita por reel.</div>
+    </div>
+    <div class="card dk"><h3>Tinta y movimiento</h3>
+      <div style="position:relative; height:150px;"><div class="ink grooves" style="inset:0; width:auto; height:auto; background:#8FA85A; position:absolute;"></div></div>
+      <div class="spec3" style="color:#9C978C">Surcos, ensō y jardín trazados de tinta real. Movimiento de 200 a 600 ms con la curva tipo Apple, sin rebotes. Con "reducir movimiento" todo queda quieto.</div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const root = document.documentElement;
+  const logos = () => {
+    const dark = root.dataset.theme === "dark";
+    document.querySelectorAll(".logo-dk").forEach(e => e.style.display = dark ? "block" : "none");
+    document.querySelectorAll(".logo-lt").forEach(e => e.style.display = dark ? "none" : "block");
+  };
+  document.querySelectorAll(".toggle button").forEach(b => b.addEventListener("click", () => {
+    root.dataset.theme = b.dataset.t;
+    document.querySelectorAll(".toggle button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    logos();
+  }));
+  if (new URLSearchParams(location.search).get("t") === "light") document.querySelector('[data-t="light"]').click();
+  logos();
+</script>
+</body>
+</html>

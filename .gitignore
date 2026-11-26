@@ -33,3 +33,11 @@ videos/*/public/*.svg
 
 # Clips of past reels or recorded boards used as inserts (regenerable from finals/)
 videos/*/public/clips/
+
+# Secrets and raw incoming footage
+.env
+videos/_inbox/
+
+# Third-party reference clips and brand assets kept next to a style kit (local only)
+skills/**/ref/
+skills/talking-head-reel/assets/styles/koan/assets/
